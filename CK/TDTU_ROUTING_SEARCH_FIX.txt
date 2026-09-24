@@ -1,0 +1,11 @@
+TDTU routing/search update
+
+- Search suggestions now use a curated TDTU campus catalogue first.
+- Official labels are shown on the map from zoom 18+.
+- Map bounds include the wider campus/VFIS area.
+- Selected start/destination is snapped immediately to the nearest walkable approach.
+- Routing graph rejects paths through buildings/water and fence/wall barriers.
+- A* prefers pedestrian/footway/service corridors and penalizes minor paths/steps.
+- No straight snap connector is drawn through grass/buildings.
+
+The catalogue can be refined later with field-surveyed entrance coordinates without changing the UI/router.

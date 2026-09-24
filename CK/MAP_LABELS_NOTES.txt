@@ -1,0 +1,6 @@
+TDTU MAP LABELS
+
+- Custom TDTU labels/markers have been removed from campus-map and navigation maps.
+- The map now shows only the native labels rendered by the underlying OpenStreetMap tile layer.
+- CSS only increases tile contrast slightly so native text is easier to read.
+- Search and routing remain available, but search results no longer create permanent building-name overlays on the map.

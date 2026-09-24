@@ -1,0 +1,27 @@
+TDTU 2D INTERNAL ROUTING
+========================
+
+Bản này KHÔNG còn lấy geometry OSRM rồi chiếu thẳng lên ảnh isometric.
+Lộ trình được tính trực tiếp trên graph đường nội bộ được trace theo bản đồ 2D Discovery TDTU.
+
+File chính:
+- js/navigation.js
+  - ROAD_NODES: các điểm trên đường nội bộ 2D
+  - ROAD_EDGES: các đoạn đường được phép đi
+  - shortestRoadPath(): snap điểm đầu/đích vào đường + tìm đường ngắn nhất
+
+GPS:
+- GPS thật vẫn được đọc bằng watchPosition().
+- GPS được đổi sang pixel bằng js/tdtu-georef.js.
+- Sau đó vị trí được snap vào mạng đường 2D để tính tuyến.
+
+Độ chính xác:
+- Đường hiển thị không còn xuyên tòa/kênh do route chỉ chạy trên ROAD_EDGES.
+- Độ chính xác tuyệt đối của marker GPS vẫn phụ thuộc các điểm georeference trong tdtu-georef.js.
+- Khi có tọa độ thực địa, cập nhật anchors để tăng độ chính xác GPS.
+
+Thông số GPS hiện tại:
+- MIN_GOOD_ACCURACY = 12 m
+- bỏ mẫu > 40 m
+- làm mượt bằng các mẫu <= 18 m
+- reroute khi di chuyển >= 6 m

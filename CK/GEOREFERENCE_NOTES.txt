@@ -1,0 +1,34 @@
+TDTU 2D GEOREFERENCE NOTES
+===========================
+
+Canonical 2D image:
+- image/official-map/tdtu-campus-full.png
+- 1439 x 772 px
+- Source layout: https://discovery.tdtu.edu.vn/
+
+Real-world reference supplied by project owner:
+- Bing Maps TDTU reference URL (the URL contains map bounds/reference points supplied by the owner).
+- Reference coordinates visible in that URL include:
+  10.731952667236328, 106.69932556152344
+  10.732783317565918, 106.69874572753906
+
+Bootstrap named control points currently used by js/tdtu-georef.js:
+- VFIS
+- Building F
+- Building G / Inspire Library
+- Statue of Ton Duc Thang
+- National Defense and Security Hub (QPAN)
+
+Why calibration is separated from the picture:
+The Discovery map is an isometric illustration, not a north-up GIS/survey raster. A simple
+latitude/longitude bounding box is therefore not enough. The project uses a projective
+GPS <-> pixel transform seeded by named control points.
+
+For the final high-accuracy version:
+1. Stand at 6-12 landmarks distributed around the campus.
+2. Record GPS latitude/longitude and accuracy for each landmark.
+3. Identify the exact same landmark point on the 2D map.
+4. Replace/add the anchors in js/tdtu-georef.js and refit the matrix.
+5. Later add altitude/floor calibration separately.
+
+Do not claim indoor/survey-grade accuracy until the field-surveyed anchors are added.

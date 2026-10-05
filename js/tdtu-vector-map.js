@@ -611,6 +611,7 @@
   // Thứ tự lớp từ dưới lên, mô phỏng cách Google Maps vẽ: nền đất/cây xanh/nước dưới cùng,
   // rồi đường, rồi lối đi bộ, tòa nhà trên cùng.
   const SKETCH_DRAW_ORDER = ['green', 'water', 'road', 'pedestrian', 'building'];
+  const INTERNAL_ROAD_STYLE = { color: '#9a9a9a', weight: 7, opacity: 1 };
 
   // Cache dữ liệu Overpass vào localStorage - khuôn viên gần như không đổi theo ngày,
   // nên các lần tải trang sau không cần gọi mạng lại, "tạo khối" gần như tức thì.
@@ -676,15 +677,18 @@
         // Chỉ vẽ nếu ít nhất 1 điểm nằm trong khuôn viên TDTU (cắt bỏ đối tượng lạc ra ngoài).
         if (!pts.some(([lat,lng]) => SM.isWithinCampus(lat, lng, bounds))) return;
         const kind = SM.classifyMapFeature(el.tags || {});
-        if (byKind.has(kind)) byKind.get(kind).push(pts);
+        if (byKind.has(kind)) byKind.get(kind).push({pts, name: el.tags?.name || ''});
       });
       let drawn = 0;
       SKETCH_DRAW_ORDER.forEach(kind => {
         const style = SM.sketchStyleFor(kind);
         if (!style) return;
-        byKind.get(kind).forEach(pts => {
+        byKind.get(kind).forEach(({pts, name}) => {
           if (kind === 'building' || kind === 'water' || kind === 'green') {
             L.polygon(pts, {...style, interactive:false}).addTo(layers);
+          } else if (kind === 'road' && SM.isInternalRoadName(name)) {
+            const line = L.polyline(pts, {...INTERNAL_ROAD_STYLE, interactive:true}).addTo(layers);
+            line.bindTooltip(escapeHtml(name), {permanent:true, direction:'center', className:'tdtu-road-label', sticky:false});
           } else {
             L.polyline(pts, {...style, interactive:false}).addTo(layers);
           }

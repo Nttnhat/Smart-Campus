@@ -1,28 +1,26 @@
 :root {
   /* Colors - Dark Blue & Red theme */
-  --primary: #00458c; /* Dark Blue */
-  --primary-light: #00366d;
-  --primary-lighter: #00274f;
-  --secondary: #d31145; /* Red */
-  --secondary-hover: #b00e38;
-  --bg-color: #ffffff;
-  --surface: #ffffff;
-  --text-dark: #1e293b;
-  --text-light: #64748b;
-  --text-white: #ffffff;
-
+  --primary: #00458C; /* Dark Blue */
+  --primary-light: #00366D;
+  --primary-lighter: #00274F;
+  --secondary: #D31145; /* Red */
+  --secondary-hover: #B00E38;
+  --bg-color: #FFFFFF;
+  --surface: #FFFFFF;
+  --text-dark: #1E293B;
+  --text-light: #64748B;
+  --text-white: #FFFFFF;
+  
   /* Layout */
   --sidebar-width: 320px;
   --header-height: 70px;
   --border-radius: 12px;
   --border-radius-lg: 20px;
-
+  
   /* Shadows & Glass */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --shadow-md:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -31,15 +29,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -133,30 +123,18 @@ ul {
   font-weight: 800;
   display: flex;
   align-items: center;
-  gap: 14px;
-
+  gap: 0.5rem;
   color: white;
   text-transform: uppercase;
 }
 
 .logo img {
-  height: 34px;
-  width: auto;
-
-  /* Giữ nguyên logo, chỉ tạo nền đỡ phía sau */
-  background-color: #ffffff;
-  padding: 7px 10px;
-  border-radius: 8px;
-
-  /* Làm logo tách khỏi nền header */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
-
-  /* Bỏ đường viền cũ */
-  border-right: none;
+  border-right: 1px solid rgba(255,255,255,0.3);
+  padding-right: 0.5rem;
 }
 
 .logo span {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255,255,255,0.9);
 }
 
 .nav-links {
@@ -166,7 +144,7 @@ ul {
   width: 300px;
   height: calc(100vh - 80px);
   background-color: var(--surface);
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 4px 0 10px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -182,20 +160,17 @@ ul {
   font-weight: 600;
   color: var(--text-dark);
   padding: 1.25rem 2rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition:
-    background 0.2s,
-    color 0.2s;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: background 0.2s, color 0.2s;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-  background-color: rgba(211, 17, 69, 0.05);
+.nav-links a:hover, .nav-links a.active {
+  background-color: rgba(211,17,69,0.05);
   color: var(--secondary);
 }
 
 .nav-links a.active::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -212,7 +187,7 @@ ul {
   left: 0;
   width: 100%;
   height: calc(100vh - 80px);
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0,0,0,0.4);
   z-index: 90;
   opacity: 0;
   visibility: hidden;
@@ -264,7 +239,7 @@ ul {
 .sidebar {
   width: var(--sidebar-width);
   background-color: var(--surface);
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0,0,0,0.05);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -281,7 +256,7 @@ ul {
   width: 100%;
   padding: 1rem 1rem 1rem 3rem;
   border-radius: var(--border-radius);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0,0,0,0.1);
   font-size: 1rem;
   transition: all 0.3s ease;
   background: var(--surface);
@@ -305,7 +280,7 @@ ul {
 .map-placeholder-container {
   width: 100%;
   height: 100%;
-  background-color: #e2e8f0;
+  background-color: #E2E8F0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -358,7 +333,7 @@ ul {
   box-shadow: var(--shadow-sm);
   padding: 1.5rem;
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .card:hover {
@@ -368,14 +343,8 @@ ul {
 
 /* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
@@ -383,30 +352,12 @@ ul {
 }
 
 /* Typography utilities */
-.text-primary {
-  color: var(--primary);
-}
-.text-secondary {
-  color: var(--secondary);
-}
-.text-light {
-  color: var(--text-light);
-}
-.font-bold {
-  font-weight: 700;
-}
-.mb-1 {
-  margin-bottom: 0.5rem;
-}
-.mb-2 {
-  margin-bottom: 1rem;
-}
-.mb-3 {
-  margin-bottom: 1.5rem;
-}
-.mb-4 {
-  margin-bottom: 2rem;
-}
-.mt-4 {
-  margin-top: 2rem;
-}
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-light { color: var(--text-light); }
+.font-bold { font-weight: 700; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mt-4 { margin-top: 2rem; }

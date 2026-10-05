@@ -1,120 +1,86 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const CAMPUS_CENTER = [10.73182, 106.69943];
-    const CAMPUS_BOUNDS = L.latLngBounds([10.73055, 106.69845], [10.73320, 106.70035]);
-    const map = L.map('campusLeafletMap', {
-        minZoom: 16,
-        maxZoom: 20,
-        maxBounds: CAMPUS_BOUNDS.pad(0.45)
-    }).setView(CAMPUS_CENTER, 18);
+  const VM = window.TDTUVectorMap;
+  const map = VM.createBaseMap('realCampusMap');
+  const pointLayer = L.layerGroup().addTo(map);
+  const gpsLayer = L.layerGroup().addTo(map);
+  const search = document.getElementById('campusSearch');
+  const results = document.getElementById('campusSearchResults');
+  const selectedName = document.getElementById('selectedPlaceName');
+  const selectedDetail = document.getElementById('selectedPlaceDetail');
+  const selectedCoords = document.getElementById('selectedCoordinates');
+  const routeLink = document.getElementById('selectedPlaceRoute');
+  const dataStatus = document.getElementById('mapDataStatus');
+  const gpsStatus = document.getElementById('gpsMapStatus');
+  const gpsDetail = document.getElementById('gpsMapDetail');
+  const toggleGps = document.getElementById('toggleMapGps');
+  const zoomReadout = document.getElementById('zoomCampus');
+  let selectedMarker = null;
+  let gpsMarker = null;
+  let accuracyCircle = null;
+  let watchId = null;
+  let searchAbort = null;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 20,
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+  VM.drawCampusVectors(map).then(info => {
+    dataStatus.textContent = info.count ? `Đã tải ${info.count} đối tượng thực tế` : 'Đang dùng nền bản đồ địa lý';
+  });
+  map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
+  zoomReadout.textContent = map.getZoom();
+  map.on('zoomend',()=>zoomReadout.textContent=map.getZoom());
 
-    const els = {
-        search: document.getElementById('campusSearch'),
-        results: document.getElementById('campusSearchResults'),
-        fit: document.getElementById('fitCampus'),
-        name: document.getElementById('selectedPlaceName'),
-        detail: document.getElementById('selectedPlaceDetail'),
-        coords: document.getElementById('selectedPlaceCoords'),
-        route: document.getElementById('selectedPlaceRoute')
-    };
+  function markerIcon(label, color='#D31145') {
+    return L.divIcon({className:'',html:`<div style="background:${color};color:#fff;border:3px solid #fff;border-radius:999px;padding:7px 10px;font-weight:800;box-shadow:0 5px 18px rgba(15,23,42,.25);white-space:nowrap">${VM.escapeHtml(label)}</div>`,iconAnchor:[20,18]});
+  }
 
-    let marker = null;
-    let selected = null;
-    let searchAbortController = null;
+  async function reverseName(lat,lng) {
+    try {
+      const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&namedetails=1&addressdetails=1`,{headers:{'Accept-Language':'vi'}});
+      const d=await r.json(); const a=d.address||{};
+      return {name:d.namedetails?.name||d.name||a.building||a.amenity||a.road||'Điểm đã chọn', detail:d.display_name||''};
+    } catch (_) { return {name:'Điểm đã chọn',detail:''}; }
+  }
 
-    function icon() {
-        return L.divIcon({
-            className: '',
-            html: '<div class="destination-map-pin"><span></span></div>',
-            iconSize: [34, 44],
-            iconAnchor: [17, 42]
-        });
-    }
+  async function selectPoint(lat,lng,name=null,detail=null) {
+    if (!name) { const r=await reverseName(lat,lng); name=r.name; detail=r.detail; }
+    pointLayer.clearLayers();
+    selectedMarker=L.marker([lat,lng],{icon:markerIcon('Điểm chọn')}).addTo(pointLayer);
+    selectedName.textContent=name; selectedDetail.textContent=detail||'Vị trí trong khuôn viên';
+    selectedCoords.textContent=`${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    routeLink.classList.remove('disabled-link');
+    routeLink.href=`navigation.html?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&name=${encodeURIComponent(name)}`;
+    map.flyTo([lat,lng],19,{duration:.6});
+  }
 
-    function updateSelection(lat, lng, name = 'Điểm đã chọn trên bản đồ', detail = 'Tọa độ lấy trực tiếp từ bản đồ OpenStreetMap') {
-        selected = { lat, lng, name, detail };
-        if (!marker) marker = L.marker([lat, lng], { icon: icon() }).addTo(map);
-        else marker.setLatLng([lat, lng]);
-        els.name.textContent = name;
-        els.detail.textContent = detail;
-        els.coords.textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-        els.route.href = `navigation.html?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&name=${encodeURIComponent(name)}`;
-        els.route.classList.remove('disabled-link');
-    }
+  map.on('click',e=>selectPoint(e.latlng.lat,e.latlng.lng));
 
-    async function reverseName(lat, lng) {
-        try {
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=19&addressdetails=1`, {
-                headers: { 'Accept': 'application/json' }
-            });
-            if (!response.ok) return;
-            const data = await response.json();
-            const name = data.name || (data.display_name || '').split(',')[0] || 'Điểm đã chọn trên bản đồ';
-            if (selected && Math.abs(selected.lat - lat) < 1e-7 && Math.abs(selected.lng - lng) < 1e-7) {
-                updateSelection(lat, lng, name, data.display_name || 'Địa điểm từ OpenStreetMap');
-            }
-        } catch { /* vẫn giữ tọa độ click nếu reverse geocoding lỗi */ }
-    }
+  async function doSearch() {
+    const q=search.value.trim();
+    if(searchAbort)searchAbort.abort(); searchAbort=new AbortController();
+    results.innerHTML='<div class="official-search-empty">Đang tìm…</div>';
+    const list=await VM.searchCampus(q,searchAbort.signal).catch(()=>[]);
+    if(!list.length){results.innerHTML='<div class="official-search-empty">Không tìm thấy. Hãy chọn trực tiếp trên bản đồ.</div>';return;}
+    results.innerHTML=list.map((r,i)=>`<button type="button" data-i="${i}" class="official-search-item"><strong>${VM.escapeHtml(r.name)}</strong><span>${VM.escapeHtml(r.detail)}</span></button>`).join('');
+    results.dataset.items=JSON.stringify(list);
+  }
+  search.addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
+  search.addEventListener('focus',doSearch);
+  search.addEventListener('input',()=>{clearTimeout(search._t);search._t=setTimeout(doSearch,450);});
+  results.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;const list=JSON.parse(results.dataset.items||'[]');const r=list[Number(b.dataset.i)];if(r)selectPoint(r.lat,r.lng,r.name,r.detail);});
 
-    async function searchOSM() {
-        const query = els.search.value.trim();
-        if (!query) {
-            els.results.innerHTML = '';
-            return;
-        }
-        if (searchAbortController) searchAbortController.abort();
-        searchAbortController = new AbortController();
-        els.results.innerHTML = '<div class="osm-result-note">Đang tìm trên OpenStreetMap…</div>';
-        const left = 106.69845, right = 106.70035, top = 10.73320, bottom = 10.73055;
-        const q = `${query}, Trường Đại học Tôn Đức Thắng, Hồ Chí Minh`;
-        const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&addressdetails=1&bounded=1&viewbox=${left},${top},${right},${bottom}&q=${encodeURIComponent(q)}`;
-        try {
-            const response = await fetch(url, { signal: searchAbortController.signal, headers: { 'Accept': 'application/json' } });
-            if (!response.ok) throw new Error('search');
-            const data = await response.json();
-            if (!data.length) {
-                els.results.innerHTML = '<div class="osm-result-note">Không tìm thấy. Hãy bấm trực tiếp lên bản đồ.</div>';
-                return;
-            }
-            els.results.innerHTML = data.map((item, index) => {
-                const title = item.name || (item.display_name || '').split(',')[0];
-                return `<button type="button" class="osm-result-item" data-index="${index}"><strong>${title}</strong><span>${item.display_name}</span></button>`;
-            }).join('');
-            els.results.dataset.items = JSON.stringify(data.map(item => ({
-                lat: Number(item.lat), lng: Number(item.lon), name: item.name || (item.display_name || '').split(',')[0], detail: item.display_name
-            })));
-        } catch (error) {
-            if (error.name !== 'AbortError') els.results.innerHTML = '<div class="osm-result-note">Không thể tìm kiếm lúc này. Hãy bấm trực tiếp lên bản đồ.</div>';
-        }
-    }
+  toggleGps.addEventListener('click',()=>{
+    if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null;toggleGps.textContent='Bật GPS';gpsStatus.textContent='Đã dừng GPS';return;}
+    if(!navigator.geolocation)return alert('Trình duyệt không hỗ trợ GPS.');
+    toggleGps.textContent='Dừng GPS'; gpsStatus.textContent='Đang lấy GPS…';
+    watchId=navigator.geolocation.watchPosition(pos=>{
+      const c=pos.coords; const ll=[c.latitude,c.longitude];
+      if(!gpsMarker)gpsMarker=L.marker(ll,{icon:markerIcon('Bạn','#0ea5e9')}).addTo(gpsLayer);else gpsMarker.setLatLng(ll);
+      if(!accuracyCircle)accuracyCircle=L.circle(ll,{radius:c.accuracy,color:'#0ea5e9',weight:1,fillColor:'#0ea5e9',fillOpacity:.08}).addTo(gpsLayer);else{accuracyCircle.setLatLng(ll);accuracyCircle.setRadius(c.accuracy);}
+      gpsStatus.textContent='GPS đang hoạt động'; gpsDetail.textContent=`Sai số khoảng ±${Math.round(c.accuracy)} m`; map.panTo(ll);
+    },err=>{gpsStatus.textContent='Không lấy được GPS';gpsDetail.textContent=err.message;},{enableHighAccuracy:true,maximumAge:0,timeout:20000});
+  });
 
-    map.on('click', event => {
-        const { lat, lng } = event.latlng;
-        updateSelection(lat, lng);
-        reverseName(lat, lng);
-    });
+  document.getElementById('zoomInCampus').addEventListener('click',()=>map.zoomIn());
+  document.getElementById('zoomOutCampus').addEventListener('click',()=>map.zoomOut());
+  document.getElementById('fitCampus').addEventListener('click',()=>map.fitBounds(VM.CAMPUS_BOUNDS,{padding:[30,30]}));
 
-    els.search.addEventListener('keydown', event => {
-        if (event.key === 'Enter') searchOSM();
-    });
-    els.search.addEventListener('input', () => {
-        if (!els.search.value.trim()) els.results.innerHTML = '';
-    });
-    els.results.addEventListener('click', event => {
-        const itemEl = event.target.closest('[data-index]');
-        if (!itemEl) return;
-        const items = JSON.parse(els.results.dataset.items || '[]');
-        const item = items[Number(itemEl.dataset.index)];
-        if (!item) return;
-        updateSelection(item.lat, item.lng, item.name, item.detail);
-        map.flyTo([item.lat, item.lng], 19, { duration: 0.7 });
-        els.results.innerHTML = '';
-    });
-    els.fit.addEventListener('click', () => map.fitBounds(CAMPUS_BOUNDS, { padding: [20, 20] }));
-
-    map.fitBounds(CAMPUS_BOUNDS, { padding: [20, 20] });
+  VM.drawNativeMapLabels(map).catch?.(()=>{});
 });

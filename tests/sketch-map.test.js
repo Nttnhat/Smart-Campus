@@ -67,9 +67,9 @@ test('isWithinCampus: điểm trong bounds TDTU -> true', () => {
   assert.equal(isWithinCampus(10.732, 106.699, bounds), true);
 });
 
-test('isWithinCampus: điểm xa khuôn viên (vd: Mapletree Business Centre) -> false', () => {
+test('isWithinCampus: điểm xa khuôn viên (vd: Mapletree Business Centre, ngoài bounds phía đông) -> false', () => {
   const bounds = { south: 10.7288, west: 106.694, north: 10.7365, east: 106.704 };
-  assert.equal(isWithinCampus(10.7298, 106.7023, bounds), false);
+  assert.equal(isWithinCampus(10.7298, 106.7101, bounds), false);
 });
 
 test('isWithinCampus: toạ độ không hợp lệ -> false, không throw', () => {

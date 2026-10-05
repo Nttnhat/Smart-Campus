@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function selectPoint(lat,lng,name=null,detail=null) {
     if (!name) {
-      const hit = window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12);
+      const hit = window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
       if (hit) { name = hit.name; detail = hit.category; }
       else { const r=await reverseName(lat,lng); name=r.name; detail=r.detail; }
     }

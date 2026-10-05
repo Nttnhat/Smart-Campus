@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function assignPoint(kind, lat, lng, suppliedName = null, suppliedDetail = null) {
-    const hit = suppliedName ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12);
+    const hit = suppliedName ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
     const resolved = suppliedName ? {name:suppliedName, detail:suppliedDetail || suppliedName}
       : hit ? {name:hit.name, detail:hit.category}
       : await reverseName(lat, lng);

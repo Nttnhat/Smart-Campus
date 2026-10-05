@@ -642,8 +642,11 @@
 
   // Vẽ khung khuôn viên TDTU theo màu Google Maps thật: chỉ hình khối (tòa nhà/đường/cây xanh/nước),
   // không tile ảnh nền, không chữ/nhãn nào được gắn vào các hình này.
+  const greenAreas = [];
+
   async function drawSketchBasemap(map, options = {}) {
     const SM = window.SketchMap;
+    greenAreas.length = 0;
     const bounds = {
       south: CAMPUS_BOUNDS.getSouth(), west: CAMPUS_BOUNDS.getWest(),
       north: CAMPUS_BOUNDS.getNorth(), east: CAMPUS_BOUNDS.getEast()
@@ -685,6 +688,7 @@
         const style = SM.sketchStyleFor(kind);
         if (!style) return;
         byKind.get(kind).forEach(pts => {
+          if (kind === 'green') greenAreas.push({name:'Khu cây xanh', category:'Cây xanh', rings:[pts]});
           if (kind === 'building' || kind === 'water' || kind === 'green') {
             L.polygon(pts, {...style, interactive:false}).addTo(layers);
           } else {
@@ -705,6 +709,7 @@
     CORE_BOUNDS,
     CAMPUS_CENTER,
     OFFICIAL_PLACES,
+    greenAreas,
     normalise,
     escapeHtml,
     haversine,

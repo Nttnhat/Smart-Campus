@@ -57,7 +57,8 @@
     {id:'loi-ra-ham-xe-a', name:'Lối ra hầm xe Tòa A', aliases:['loi ra ham xe a','cua ra ham xe a'], category:'Hầm xe', lat:10.731693, lng:106.699367},
     {id:'ham-xe-a',name:'Hầm xe Tòa A', aliases:['ham xe a','bai xe a'], category:'Hầm xe', lat:10.7318249, lng:106.6986723},
     {id:'loi-vao-ham-xe-d', name:'Lối vào hầm xe Tòa D', aliases:['loi vao ham xe d','cua vao ham xe d'], category:'Hầm xe', lat:10.732652, lng:106.698791},
-    {id:'loi-ra-ham-xe-d', name:'Lối ra hầm xe Tòa D', aliases:['loi ra ham xe d','cua ra ham xe d'], category:'Hầm xe', lat:10.733013, lng:106.699110},
+    {id:'thang-bo-ham-xe-d', name:'Thang bộ xuống hầm Tòa D', aliases:['thang bo xuong ham xe d','thang bo ham d'], category:'Hầm xe', lat:10.732599, lng:106.699503},
+    {id:'loi-ra-ham-xe-d',name:'Lối ra hầm xe Tòa D', aliases:['loi ra ham xe d','cua ra ham xe d'], category:'Hầm xe', lat:10.733013, lng:106.699110},
     {id:'loi-vao-ham-xe-f', name:'Lối vào hầm xe Tòa F', aliases:['loi vao ham xe f','cua vao ham xe f'], category:'Hầm xe', lat:10.730817, lng:106.698770},
     {id:'loi-ra-ham-xe-f', name:'Lối ra hầm xe Tòa F', aliases:['loi ra ham xe f','cua ra ham xe f'], category:'Hầm xe', lat:10.730645, lng:106.699286},
     // Cổng

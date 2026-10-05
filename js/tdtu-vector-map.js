@@ -13,6 +13,7 @@
   // Official TDTU place catalogue. Names/aliases follow the Discovery campus map.
   // Coordinates represent the practical access side of each place, so routing ends on a walkable approach.
   const OFFICIAL_PLACES = [
+<<<<<<< HEAD
     {id:'toa-a', name:'Tòa A', aliases:['nha a','giang duong a','toa a'], category:'Tòa nhà', lat:10.73186, lng:106.69920},
     {id:'toa-b', name:'Tòa B', aliases:['nha b','giang duong b','toa b'], category:'Tòa nhà', lat:10.73224, lng:106.69899},
     {id:'toa-c', name:'Tòa C', aliases:['nha c','giang duong c','toa c'], category:'Tòa nhà', lat:10.73141, lng:106.69930},
@@ -42,6 +43,86 @@
     'https://overpass-api.de/api/interpreter',
     'https://overpass.kumi.systems/api/interpreter'
   ];
+=======
+    {id:'toa-a', name:'Tòa A', aliases:['nha a','giang duong a','toa a'], category:'Tòa nhà', lat:10.731936, lng:106.699125},
+    {id:'toa-b', name:'Tòa B', aliases:['nha b','giang duong b','toa b'], category:'Tòa nhà', lat:10.732448, lng:106.699068},
+    {id:'toa-c', name:'Tòa C', aliases:['nha c','giang duong c','toa c'], category:'Tòa nhà', lat:10.731403, lng:106.699205},
+    {id:'toa-d', name:'Tòa D', aliases:['nha d','giang duong d','toa d'], category:'Tòa nhà', lat:10.732828, lng:106.698758},
+    {id:'toa-e', name:'Tòa E', aliases:['nha e','giang duong e','toa e'], category:'Tòa nhà', lat:10.732907, lng:106.699280},
+    {id:'toa-f', name:'Tòa F', aliases:['nha f','giang duong f','toa f'], category:'Tòa nhà', lat:10.730827, lng:106.698876},
+    {id:'toa-g', name:'Tòa G - Thư viện truyền cảm hứng', aliases:['toa g','nha g','thu vien','thu vien truyen cam hung'], category:'Tòa nhà · Thư viện', lat:10.730772, lng:106.699395},
+    {id:'nha-h', name:'Tòa H', aliases:['toa h','nha h','ky tuc xa h','ktx h'], category:'Ký túc xá', lat:10.732896, lng:106.697001},
+    {id:'home-mart', name:'Home Mart', aliases:['home mart','tang tret toa h'], category:'Khu vực', lat:10.732863, lng:106.696886},
+    {id:'stepup', name:'StepUp', aliases:['stepup','step up','tang tret toa h'], category:'Khu vực', lat:10.732848, lng:106.697159},
+    {id:'can-tin-nha-h', name:'Căn tin Nhà H', aliases:['can tin nha h','can tin toa h'], category:'Khu vực', lat:10.733020, lng:106.696802},
+    {id:'nha-tam-quan-su', name:'Nhà tắm khu quân sự', aliases:['nha tam quan su','nha tam'], category:'Khu vực', lat:10.733116, lng:106.696927},
+    {id:'nha-i', name:'Tòa I', aliases:['toa i','nha i','ky tuc xa i','ktx i'], category:'Ký túc xá', lat:10.733135, lng:106.696776},
+    {id:'toa-k', name:'Tòa K', aliases:['nha k','giang duong k','toa k'], category:'Tòa nhà', lat:10.7308612, lng:106.6977227},
+    {id:'toa-l', name:'Tòa L', aliases:['nha l','giang duong l','toa l'], category:'Tòa nhà', lat:10.7304774, lng:106.6977502},
+    {id:'trung-tam-qp', name:'Trung tâm Quốc phòng (Tòa M)', aliases:['toa m','trung tam qp','trung tam quoc phong','qpan','quoc phong'], category:'Khu vực', lat:10.730607, lng:106.698078},
+    {id:'vfis', name:'Trường Quốc tế Việt Nam - Phần Lan (VFIS)', aliases:['vfis','truong vfis','viet nam phan lan','truong quoc te viet nam phan lan'], category:'Trường trực thuộc', lat:10.732462, lng:106.694972},
+    {id:'san-qpan', name:'Sân quốc phòng', aliases:['san quoc phong','san qpan'], category:'Khu vực', lat:10.731219, lng:106.698014},
+    {id:'nha-in-ada', name:'Nhà In ADA', aliases:['nha in ada','in ada'], category:'Khu vực', lat:10.731749, lng:106.698165},
+    {id:'loi-vao-ham-xe-nha-thi-dau', name:'Lối vào hầm xe Nhà thi đấu', aliases:['loi vao ham xe nha thi dau'], category:'Hầm xe', lat:10.731833, lng:106.698159},
+    {id:'loi-ra-ham-xe-nha-thi-dau', name:'Lối ra hầm xe Nhà thi đấu', aliases:['loi ra ham xe nha thi dau'], category:'Hầm xe', lat:10.731845, lng:106.697400},
+    {id:'khu-tap-the-duc-ktx', name:'Khu tập thể dục KTX', aliases:['khu tap the duc ktx','tap the duc ktx'], category:'Khu vực', lat:10.732184, lng:106.697145},
+    {id:'nha-thi-dau',name:'Nhà thi đấu', aliases:['nha thi dau','gym','nha the thao'], category:'Thể thao', lat:10.731839, lng:106.697904},
+    {id:'san-van-dong', name:'Sân vận động', aliases:['san van dong','san bong da'], category:'Thể thao', lat:10.732629, lng:106.697863},
+    {id:'ho-boi', name:'Hồ bơi 1', aliases:['ho boi','ho boi 1','be boi'], category:'Thể thao', lat:10.732615, lng:106.697061},
+    {id:'ho-boi-moi', name:'Hồ bơi 2', aliases:['ho boi 2','ho boi moi','be boi moi'], category:'Thể thao', lat:10.731091, lng:106.697683},
+    {id:'san-tennis', name:'Sân tennis', aliases:['san tennis','tennis'], category:'Thể thao', lat:10.73234, lng:106.697133},
+    {id:'san-bong-ro', name:'Sân bóng rổ', aliases:['san bong ro','bong ro'], category:'Thể thao', lat:10.73243, lng:106.696957},
+    {id:'san-golf', name:'Sân tập golf', aliases:['san tap golf','golf'], category:'Thể thao', lat:10.73455, lng:106.70015},
+    {id:'khu-tap-luyen-quan-su', name:'Khu tập luyện quân sự', aliases:['khu tap luyen quan su','quan su'], category:'Khu vực', lat:10.731635, lng:106.695949},
+    {id:'san-golf-khu', name:'Khu golf', aliases:['khu golf','san golf'], category:'Khu vực', lat:10.730891, lng:106.696631},
+    {id:'san-pickleball', name:'Sân pickleball', aliases:['san pickleball','pickleball'], category:'Khu vực', lat:10.730092, lng:106.696340},
+    {id:'khu-cay-xanh-ghe-da', name:'Khu cây xanh bóng mát (ghế đá)', aliases:['cay xanh','bong mat','ghe da','khu cay xanh'], category:'Khu vực', lat:10.731312, lng:106.697611},
+    {id:'vuon-uom',name:'Vườn ươm',aliases:['vuon uom','nha kinh'], category:'Khu vực', lat:10.730757, lng:106.694926},
+    {id:'tuong-dai', name:'Tượng đài Bác Tôn Đức Thắng', aliases:['tuong dai','tuong ton duc thang','tuong dai ton duc thang'], category:'Điểm mốc', lat:10.73192, lng:106.69952},
+    {id:'7-eleven', name:'7-Eleven', aliases:['7 eleven','seven eleven','cua hang tien loi'], category:'Tiện ích', lat:10.73063, lng:106.69822},
+    {id:'phong-y-te', name:'Phòng y tế', aliases:['phong y te','y te'], category:'Khu vực', lat:10.731710, lng:106.698054},
+    {id:'tram-dien', name:'Trạm điện', aliases:['tram dien'], category:'Hạ tầng', lat:10.73055, lng:106.69972},
+    // Ăn uống
+    {id:'sanh-711', name:'Sảnh 711', aliases:['sanh 711','khu an uong sanh 711'], category:'Khu vực', lat:10.730538, lng:106.697864},
+    {id:'can-tin', name:'Căn tin', aliases:['can tin','nha an'], category:'Ăn uống', lat:10.73150, lng:106.69905},
+    {id:'can-tin-10d', name:'Căn tin 10D', aliases:['can tin 10d','10d'], category:'Ăn uống', lat:10.73230, lng:106.69865},
+    {id:'startup-cafe', name:'StartUp', aliases:['startup','start up','start up cafe'], category:'Khu vực', lat:10.732077, lng:106.698168},
+    {id:'coffee-duoi-thu-vien', name:'Coffee dưới thư viện', aliases:['coffee duoi thu vien','quan duoi thu vien'], category:'Khu vực', lat:10.730830, lng:106.699129},
+    {id:'day-phong-nghi-san-vd', name:'Dãy phòng nghỉ/họp sân vận động', aliases:['day phong nghi san van dong','phong nghi san van dong','phong hop san van dong'], category:'Khu vực', lat:10.732647, lng:106.697396},
+    {id:'day-phong-cong-vu', name:'Dãy phòng công vụ', aliases:['day phong cong vu','phong cong vu'], category:'Khu vực', lat:10.733127, lng:106.697747},
+    {id:'phong-gym',name:'Phòng Gym', aliases:['phong gym','gym'], category:'Khu vực', lat:10.732178, lng:106.698138},
+    // Mua sắm
+    {id:'smart', name:'SMart', aliases:['smart','sieu thi smart'], category:'Khu vực', lat:10.730794, lng:106.697617},
+    // Hầm xe
+    {id:'ham-xe-cong-cong', name:'Hầm xe phương tiện công cộng', aliases:['ham xe cong cong','ham xe xe buyt'], category:'Hầm xe', lat:10.731883, lng:106.698626},
+    {id:'loi-vao-ham-xe-a', name:'Lối vào hầm xe Tòa A', aliases:['loi vao ham xe a','cua vao ham xe a'], category:'Hầm xe', lat:10.732244, lng:106.699332},
+    {id:'loi-ra-ham-xe-a', name:'Lối ra hầm xe Tòa A', aliases:['loi ra ham xe a','cua ra ham xe a'], category:'Hầm xe', lat:10.731693, lng:106.699367},
+    {id:'loi-vao-ham-xe-d', name:'Lối vào hầm xe Tòa D', aliases:['loi vao ham xe d','cua vao ham xe d'], category:'Hầm xe', lat:10.732652, lng:106.698791},
+    {id:'thang-bo-ham-xe-d', name:'Thang bộ xuống hầm Tòa D', aliases:['thang bo xuong ham xe d','thang bo ham d'], category:'Hầm xe', lat:10.732599, lng:106.699503},
+    {id:'loi-ra-ham-xe-d',name:'Lối ra hầm xe Tòa D', aliases:['loi ra ham xe d','cua ra ham xe d'], category:'Hầm xe', lat:10.733013, lng:106.699110},
+    {id:'loi-vao-ham-xe-f', name:'Lối vào hầm xe Tòa F', aliases:['loi vao ham xe f','cua vao ham xe f'], category:'Hầm xe', lat:10.730817, lng:106.698770},
+    {id:'loi-ra-ham-xe-f', name:'Lối ra hầm xe Tòa F', aliases:['loi ra ham xe f','cua ra ham xe f'], category:'Hầm xe', lat:10.730645, lng:106.699286},
+    // Cổng
+    {id:'cong-1', name:'Cổng 1', aliases:['cong 1','cong chinh'], category:'Cổng', lat:10.731588, lng:106.699997},
+    {id:'cong-2', name:'Cổng 2', aliases:['cong 2'], category:'Cổng', lat:10.732455, lng:106.699906},
+    {id:'cong-3', name:'Cổng 3', aliases:['cong 3'], category:'Cổng', lat:10.733033, lng:106.699814},
+    {id:'cong-4-xe-buyt', name:'Cổng 4 (xe buýt)', aliases:['cong 4','cong xe buyt'], category:'Cổng', lat:10.733169, lng:106.699393},
+    {id:'cong-5', name:'Cổng 5', aliases:['cong 5'], category:'Cổng', lat:10.733169, lng:106.698948},
+    {id:'cong-6', name:'Cổng 6', aliases:['cong 6'], category:'Cổng', lat:10.733269, lng:106.697283},
+    {id:'cong-7', name:'Cổng 7', aliases:['cong 7'], category:'Cổng', lat:10.733311, lng:106.696380},
+    // Phòng ban hỗ trợ
+    {id:'phong-c00', name:'Phòng C00 - Một cửa', aliases:['c00','phong c00','mot cua'], category:'Phòng ban', lat:10.73178, lng:106.69915},
+    {id:'phong-a003', name:'Phòng A003', aliases:['a003'], category:'Phòng ban', lat:10.73183, lng:106.69922},
+  ];
+  const OVERPASS_ENDPOINTS = [
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter',
+    'https://overpass.openstreetmap.ru/api/interpreter',
+    'https://overpass.osm.ch/api/interpreter',
+    'https://overpass.private.coffee/api/interpreter'
+  ];
+  const OVERPASS_TIMEOUT_MS = 9000;
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 
   function escapeHtml(value) {
     return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
@@ -71,18 +152,40 @@
   async function overpass(query, signal) {
     let lastError = null;
     for (const endpoint of OVERPASS_ENDPOINTS) {
+<<<<<<< HEAD
       try {
         const response = await fetch(endpoint, {
           method: 'POST',
           signal,
+=======
+      // Mỗi endpoint có timeout riêng (OVERPASS_TIMEOUT_MS): nếu bị treo/chậm thì bỏ qua và
+      // thử endpoint tiếp theo, thay vì bỏ cuộc toàn bộ. Chỉ bỏ cuộc thật nếu người gọi
+      // (caller) tự huỷ qua `signal` bên ngoài.
+      const timeoutController = new AbortController();
+      const timer = setTimeout(() => timeoutController.abort(), OVERPASS_TIMEOUT_MS);
+      const onExternalAbort = () => timeoutController.abort();
+      if (signal) signal.addEventListener('abort', onExternalAbort);
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          signal: timeoutController.signal,
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
           headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
           body: `data=${encodeURIComponent(query)}`
         });
         if (!response.ok) throw new Error(`Overpass ${response.status}`);
         return await response.json();
       } catch (error) {
+<<<<<<< HEAD
         if (error.name === 'AbortError') throw error;
         lastError = error;
+=======
+        if (signal && signal.aborted) throw error;
+        lastError = error;
+      } finally {
+        clearTimeout(timer);
+        if (signal) signal.removeEventListener('abort', onExternalAbort);
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
       }
     }
     throw lastError || new Error('OverpassUnavailable');
@@ -506,17 +609,39 @@
     }
   }
 
+<<<<<<< HEAD
   function drawOfficialLabels(map) {
+=======
+  // Chỉ gán nhãn cho: tòa nhà, khu vực (kể cả thể thao/trường trực thuộc), cổng, hầm xe.
+  // Các danh mục khác (ăn uống, mua sắm, phòng ban...) có trong dữ liệu nhưng không hiện nhãn mặc định
+  // để tránh rối bản đồ - admin có thể bật thêm sau qua danh sách categories truyền vào.
+  const DEFAULT_LABEL_CATEGORIES = new Set([
+    'Tòa nhà', 'Tòa nhà · Thư viện', 'Ký túc xá', 'Trường trực thuộc',
+    'Khu vực', 'Thể thao', 'Cổng', 'Hầm xe'
+  ]);
+
+  function drawOfficialLabels(map, { categories = DEFAULT_LABEL_CATEGORIES } = {}) {
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
     const group=L.layerGroup().addTo(map);
     const entries=[];
     OFFICIAL_PLACES.forEach(place=>{
       if(!Number.isFinite(place.lat)||!Number.isFinite(place.lng))return;
+<<<<<<< HEAD
       const marker=L.circleMarker([place.lat,place.lng],{radius:3,color:'#00458C',weight:2,fillColor:'#fff',fillOpacity:1,interactive:true});
       marker.bindTooltip(place.name,{permanent:true,direction:'top',offset:[0,-5],className:'tdtu-place-label'});
       marker.bindPopup(`<strong>${escapeHtml(place.name)}</strong><br>${escapeHtml(place.category)}`);
       marker.addTo(group); entries.push({marker,place});
     });
     const update=()=>{const show=map.getZoom()>=18; group.eachLayer(layer=>{if(layer.getTooltip()){const el=layer.getTooltip().getElement(); if(el)el.style.display=show?'':'none';}});};
+=======
+      if(categories && !categories.has(place.category))return;
+      const marker=L.circleMarker([place.lat,place.lng],{radius:3,color:'#4285F4',weight:2,fillColor:'#fff',fillOpacity:1,interactive:true});
+      marker.bindTooltip(place.name,{permanent:true,direction:'top',offset:[0,-6],className:'tdtu-place-label'});
+      marker.bindPopup(`<strong>${escapeHtml(place.name)}</strong><br>${escapeHtml(place.category)}`);
+      marker.addTo(group); entries.push({marker,place});
+    });
+    const update=()=>{const show=map.getZoom()>=17; group.eachLayer(layer=>{if(layer.getTooltip()){const el=layer.getTooltip().getElement(); if(el)el.style.display=show?'':'none';}});};
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
     map.on('zoomend',update); setTimeout(update,0);
     return {group,entries};
   }
@@ -525,6 +650,7 @@
     const map = L.map(elementId, {
       zoomControl:false,
       minZoom:16,
+<<<<<<< HEAD
       maxZoom:21,
       maxBounds:CAMPUS_BOUNDS.pad(.15),
       preferCanvas:true,
@@ -536,20 +662,140 @@
       maxZoom:21,
       attribution:'&copy; OpenStreetMap contributors'
     }).addTo(map);
+=======
+      maxZoom:22,
+      maxBounds:CAMPUS_BOUNDS,
+      maxBoundsViscosity:1.0,
+      preferCanvas:true,
+      attributionControl:false,
+      ...options
+    }).setView(CAMPUS_CENTER, 18);
+
+    // Không dùng tile raster bên ngoài (không chữ, không nhãn baked-in).
+    // Nền gần trắng giống Google Maps thật; hình khối thật vẽ bằng drawSketchBasemap().
+    map.setMinZoom(Math.max(16, map.getBoundsZoom(CAMPUS_BOUNDS)));
+    map.getContainer().style.background = '#f2efe9';
+    L.control.attribution({prefix:false}).addAttribution('Phác thảo dựa trên dữ liệu OpenStreetMap').addTo(map);
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 
     return map;
   }
 
+<<<<<<< HEAD
+=======
+  // Thứ tự lớp từ dưới lên, mô phỏng cách Google Maps vẽ: nền đất/cây xanh/nước dưới cùng,
+  // rồi đường, rồi lối đi bộ, tòa nhà trên cùng.
+  const SKETCH_DRAW_ORDER = ['green', 'water', 'road', 'pedestrian', 'building'];
+
+  // Cache dữ liệu Overpass vào localStorage - khuôn viên gần như không đổi theo ngày,
+  // nên các lần tải trang sau không cần gọi mạng lại, "tạo khối" gần như tức thì.
+  const SKETCH_CACHE_KEY = 'tdtu_sketch_cache_v1';
+  const SKETCH_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 ngày
+
+  function readSketchCache() {
+    try {
+      const raw = localStorage.getItem(SKETCH_CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.elements)) return null;
+      if (Date.now() - parsed.savedAt > SKETCH_CACHE_TTL_MS) return null;
+      return parsed.elements;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function writeSketchCache(elements) {
+    try {
+      localStorage.setItem(SKETCH_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), elements }));
+    } catch (_) {
+      // Hết quota hoặc private mode - bỏ qua, không ảnh hưởng chức năng chính.
+    }
+  }
+
+  // Vẽ khung khuôn viên TDTU theo màu Google Maps thật: chỉ hình khối (tòa nhà/đường/cây xanh/nước),
+  // không tile ảnh nền, không chữ/nhãn nào được gắn vào các hình này.
+  const greenAreas = [];
+
+  async function drawSketchBasemap(map, options = {}) {
+    const SM = window.SketchMap;
+    greenAreas.length = 0;
+    const bounds = {
+      south: CAMPUS_BOUNDS.getSouth(), west: CAMPUS_BOUNDS.getWest(),
+      north: CAMPUS_BOUNDS.getNorth(), east: CAMPUS_BOUNDS.getEast()
+    };
+    const layers = L.layerGroup().addTo(map);
+    try {
+      let elements = options.forceRefresh ? null : readSketchCache();
+      let source = 'sketch-cache';
+      if (!elements) {
+        const query = `
+          [out:json][timeout:25];
+          (
+            way["building"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["highway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["waterway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["leisure"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["landuse"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["natural"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+          );
+          out geom tags;
+        `;
+        const data = await overpass(query, options.signal);
+        elements = data.elements || [];
+        writeSketchCache(elements);
+        source = 'sketch';
+      }
+      const byKind = new Map(SKETCH_DRAW_ORDER.map(k => [k, []]));
+      elements.forEach(el => {
+        const pts = wayGeometry(el);
+        if (pts.length < 2) return;
+        // Chỉ vẽ nếu ít nhất 1 điểm nằm trong khuôn viên TDTU (cắt bỏ đối tượng lạc ra ngoài).
+        if (!pts.some(([lat,lng]) => SM.isWithinCampus(lat, lng, bounds))) return;
+        const kind = SM.classifyMapFeature(el.tags || {});
+        if (byKind.has(kind)) byKind.get(kind).push(pts);
+      });
+      let drawn = 0;
+      SKETCH_DRAW_ORDER.forEach(kind => {
+        const style = SM.sketchStyleFor(kind);
+        if (!style) return;
+        byKind.get(kind).forEach(pts => {
+          if (kind === 'green') greenAreas.push({name:'Khu cây xanh', category:'Cây xanh', rings:[pts]});
+          if (kind === 'building' || kind === 'water' || kind === 'green') {
+            L.polygon(pts, {...style, interactive:false}).addTo(layers);
+          } else {
+            L.polyline(pts, {...style, interactive:false}).addTo(layers);
+          }
+          drawn++;
+        });
+      });
+      return {layers, source, count:drawn};
+    } catch (error) {
+      console.warn('Không tải được dữ liệu sketch:', error);
+      return {layers, source:'fallback', count:0, error};
+    }
+  }
+
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
   window.TDTUVectorMap = {
     CAMPUS_BOUNDS,
     CORE_BOUNDS,
     CAMPUS_CENTER,
     OFFICIAL_PLACES,
+<<<<<<< HEAD
+=======
+    greenAreas,
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
     normalise,
     escapeHtml,
     haversine,
     createBaseMap,
     drawCampusVectors,
+<<<<<<< HEAD
+=======
+    drawSketchBasemap,
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
     searchCampus,
     officialSearch,
     drawOfficialLabels,

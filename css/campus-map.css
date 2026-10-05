@@ -487,6 +487,11 @@
 [hidden] { display:none !important; }
 .real-campus-map-shell {
     position:relative;
+<<<<<<< HEAD
+=======
+    z-index:0;
+    isolation:isolate; /* chặn z-index nội bộ của Leaflet (400-700) đè lên header của trang */
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
     min-height:680px;
     overflow:hidden;
     border-radius:22px;
@@ -551,3 +556,21 @@
   pointer-events: none !important;
 }
 .native-osm-label::before { display:none !important; }
+<<<<<<< HEAD
+=======
+
+/* Nhãn chính thức TDTU (tên tiếng Việt do admin xác nhận), kiểu pin trắng giống Google Maps thật. */
+.tdtu-place-label {
+  background: #ffffff !important;
+  border: 1px solid rgba(0,0,0,.08) !important;
+  border-radius: 4px !important;
+  color: #202124 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  padding: 3px 8px !important;
+  white-space: nowrap !important;
+}
+.tdtu-place-label::before { display:none !important; }
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3

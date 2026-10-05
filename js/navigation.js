@@ -134,7 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function assignPoint(kind, lat, lng, suppliedName = null, suppliedDetail = null) {
+<<<<<<< HEAD
     const resolved = suppliedName ? {name:suppliedName, detail:suppliedDetail || suppliedName} : await reverseName(lat, lng);
+=======
+    const hit = suppliedName ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
+    const resolved = suppliedName ? {name:suppliedName, detail:suppliedDetail || suppliedName}
+      : hit ? {name:hit.name, detail:hit.category}
+      : await reverseName(lat, lng);
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 
     // Keep the REAL selected place coordinate for the marker/name.
     // Routing uses a separate walkable access coordinate so the destination never
@@ -461,8 +468,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Map data / vector overlay.
+<<<<<<< HEAD
   VM.drawCampusVectors(map).then(info => {
     els.vectorStatus.textContent = info.count ? `Đã tải ${info.count} đối tượng đường/công trình thực tế` : 'Đang dùng nền bản đồ địa lý thực tế';
+=======
+  VM.drawSketchBasemap(map).then(info => {
+    els.vectorStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
   });
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   els.zoomValue.textContent = map.getZoom();
@@ -504,5 +516,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (Number.isFinite(lat)&&Number.isFinite(lng)) assignPoint('destination',lat,lng,params.get('name')||null);
   if (params.get('mode')==='mylocation') startTracking();
 
+<<<<<<< HEAD
   VM.drawNativeMapLabels(map).catch?.(()=>{});
+=======
+  VM.drawOfficialLabels(map);
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 });

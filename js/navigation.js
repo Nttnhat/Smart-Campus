@@ -461,8 +461,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Map data / vector overlay.
-  VM.drawCampusVectors(map).then(info => {
-    els.vectorStatus.textContent = info.count ? `Đã tải ${info.count} đối tượng đường/công trình thực tế` : 'Đang dùng nền bản đồ địa lý thực tế';
+  VM.drawSketchBasemap(map).then(info => {
+    els.vectorStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
   });
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   els.zoomValue.textContent = map.getZoom();
@@ -504,5 +504,4 @@ document.addEventListener('DOMContentLoaded', () => {
   if (Number.isFinite(lat)&&Number.isFinite(lng)) assignPoint('destination',lat,lng,params.get('name')||null);
   if (params.get('mode')==='mylocation') startTracking();
 
-  VM.drawOfficialLabels(map);
 });

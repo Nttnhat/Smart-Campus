@@ -545,16 +545,61 @@
       maxZoom:21,
       maxBounds:CAMPUS_BOUNDS.pad(.15),
       preferCanvas:true,
+      attributionControl:false,
       ...options
     }).setView(CAMPUS_CENTER, 18);
 
-    // Accurate geographic base. Labels are kept subtle; TDTU labels/search are controlled separately.
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom:21,
-      attribution:'&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    // Không dùng tile raster bên ngoài (không chữ, không nhãn baked-in).
+    // Nền trơn màu giấy phác thảo; hình khối thật vẽ bằng drawSketchBasemap().
+    map.getContainer().style.background = '#f6f3ea';
+    L.control.attribution({prefix:false}).addAttribution('Phác thảo dựa trên dữ liệu OpenStreetMap').addTo(map);
 
     return map;
+  }
+
+  // Vẽ khung khuôn viên TDTU theo kiểu phác thảo (sketch): chỉ hình khối (tòa nhà/đường/hồ nước),
+  // không tile ảnh nền, không chữ/nhãn nào được gắn vào các hình này.
+  async function drawSketchBasemap(map, options = {}) {
+    const SM = window.SketchMap;
+    const bounds = {
+      south: CAMPUS_BOUNDS.getSouth(), west: CAMPUS_BOUNDS.getWest(),
+      north: CAMPUS_BOUNDS.getNorth(), east: CAMPUS_BOUNDS.getEast()
+    };
+    const query = `
+      [out:json][timeout:20];
+      (
+        way["building"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+        way["highway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+        way["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+        way["waterway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+      );
+      out geom tags;
+    `;
+    const layers = L.layerGroup().addTo(map);
+    try {
+      const data = await overpass(query, options.signal);
+      const elements = data.elements || [];
+      let drawn = 0;
+      elements.forEach(el => {
+        const pts = wayGeometry(el);
+        if (pts.length < 2) return;
+        // Chỉ vẽ nếu ít nhất 1 điểm nằm trong khuôn viên TDTU (cắt bỏ đối tượng lạc ra ngoài).
+        if (!pts.some(([lat,lng]) => SM.isWithinCampus(lat, lng, bounds))) return;
+        const kind = SM.classifyMapFeature(el.tags || {});
+        const style = SM.sketchStyleFor(kind);
+        if (!style) return;
+        if (kind === 'building' || kind === 'water') {
+          L.polygon(pts, {...style, interactive:false}).addTo(layers);
+        } else {
+          L.polyline(pts, {...style, interactive:false}).addTo(layers);
+        }
+        drawn++;
+      });
+      return {layers, source:'sketch', count:drawn};
+    } catch (error) {
+      console.warn('Không tải được dữ liệu sketch:', error);
+      return {layers, source:'fallback', count:0, error};
+    }
   }
 
   window.TDTUVectorMap = {
@@ -567,6 +612,7 @@
     haversine,
     createBaseMap,
     drawCampusVectors,
+    drawSketchBasemap,
     searchCampus,
     officialSearch,
     drawOfficialLabels,

@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let watchId = null;
   let searchAbort = null;
 
-  VM.drawCampusVectors(map).then(info => {
-    dataStatus.textContent = info.count ? `Đã tải ${info.count} đối tượng thực tế` : 'Đang dùng nền bản đồ địa lý';
+  VM.drawSketchBasemap(map).then(info => {
+    dataStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
   });
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   zoomReadout.textContent = map.getZoom();
@@ -82,5 +82,4 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('zoomOutCampus').addEventListener('click',()=>map.zoomOut());
   document.getElementById('fitCampus').addEventListener('click',()=>map.fitBounds(VM.CAMPUS_BOUNDS,{padding:[30,30]}));
 
-  VM.drawOfficialLabels(map);
 });

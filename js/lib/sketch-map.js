@@ -42,5 +42,12 @@
     return lat >= bounds.south && lat <= bounds.north && lng >= bounds.west && lng <= bounds.east;
   }
 
-  return { classifyMapFeature, sketchStyleFor, isWithinCampus };
+  const INTERNAL_ROAD_PATTERN = /^(đường nội bộ|đường nội khu|đường số\s*\d+|đường d\d+)/i;
+
+  function isInternalRoadName(name) {
+    if (!name) return false;
+    return INTERNAL_ROAD_PATTERN.test(String(name).trim());
+  }
+
+  return { classifyMapFeature, sketchStyleFor, isWithinCampus, isInternalRoadName };
 });

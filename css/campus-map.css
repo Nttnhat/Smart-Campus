@@ -568,15 +568,3 @@
   white-space: nowrap !important;
 }
 .tdtu-place-label::before { display:none !important; }
-
-.tdtu-road-label {
-  background: rgba(255,255,255,.92) !important;
-  border: 0 !important;
-  color: #3c4043 !important;
-  font-size: 10.5px !important;
-  font-weight: 600 !important;
-  padding: 1px 5px !important;
-  box-shadow: none !important;
-  pointer-events: none !important;
-}
-.tdtu-road-label::before { display:none !important; }

@@ -134,7 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function assignPoint(kind, lat, lng, suppliedName = null, suppliedDetail = null) {
-    const resolved = suppliedName ? {name:suppliedName, detail:suppliedDetail || suppliedName} : await reverseName(lat, lng);
+    const hit = suppliedName ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 30);
+    const resolved = suppliedName ? {name:suppliedName, detail:suppliedDetail || suppliedName}
+      : hit ? {name:hit.name, detail:hit.category}
+      : await reverseName(lat, lng);
 
     // Keep the REAL selected place coordinate for the marker/name.
     // Routing uses a separate walkable access coordinate so the destination never

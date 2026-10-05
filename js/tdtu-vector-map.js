@@ -52,7 +52,10 @@
     // Mua sắm
     {id:'smart', name:'SMart', aliases:['smart','sieu thi smart'], category:'Mua sắm', lat:10.73145, lng:106.69898},
     // Hầm xe
-    {id:'ham-xe-a', name:'Hầm xe Tòa A', aliases:['ham xe a','bai xe a'], category:'Hầm xe', lat:10.7318249, lng:106.6986723},
+    {id:'ham-xe-cong-cong', name:'Hầm xe phương tiện công cộng', aliases:['ham xe cong cong','ham xe xe buyt'], category:'Hầm xe', lat:10.731883, lng:106.698626},
+    {id:'loi-vao-ham-xe-a', name:'Lối vào hầm xe Tòa A', aliases:['loi vao ham xe a','cua vao ham xe a'], category:'Hầm xe', lat:10.732244, lng:106.699332},
+    {id:'loi-ra-ham-xe-a', name:'Lối ra hầm xe Tòa A', aliases:['loi ra ham xe a','cua ra ham xe a'], category:'Hầm xe', lat:10.731693, lng:106.699367},
+    {id:'ham-xe-a',name:'Hầm xe Tòa A', aliases:['ham xe a','bai xe a'], category:'Hầm xe', lat:10.7318249, lng:106.6986723},
     {id:'loi-vao-ham-xe-d', name:'Lối vào hầm xe Tòa D', aliases:['loi vao ham xe d','cua vao ham xe d'], category:'Hầm xe', lat:10.732652, lng:106.698791},
     {id:'loi-ra-ham-xe-d', name:'Lối ra hầm xe Tòa D', aliases:['loi ra ham xe d','cua ra ham xe d'], category:'Hầm xe', lat:10.733013, lng:106.699110},
     {id:'loi-vao-ham-xe-f', name:'Lối vào hầm xe Tòa F', aliases:['loi vao ham xe f','cua vao ham xe f'], category:'Hầm xe', lat:10.730817, lng:106.698770},

@@ -86,3 +86,14 @@ test('isWithinCampus: toạ độ không hợp lệ -> false, không throw', () 
   assert.equal(isWithinCampus(NaN, 106.699, bounds), false);
   assert.equal(isWithinCampus(10.732, undefined, bounds), false);
 });
+
+test('isInternalRoadName: đường nội bộ/đường số/đường D trong trường -> true, đường ngoài -> false', () => {
+  const { isInternalRoadName } = require('../js/lib/sketch-map.js');
+  assert.equal(isInternalRoadName('Đường nội bộ Trường Đại học Tôn Đức Thắng'), true);
+  assert.equal(isInternalRoadName('Đường Số 5'), true);
+  assert.equal(isInternalRoadName('Đường số 12'), true);
+  assert.equal(isInternalRoadName('Đường D6'), true);
+  assert.equal(isInternalRoadName('Nguyễn Văn Linh'), false);
+  assert.equal(isInternalRoadName(''), false);
+  assert.equal(isInternalRoadName(undefined), false);
+});

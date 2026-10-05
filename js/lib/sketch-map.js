@@ -9,21 +9,26 @@
   const PEDESTRIAN_HIGHWAYS = new Set(['footway', 'path', 'pedestrian', 'steps']);
   const ROAD_HIGHWAYS = new Set(['service', 'residential', 'unclassified', 'tertiary', 'living_street']);
 
+  const GREEN_LEISURE = new Set(['pitch', 'park', 'garden', 'golf_course']);
+
   function classifyMapFeature(tags) {
     if (!tags) return 'ignore';
     if (tags.building) return 'building';
     if (tags.natural === 'water' || tags.waterway) return 'water';
+    if (GREEN_LEISURE.has(tags.leisure) || tags.landuse === 'grass' || tags.natural === 'grass') return 'green';
     if (PEDESTRIAN_HIGHWAYS.has(tags.highway)) return 'pedestrian';
     if (ROAD_HIGHWAYS.has(tags.highway)) return 'road';
     return 'ignore';
   }
 
-  // Bảng màu "sketch": viền tay vẽ, không chữ/nhãn - chỉ hình khối.
+  // Bảng màu mô phỏng Google Maps thật (đường kem/xám, nước xanh dương nhạt,
+  // tòa nhà trắng-xám, cây xanh/sân cỏ xanh lá nhạt) - không chữ/nhãn trong style.
   const SKETCH_STYLES = {
-    building: { color: '#3a3a3a', weight: 1.5, fillColor: '#e8e4da', fillOpacity: 0.55, dashArray: '4 2' },
-    water: { color: '#4f87a8', weight: 1.2, fillColor: '#bfe0ee', fillOpacity: 0.5 },
-    pedestrian: { color: '#2f855a', weight: 2, dashArray: '3 4' },
-    road: { color: '#6b6b6b', weight: 3, opacity: 0.7 },
+    building: { color: '#c7c2b3', weight: 1, fillColor: '#f0ede3', fillOpacity: 1 },
+    water: { color: '#aad3df', weight: 1, fillColor: '#aad3df', fillOpacity: 1 },
+    green: { color: '#b9dca3', weight: 1, fillColor: '#c6e8b4', fillOpacity: 1 },
+    pedestrian: { color: '#e8e0c8', weight: 2.5, opacity: 1 },
+    road: { color: '#f3f1e9', weight: 6, opacity: 1 },
   };
 
   function sketchStyleFor(classification) {

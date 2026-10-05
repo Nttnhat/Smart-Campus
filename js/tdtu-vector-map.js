@@ -57,8 +57,12 @@
   ];
   const OVERPASS_ENDPOINTS = [
     'https://overpass-api.de/api/interpreter',
-    'https://overpass.kumi.systems/api/interpreter'
+    'https://overpass.kumi.systems/api/interpreter',
+    'https://overpass.openstreetmap.ru/api/interpreter',
+    'https://overpass.osm.ch/api/interpreter',
+    'https://overpass.private.coffee/api/interpreter'
   ];
+  const OVERPASS_TIMEOUT_MS = 9000;
 
   function escapeHtml(value) {
     return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
@@ -88,18 +92,28 @@
   async function overpass(query, signal) {
     let lastError = null;
     for (const endpoint of OVERPASS_ENDPOINTS) {
+      // Mỗi endpoint có timeout riêng (OVERPASS_TIMEOUT_MS): nếu bị treo/chậm thì bỏ qua và
+      // thử endpoint tiếp theo, thay vì bỏ cuộc toàn bộ. Chỉ bỏ cuộc thật nếu người gọi
+      // (caller) tự huỷ qua `signal` bên ngoài.
+      const timeoutController = new AbortController();
+      const timer = setTimeout(() => timeoutController.abort(), OVERPASS_TIMEOUT_MS);
+      const onExternalAbort = () => timeoutController.abort();
+      if (signal) signal.addEventListener('abort', onExternalAbort);
       try {
         const response = await fetch(endpoint, {
           method: 'POST',
-          signal,
+          signal: timeoutController.signal,
           headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
           body: `data=${encodeURIComponent(query)}`
         });
         if (!response.ok) throw new Error(`Overpass ${response.status}`);
         return await response.json();
       } catch (error) {
-        if (error.name === 'AbortError') throw error;
+        if (signal && signal.aborted) throw error;
         lastError = error;
+      } finally {
+        clearTimeout(timer);
+        if (signal) signal.removeEventListener('abort', onExternalAbort);
       }
     }
     throw lastError || new Error('OverpassUnavailable');

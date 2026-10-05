@@ -57,7 +57,13 @@
     {id:'loi-ra-ham-xe-d', name:'Lối ra hầm xe Tòa D', aliases:['loi ra ham xe d','cua ra ham xe d'], category:'Hầm xe', lat:10.733013, lng:106.699110},
     {id:'ham-xe-fg', name:'Hầm xe Tòa F,G', aliases:['ham xe f','ham xe g','bai xe f g'], category:'Hầm xe', lat:10.7308861, lng:106.6987677},
     // Cổng
-    {id:'cong-chinh', name:'Cổng chính', aliases:['cong chinh','cong 1'], category:'Cổng', lat:10.73295, lng:106.69955},
+    {id:'cong-1', name:'Cổng 1', aliases:['cong 1','cong chinh'], category:'Cổng', lat:10.731588, lng:106.699997},
+    {id:'cong-2', name:'Cổng 2', aliases:['cong 2'], category:'Cổng', lat:10.732455, lng:106.699906},
+    {id:'cong-3', name:'Cổng 3', aliases:['cong 3'], category:'Cổng', lat:10.733033, lng:106.699814},
+    {id:'cong-4-xe-buyt', name:'Cổng 4 (xe buýt)', aliases:['cong 4','cong xe buyt'], category:'Cổng', lat:10.733169, lng:106.699393},
+    {id:'cong-5', name:'Cổng 5', aliases:['cong 5'], category:'Cổng', lat:10.733169, lng:106.698948},
+    {id:'cong-6', name:'Cổng 6', aliases:['cong 6'], category:'Cổng', lat:10.733269, lng:106.697283},
+    {id:'cong-7', name:'Cổng 7', aliases:['cong 7'], category:'Cổng', lat:10.733311, lng:106.696380},
     // Phòng ban hỗ trợ
     {id:'phong-c00', name:'Phòng C00 - Một cửa', aliases:['c00','phong c00','mot cua'], category:'Phòng ban', lat:10.73178, lng:106.69915},
     {id:'phong-a003', name:'Phòng A003', aliases:['a003'], category:'Phòng ban', lat:10.73183, lng:106.69922},

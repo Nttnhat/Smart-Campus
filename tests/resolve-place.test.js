@@ -40,3 +40,15 @@ test('resolvePlaceAtPoint: điểm NaN hoặc danh sách rỗng -> null, không 
   assert.equal(resolvePlaceAtPoint(10.7, 106.7, [], 30), null);
   assert.equal(resolvePlaceAtPoint(10.7, 106.7, null, 30), null);
 });
+
+test('resolvePlaceAtPoint: bấm trong khu cây xanh, xa mọi nhãn -> trả khu cây xanh', () => {
+  const areas = [{ name: 'Khu cây xanh', category: 'Cây xanh', rings: [[10.7300, 106.6980], [10.7300, 106.6990], [10.7310, 106.6990], [10.7310, 106.6980]] }];
+  const result = resolvePlaceAtPoint(10.7305, 106.6985, PLACES, 12, areas);
+  assert.equal(result.name, 'Khu cây xanh');
+});
+
+test('resolvePlaceAtPoint: có nhãn sát điểm bấm -> ưu tiên nhãn hơn khu cây xanh', () => {
+  const areas = [{ name: 'Khu cây xanh', category: 'Cây xanh', rings: [[10.7300, 106.6980], [10.7300, 106.6990], [10.7310, 106.6990], [10.7310, 106.6980]] }];
+  const result = resolvePlaceAtPoint(10.731936, 106.699125, PLACES, 12, areas);
+  assert.equal(result.id, 'toa-a');
+});

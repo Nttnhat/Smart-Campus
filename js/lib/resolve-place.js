@@ -16,7 +16,27 @@
     return 2 * EARTH_RADIUS_M * Math.asin(Math.sqrt(h));
   }
 
-  function resolvePlaceAtPoint(lat, lng, places, radiusM) {
+  function pointInRing(lat, lng, ring) {
+    let inside = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [yi, xi] = ring[i];
+      const [yj, xj] = ring[j];
+      if ((yi > lat) !== (yj > lat) && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) inside = !inside;
+    }
+    return inside;
+  }
+
+  function findAreaAtPoint(lat, lng, areas) {
+    if (!Array.isArray(areas)) return null;
+    for (const area of areas) {
+      for (const ring of area.rings || []) {
+        if (pointInRing(lat, lng, ring)) return area;
+      }
+    }
+    return null;
+  }
+
+  function resolvePlaceAtPoint(lat, lng, places, radiusM, areas = []) {
     if (!Array.isArray(places) || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
     let best = null;
     let bestDist = Infinity;
@@ -27,7 +47,7 @@
         bestDist = d;
       }
     }
-    return best;
+    return best || findAreaAtPoint(lat, lng, areas);
   }
 
   return { resolvePlaceAtPoint, distanceM };

@@ -487,6 +487,8 @@
 [hidden] { display:none !important; }
 .real-campus-map-shell {
     position:relative;
+    z-index:0;
+    isolation:isolate; /* chặn z-index nội bộ của Leaflet (400-700) đè lên header của trang */
     min-height:680px;
     overflow:hidden;
     border-radius:22px;

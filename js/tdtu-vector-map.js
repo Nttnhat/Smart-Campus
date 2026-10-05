@@ -584,6 +584,32 @@
   // rồi đường, rồi lối đi bộ, tòa nhà trên cùng.
   const SKETCH_DRAW_ORDER = ['green', 'water', 'road', 'pedestrian', 'building'];
 
+  // Cache dữ liệu Overpass vào localStorage - khuôn viên gần như không đổi theo ngày,
+  // nên các lần tải trang sau không cần gọi mạng lại, "tạo khối" gần như tức thì.
+  const SKETCH_CACHE_KEY = 'tdtu_sketch_cache_v1';
+  const SKETCH_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 ngày
+
+  function readSketchCache() {
+    try {
+      const raw = localStorage.getItem(SKETCH_CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.elements)) return null;
+      if (Date.now() - parsed.savedAt > SKETCH_CACHE_TTL_MS) return null;
+      return parsed.elements;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function writeSketchCache(elements) {
+    try {
+      localStorage.setItem(SKETCH_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), elements }));
+    } catch (_) {
+      // Hết quota hoặc private mode - bỏ qua, không ảnh hưởng chức năng chính.
+    }
+  }
+
   // Vẽ khung khuôn viên TDTU theo màu Google Maps thật: chỉ hình khối (tòa nhà/đường/cây xanh/nước),
   // không tile ảnh nền, không chữ/nhãn nào được gắn vào các hình này.
   async function drawSketchBasemap(map, options = {}) {
@@ -592,23 +618,29 @@
       south: CAMPUS_BOUNDS.getSouth(), west: CAMPUS_BOUNDS.getWest(),
       north: CAMPUS_BOUNDS.getNorth(), east: CAMPUS_BOUNDS.getEast()
     };
-    const query = `
-      [out:json][timeout:25];
-      (
-        way["building"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-        way["highway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-        way["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-        way["waterway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-        way["leisure"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-        way["landuse"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-        way["natural"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-      );
-      out geom tags;
-    `;
     const layers = L.layerGroup().addTo(map);
     try {
-      const data = await overpass(query, options.signal);
-      const elements = data.elements || [];
+      let elements = options.forceRefresh ? null : readSketchCache();
+      let source = 'sketch-cache';
+      if (!elements) {
+        const query = `
+          [out:json][timeout:25];
+          (
+            way["building"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["highway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["waterway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["leisure"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["landuse"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            way["natural"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+          );
+          out geom tags;
+        `;
+        const data = await overpass(query, options.signal);
+        elements = data.elements || [];
+        writeSketchCache(elements);
+        source = 'sketch';
+      }
       const byKind = new Map(SKETCH_DRAW_ORDER.map(k => [k, []]));
       elements.forEach(el => {
         const pts = wayGeometry(el);
@@ -631,7 +663,7 @@
           drawn++;
         });
       });
-      return {layers, source:'sketch', count:drawn};
+      return {layers, source, count:drawn};
     } catch (error) {
       console.warn('Không tải được dữ liệu sketch:', error);
       return {layers, source:'fallback', count:0, error};

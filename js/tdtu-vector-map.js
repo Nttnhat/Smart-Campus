@@ -582,8 +582,8 @@
   function createBaseMap(elementId, options = {}) {
     const map = L.map(elementId, {
       zoomControl:false,
-      minZoom:16,
-      maxZoom:21,
+      minZoom:15,
+      maxZoom:22,
       maxBounds:CAMPUS_BOUNDS.pad(.15),
       preferCanvas:true,
       attributionControl:false,

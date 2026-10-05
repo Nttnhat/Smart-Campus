@@ -21,6 +21,8 @@
     {id:'toa-f', name:'Tòa F', aliases:['nha f','giang duong f','toa f'], category:'Tòa nhà', lat:10.730827, lng:106.698876},
     {id:'toa-g', name:'Tòa G - Thư viện truyền cảm hứng', aliases:['toa g','nha g','thu vien','thu vien truyen cam hung'], category:'Tòa nhà · Thư viện', lat:10.730772, lng:106.699395},
     {id:'nha-h', name:'Nhà H', aliases:['toa h','nha h','ky tuc xa h','ktx h'], category:'Ký túc xá', lat:10.732896, lng:106.697001},
+    {id:'home-mart', name:'Home Mart', aliases:['home mart','tang tret toa h'], category:'Khu vực', lat:10.732896, lng:106.696800},
+    {id:'stepup', name:'StepUp', aliases:['stepup','step up','tang tret toa h'], category:'Khu vực', lat:10.732896, lng:106.697239},
     {id:'nha-i', name:'Nhà I', aliases:['toa i','nha i','ky tuc xa i','ktx i'], category:'Ký túc xá', lat:10.733135, lng:106.696776},
     {id:'toa-k', name:'Tòa K', aliases:['nha k','giang duong k','toa k'], category:'Tòa nhà', lat:10.7308612, lng:106.6977227},
     {id:'toa-l', name:'Tòa L', aliases:['nha l','giang duong l','toa l'], category:'Tòa nhà', lat:10.7304774, lng:106.6977502},

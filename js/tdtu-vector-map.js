@@ -39,7 +39,7 @@
     {id:'san-bong-ro', name:'Sân bóng rổ', aliases:['san bong ro','bong ro'], category:'Thể thao', lat:10.73243, lng:106.696957},
     {id:'san-golf', name:'Sân tập golf', aliases:['san tap golf','golf'], category:'Thể thao', lat:10.73455, lng:106.70015},
     {id:'vuon-uom', name:'Vườn ươm', aliases:['vuon uom','nha kinh'], category:'Khu vực', lat:10.730757, lng:106.694926},
-    {id:'tuong-dai', name:'Tượng đài Chủ tịch Tôn Đức Thắng', aliases:['tuong dai','tuong ton duc thang','tuong dai ton duc thang'], category:'Điểm mốc', lat:10.73192, lng:106.69952},
+    {id:'tuong-dai', name:'Tượng đài Bác Tôn Đức Thắng', aliases:['tuong dai','tuong ton duc thang','tuong dai ton duc thang'], category:'Điểm mốc', lat:10.73192, lng:106.69952},
     {id:'7-eleven', name:'7-Eleven', aliases:['7 eleven','seven eleven','cua hang tien loi'], category:'Tiện ích', lat:10.73063, lng:106.69822},
     {id:'phong-y-te', name:'Phòng y tế', aliases:['phong y te','y te'], category:'Tiện ích', lat:10.73135, lng:106.69788},
     {id:'tram-dien', name:'Trạm điện', aliases:['tram dien'], category:'Hạ tầng', lat:10.73055, lng:106.69972},

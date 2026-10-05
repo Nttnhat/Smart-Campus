@@ -1,0 +1,47 @@
+TDTU SMART CAMPUS - HƯỚNG DẪN TEST GPS LIVE
+============================================
+
+1. KHÔNG mở trực tiếp navigation.html bằng file:// nếu muốn dùng GPS.
+   Geolocation trên trình duyệt cần HTTPS hoặc localhost.
+
+2. Cách chạy nhanh trên máy:
+   - Mở terminal tại thư mục CK
+   - Chạy: python -m http.server 5500
+   - Mở: http://localhost:5500/home.html
+
+3. Cách test tốt nhất:
+   - Deploy project lên một host HTTPS (GitHub Pages / Netlify / Vercel / hosting của nhóm).
+   - Mở bằng điện thoại.
+   - Cấp quyền Location cho trình duyệt.
+   - Ra khu vực ngoài trời để GPS có độ chính xác tốt hơn.
+
+4. Trang BẢN ĐỒ:
+   - Không còn marker A/B/C/D do project tự gắn.
+   - Bấm trực tiếp lên bản đồ để chọn điểm đến.
+   - Có thể tìm địa điểm bằng OpenStreetMap search.
+   - Bấm "Dẫn đường đến đây" để chuyển tọa độ sang trang Tìm đường.
+
+5. Trang TÌM ĐƯỜNG:
+   - Bấm "Bắt đầu theo dõi GPS".
+   - watchPosition() cập nhật vị trí liên tục.
+   - Vòng xanh thể hiện sai số GPS (accuracy).
+   - Hệ thống làm mượt 5 mẫu GPS gần nhất để giảm giật.
+   - Khi di chuyển khoảng >= 10 m và đã qua >= 7 giây, route sẽ tự tính lại.
+   - Routing sử dụng mạng đường đi bộ từ OpenStreetMap qua public foot routing service.
+   - Điểm bắt đầu/đích của route được routing engine snap vào mạng đường.
+
+6. PHẦN XÁC ĐỊNH TẦNG SAU NÀY:
+   navigation.js hiện đã giữ các dữ liệu:
+   - position.coords.altitude
+   - position.coords.altitudeAccuracy
+   - position.coords.accuracy
+   - position.coords.heading
+   - position.coords.speed
+
+   Khi nhóm đo cao độ chuẩn của từng tầng, chỉ cần thêm module đối chiếu altitude/barometer
+   để suy ra tòa + tầng. Không cần thay kiến trúc GPS/routing hiện tại.
+
+7. LƯU Ý TRIỂN KHAI THỰC TẾ:
+   - OpenStreetMap/Nominatim/routing public phù hợp demo và đồ án học tập.
+   - Nếu triển khai cho lượng người dùng lớn, nên dùng dịch vụ/API riêng hoặc tự host
+     để ổn định và tuân thủ hạn mức của dịch vụ công cộng.

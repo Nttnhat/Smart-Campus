@@ -1,0 +1,10 @@
+Nguồn tham chiếu bản đồ 2D:
+https://discovery.tdtu.edu.vn/
+
+Các ảnh trong thư mục này được đưa vào project từ ảnh chụp bản đồ Discovery TDTU do người dùng cung cấp ngày 23/09/2026.
+
+- tdtu-campus-full.png: toàn khuôn viên
+- tdtu-academic-ae.png: khu học tập A-E và thư viện
+- tdtu-northwest.png: F-G, KTX, khu thể thao
+- tdtu-northeast.png: H-I, sân vận động và khu Đông Bắc
+- tdtu-garden-vfis.png: VFIS, vườn ươm, sân tập golf

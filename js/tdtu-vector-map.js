@@ -56,7 +56,9 @@
     {id:'can-tin-10d', name:'Căn tin 10D', aliases:['can tin 10d','10d'], category:'Ăn uống', lat:10.73230, lng:106.69865},
     {id:'startup-cafe', name:'StartUp', aliases:['startup','start up','start up cafe'], category:'Khu vực', lat:10.732077, lng:106.698168},
     {id:'coffee-duoi-thu-vien', name:'Coffee dưới thư viện', aliases:['coffee duoi thu vien','quan duoi thu vien'], category:'Khu vực', lat:10.730830, lng:106.699129},
-    {id:'phong-gym', name:'Phòng Gym', aliases:['phong gym','gym'], category:'Khu vực', lat:10.732178, lng:106.698138},
+    {id:'day-phong-nghi-san-vd', name:'Dãy phòng nghỉ/họp sân vận động', aliases:['day phong nghi san van dong','phong nghi san van dong','phong hop san van dong'], category:'Khu vực', lat:10.732647, lng:106.697396},
+    {id:'day-phong-cong-vu', name:'Dãy phòng công vụ', aliases:['day phong cong vu','phong cong vu'], category:'Khu vực', lat:10.733127, lng:106.697747},
+    {id:'phong-gym',name:'Phòng Gym', aliases:['phong gym','gym'], category:'Khu vực', lat:10.732178, lng:106.698138},
     // Mua sắm
     {id:'smart', name:'SMart', aliases:['smart','sieu thi smart'], category:'Khu vực', lat:10.730794, lng:106.697617},
     // Hầm xe

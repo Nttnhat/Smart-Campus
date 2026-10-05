@@ -504,4 +504,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (Number.isFinite(lat)&&Number.isFinite(lng)) assignPoint('destination',lat,lng,params.get('name')||null);
   if (params.get('mode')==='mylocation') startTracking();
 
+  VM.drawOfficialLabels(map);
 });

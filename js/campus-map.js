@@ -82,4 +82,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('zoomOutCampus').addEventListener('click',()=>map.zoomOut());
   document.getElementById('fitCampus').addEventListener('click',()=>map.fitBounds(VM.CAMPUS_BOUNDS,{padding:[30,30]}));
 
+  VM.drawOfficialLabels(map);
 });

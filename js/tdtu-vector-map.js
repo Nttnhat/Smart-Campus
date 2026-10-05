@@ -523,17 +523,26 @@
     }
   }
 
-  function drawOfficialLabels(map) {
+  // Chỉ gán nhãn cho: tòa nhà, khu vực (kể cả thể thao/trường trực thuộc), cổng, hầm xe.
+  // Các danh mục khác (ăn uống, mua sắm, phòng ban...) có trong dữ liệu nhưng không hiện nhãn mặc định
+  // để tránh rối bản đồ - admin có thể bật thêm sau qua danh sách categories truyền vào.
+  const DEFAULT_LABEL_CATEGORIES = new Set([
+    'Tòa nhà', 'Tòa nhà · Thư viện', 'Ký túc xá', 'Trường trực thuộc',
+    'Khu vực', 'Thể thao', 'Cổng', 'Hầm xe'
+  ]);
+
+  function drawOfficialLabels(map, { categories = DEFAULT_LABEL_CATEGORIES } = {}) {
     const group=L.layerGroup().addTo(map);
     const entries=[];
     OFFICIAL_PLACES.forEach(place=>{
       if(!Number.isFinite(place.lat)||!Number.isFinite(place.lng))return;
-      const marker=L.circleMarker([place.lat,place.lng],{radius:3,color:'#00458C',weight:2,fillColor:'#fff',fillOpacity:1,interactive:true});
-      marker.bindTooltip(place.name,{permanent:true,direction:'top',offset:[0,-5],className:'tdtu-place-label'});
+      if(categories && !categories.has(place.category))return;
+      const marker=L.circleMarker([place.lat,place.lng],{radius:3,color:'#4285F4',weight:2,fillColor:'#fff',fillOpacity:1,interactive:true});
+      marker.bindTooltip(place.name,{permanent:true,direction:'top',offset:[0,-6],className:'tdtu-place-label'});
       marker.bindPopup(`<strong>${escapeHtml(place.name)}</strong><br>${escapeHtml(place.category)}`);
       marker.addTo(group); entries.push({marker,place});
     });
-    const update=()=>{const show=map.getZoom()>=18; group.eachLayer(layer=>{if(layer.getTooltip()){const el=layer.getTooltip().getElement(); if(el)el.style.display=show?'':'none';}});};
+    const update=()=>{const show=map.getZoom()>=17; group.eachLayer(layer=>{if(layer.getTooltip()){const el=layer.getTooltip().getElement(); if(el)el.style.display=show?'':'none';}});};
     map.on('zoomend',update); setTimeout(update,0);
     return {group,entries};
   }
@@ -550,14 +559,18 @@
     }).setView(CAMPUS_CENTER, 18);
 
     // Không dùng tile raster bên ngoài (không chữ, không nhãn baked-in).
-    // Nền trơn màu giấy phác thảo; hình khối thật vẽ bằng drawSketchBasemap().
-    map.getContainer().style.background = '#f6f3ea';
+    // Nền gần trắng giống Google Maps thật; hình khối thật vẽ bằng drawSketchBasemap().
+    map.getContainer().style.background = '#f2efe9';
     L.control.attribution({prefix:false}).addAttribution('Phác thảo dựa trên dữ liệu OpenStreetMap').addTo(map);
 
     return map;
   }
 
-  // Vẽ khung khuôn viên TDTU theo kiểu phác thảo (sketch): chỉ hình khối (tòa nhà/đường/hồ nước),
+  // Thứ tự lớp từ dưới lên, mô phỏng cách Google Maps vẽ: nền đất/cây xanh/nước dưới cùng,
+  // rồi đường, rồi lối đi bộ, tòa nhà trên cùng.
+  const SKETCH_DRAW_ORDER = ['green', 'water', 'road', 'pedestrian', 'building'];
+
+  // Vẽ khung khuôn viên TDTU theo màu Google Maps thật: chỉ hình khối (tòa nhà/đường/cây xanh/nước),
   // không tile ảnh nền, không chữ/nhãn nào được gắn vào các hình này.
   async function drawSketchBasemap(map, options = {}) {
     const SM = window.SketchMap;
@@ -566,12 +579,15 @@
       north: CAMPUS_BOUNDS.getNorth(), east: CAMPUS_BOUNDS.getEast()
     };
     const query = `
-      [out:json][timeout:20];
+      [out:json][timeout:25];
       (
         way["building"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
         way["highway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
         way["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
         way["waterway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+        way["leisure"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+        way["landuse"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+        way["natural"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
       );
       out geom tags;
     `;
@@ -579,21 +595,27 @@
     try {
       const data = await overpass(query, options.signal);
       const elements = data.elements || [];
-      let drawn = 0;
+      const byKind = new Map(SKETCH_DRAW_ORDER.map(k => [k, []]));
       elements.forEach(el => {
         const pts = wayGeometry(el);
         if (pts.length < 2) return;
         // Chỉ vẽ nếu ít nhất 1 điểm nằm trong khuôn viên TDTU (cắt bỏ đối tượng lạc ra ngoài).
         if (!pts.some(([lat,lng]) => SM.isWithinCampus(lat, lng, bounds))) return;
         const kind = SM.classifyMapFeature(el.tags || {});
+        if (byKind.has(kind)) byKind.get(kind).push(pts);
+      });
+      let drawn = 0;
+      SKETCH_DRAW_ORDER.forEach(kind => {
         const style = SM.sketchStyleFor(kind);
         if (!style) return;
-        if (kind === 'building' || kind === 'water') {
-          L.polygon(pts, {...style, interactive:false}).addTo(layers);
-        } else {
-          L.polyline(pts, {...style, interactive:false}).addTo(layers);
-        }
-        drawn++;
+        byKind.get(kind).forEach(pts => {
+          if (kind === 'building' || kind === 'water' || kind === 'green') {
+            L.polygon(pts, {...style, interactive:false}).addTo(layers);
+          } else {
+            L.polyline(pts, {...style, interactive:false}).addTo(layers);
+          }
+          drawn++;
+        });
       });
       return {layers, source:'sketch', count:drawn};
     } catch (error) {

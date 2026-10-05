@@ -1,0 +1,9 @@
+TDTU 2D NAVIGATION - GHI CHU
+
+- navigation.html KHÔNG còn hiển thị OpenStreetMap/Leaflet.
+- Nền hiển thị: image/official-map/tdtu-campus-full.png
+- GPS, điểm đầu, điểm đến và tuyến đường đều được vẽ trực tiếp trên bản đồ 2D.
+- Dịch vụ OpenStreetMap/Nominatim/routing.openstreetmap.de chỉ chạy phía sau để tìm kiếm/tính route.
+- Phép quy đổi GPS <-> pixel nằm trong js/tdtu-georef.js.
+- Khi có thêm các điểm GPS đo thực tế, hãy cập nhật anchors/matrix trong js/tdtu-georef.js để tăng độ chính xác.
+- GPS trên trình duyệt cần HTTPS hoặc localhost.

@@ -54,7 +54,7 @@
     // Hầm xe
     {id:'ham-xe-a', name:'Hầm xe Tòa A', aliases:['ham xe a','bai xe a'], category:'Hầm xe', lat:10.7318249, lng:106.6986723},
     {id:'loi-vao-ham-xe-d', name:'Lối vào hầm xe Tòa D', aliases:['loi vao ham xe d','cua vao ham xe d'], category:'Hầm xe', lat:10.732652, lng:106.698791},
-    {id:'ham-xe-de',name:'Hầm xe Tòa D,E', aliases:['ham xe d','ham xe e','bai xe d e'], category:'Hầm xe', lat:10.7325115, lng:106.69865},
+    {id:'loi-ra-ham-xe-d', name:'Lối ra hầm xe Tòa D', aliases:['loi ra ham xe d','cua ra ham xe d'], category:'Hầm xe', lat:10.733013, lng:106.699110},
     {id:'ham-xe-fg', name:'Hầm xe Tòa F,G', aliases:['ham xe f','ham xe g','bai xe f g'], category:'Hầm xe', lat:10.7308861, lng:106.6987677},
     // Cổng
     {id:'cong-chinh', name:'Cổng chính', aliases:['cong chinh','cong 1'], category:'Cổng', lat:10.73295, lng:106.69955},

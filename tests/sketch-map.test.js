@@ -36,6 +36,13 @@ test('classifyMapFeature: highway xe/đường nội bộ -> "road"', () => {
   assert.equal(classifyMapFeature({ highway: 'tertiary' }), 'road');
 });
 
+test('classifyMapFeature: sân cỏ/cây xanh (leisure=pitch/park, landuse=grass, natural=grass) -> "green"', () => {
+  assert.equal(classifyMapFeature({ leisure: 'pitch' }), 'green');
+  assert.equal(classifyMapFeature({ leisure: 'park' }), 'green');
+  assert.equal(classifyMapFeature({ landuse: 'grass' }), 'green');
+  assert.equal(classifyMapFeature({ natural: 'grass' }), 'green');
+});
+
 test('classifyMapFeature: tag không liên quan -> "ignore"', () => {
   assert.equal(classifyMapFeature({ tourism: 'hotel' }), 'ignore');
   assert.equal(classifyMapFeature({}), 'ignore');
@@ -47,11 +54,13 @@ test('sketchStyleFor: mỗi loại có style riêng, không chứa text/label', 
   const water = sketchStyleFor('water');
   const pedestrian = sketchStyleFor('pedestrian');
   const road = sketchStyleFor('road');
+  const green = sketchStyleFor('green');
   assert.ok(building.color && building.fillColor);
   assert.ok(water.color && water.fillColor);
   assert.ok(pedestrian.color);
   assert.ok(road.color);
-  for (const style of [building, water, pedestrian, road]) {
+  assert.ok(green.color && green.fillColor);
+  for (const style of [building, water, pedestrian, road, green]) {
     assert.equal(style.label, undefined);
     assert.equal(style.tooltip, undefined);
   }

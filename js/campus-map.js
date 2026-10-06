@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function selectPoint(lat,lng,name=null,detail=null) {
     const token = ++selectToken;
-    const hit = name ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
+    const hit = name ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, [...VM.buildingAreas, ...VM.greenAreas]);
     pointLayer.clearLayers();
     selectedMarker=L.marker([lat,lng],{icon:markerIcon('Điểm chọn')}).addTo(pointLayer);
     selectedCoords.textContent=`${lat.toFixed(6)}, ${lng.toFixed(6)}`;

@@ -594,7 +594,7 @@
   function createBaseMap(elementId, options = {}) {
     const map = L.map(elementId, {
       zoomControl:false,
-      minZoom:16,
+      minZoom:17,
       maxZoom:22,
       maxBounds:CAMPUS_BOUNDS,
       maxBoundsViscosity:1.0,
@@ -605,7 +605,7 @@
 
     // Không dùng tile raster bên ngoài (không chữ, không nhãn baked-in).
     // Nền gần trắng giống Google Maps thật; hình khối thật vẽ bằng drawSketchBasemap().
-    map.setMinZoom(Math.max(16, map.getBoundsZoom(CAMPUS_BOUNDS)));
+    map.setMinZoom(Math.max(17, map.getBoundsZoom(CAMPUS_BOUNDS)));
     map.getContainer().style.background = '#f2efe9';
     L.control.attribution({prefix:false}).addAttribution('Phác thảo dựa trên dữ liệu OpenStreetMap').addTo(map);
 

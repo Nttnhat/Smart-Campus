@@ -186,7 +186,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchAbort[kind]) searchAbort[kind].abort();
     searchAbort[kind] = new AbortController();
     box.classList.add('show');
-    box.innerHTML = '<div class="suggestion-loading">Đang tìm trong khuôn viên…</div>';
+    const renderList = list => {
+      box.dataset.results = JSON.stringify(list);
+      box.innerHTML = list.map((r,i) => `
+        <button type="button" class="suggestion-item osm-result" data-index="${i}">
+          <span class="suggestion-icon">⌖</span>
+          <span class="suggestion-text"><strong>${VM.escapeHtml(r.name)}</strong><small>${VM.escapeHtml(r.detail)}</small></span>
+        </button>`).join('');
+    };
+    const instant = VM.officialSearch(q).slice(0, 20);
+    if (instant.length) renderList(instant);
+    else box.innerHTML = '<div class="suggestion-loading">Đang tìm trong khuôn viên…</div>';
     try {
       const results = await VM.searchCampus(q, searchAbort[kind].signal);
       if (!results.length) {

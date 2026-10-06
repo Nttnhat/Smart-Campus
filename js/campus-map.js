@@ -33,25 +33,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function reverseName(lat,lng) {
     try {
-      const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&namedetails=1&addressdetails=1`,{headers:{'Accept-Language':'vi'}});
+      const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&namedetails=1&addressdetails=1`,{headers:{'Accept-Language':'vi'},signal:AbortSignal.timeout(4000)});
       const d=await r.json(); const a=d.address||{};
       return {name:d.namedetails?.name||d.name||a.building||a.amenity||a.road||'Điểm đã chọn', detail:d.display_name||''};
     } catch (_) { return {name:'Điểm đã chọn',detail:''}; }
   }
 
+  let selectToken = 0;
+
+  function showSelection(lat,lng,name,detail) {
+    selectedName.textContent=name; selectedDetail.textContent=detail||'Vị trí trong khuôn viên';
+    routeLink.href=`navigation.html?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&name=${encodeURIComponent(name)}`;
+  }
+
   async function selectPoint(lat,lng,name=null,detail=null) {
-    if (!name) {
-      const hit = window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
-      if (hit) { name = hit.name; detail = hit.category; }
-      else { const r=await reverseName(lat,lng); name=r.name; detail=r.detail; }
-    }
+    const token = ++selectToken;
+    const hit = name ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
     pointLayer.clearLayers();
     selectedMarker=L.marker([lat,lng],{icon:markerIcon('Điểm chọn')}).addTo(pointLayer);
-    selectedName.textContent=name; selectedDetail.textContent=detail||'Vị trí trong khuôn viên';
     selectedCoords.textContent=`${lat.toFixed(6)}, ${lng.toFixed(6)}`;
     routeLink.classList.remove('disabled-link');
-    routeLink.href=`navigation.html?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&name=${encodeURIComponent(name)}`;
-    map.flyTo([lat,lng],19,{duration:.6});
+    map.flyTo([lat,lng],19,{duration:.4});
+    if (name || hit) {
+      showSelection(lat,lng,name||hit.name,detail||hit?.category);
+      return;
+    }
+    showSelection(lat,lng,'Đang xác định…',null);
+    const r = await reverseName(lat,lng);
+    if (token !== selectToken) return;
+    showSelection(lat,lng,r.name,r.detail);
   }
 
   map.on('click',e=>selectPoint(e.latlng.lat,e.latlng.lng));

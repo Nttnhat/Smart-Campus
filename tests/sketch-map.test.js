@@ -17,9 +17,10 @@ test('classifyMapFeature: building -> "building"', () => {
   assert.equal(classifyMapFeature({ building: 'university' }), 'building');
 });
 
-test('classifyMapFeature: natural=water hoặc waterway -> "water"', () => {
-  assert.equal(classifyMapFeature({ natural: 'water' }), 'water');
+test('classifyMapFeature: waterway (sông/kênh) -> "water", natural=water (vùng phủ kín) -> "ignore"', () => {
   assert.equal(classifyMapFeature({ waterway: 'stream' }), 'water');
+  assert.equal(classifyMapFeature({ waterway: 'canal' }), 'water');
+  assert.equal(classifyMapFeature({ natural: 'water' }), 'ignore');
 });
 
 test('classifyMapFeature: highway đi bộ -> "pedestrian"', () => {

@@ -46,6 +46,8 @@
     {id:'san-golf-khu', name:'Khu golf', aliases:['khu golf','san golf'], category:'Khu vực', lat:10.730891, lng:106.696631},
     {id:'san-pickleball', name:'Sân pickleball', aliases:['san pickleball','pickleball'], category:'Khu vực', lat:10.730092, lng:106.696340},
     {id:'khu-cay-xanh-ghe-da', name:'Khu cây xanh bóng mát (ghế đá)', aliases:['cay xanh','bong mat','ghe da','khu cay xanh'], category:'Khu vực', lat:10.731312, lng:106.697611},
+    {id:'sanh-noi-ab', name:'Sảnh nối Tòa A-B', aliases:['sanh noi ab','sanh noi a b'], category:'Khu vực', lat:10.732218, lng:106.698964},
+    {id:'sanh-noi-ac', name:'Sảnh nối Tòa A-C', aliases:['sanh noi ac','sanh noi a c'], category:'Khu vực', lat:10.731693, lng:106.699057},
     {id:'vuon-uom',name:'Vườn ươm',aliases:['vuon uom','nha kinh'], category:'Khu vực', lat:10.730757, lng:106.694926},
     {id:'tuong-dai', name:'Tượng đài Bác Tôn Đức Thắng', aliases:['tuong dai','tuong ton duc thang','tuong dai ton duc thang'], category:'Điểm mốc', lat:10.73192, lng:106.69952},
     {id:'7-eleven', name:'7-Eleven', aliases:['7 eleven','seven eleven','cua hang tien loi'], category:'Tiện ích', lat:10.73063, lng:106.69822},

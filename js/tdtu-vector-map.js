@@ -618,7 +618,7 @@
 
   // Cache dữ liệu Overpass vào localStorage - khuôn viên gần như không đổi theo ngày,
   // nên các lần tải trang sau không cần gọi mạng lại, "tạo khối" gần như tức thì.
-  const SKETCH_CACHE_KEY = 'tdtu_sketch_cache_v1';
+  const SKETCH_CACHE_KEY = 'tdtu_sketch_cache_v2';
   const SKETCH_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 ngày
 
   function readSketchCache() {
@@ -668,6 +668,7 @@
             way["leisure"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
             way["landuse"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
             way["natural"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
+            relation["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
           );
           out geom tags;
         `;
@@ -678,6 +679,16 @@
       }
       const byKind = new Map(SKETCH_DRAW_ORDER.map(k => [k, []]));
       elements.forEach(el => {
+        if (el.type === 'relation') {
+          const members = el.members || [];
+          const segsOf = role => members
+            .filter(m => m.role === role && Array.isArray(m.geometry) && m.geometry.length >= 2)
+            .map(m => m.geometry.map(p => [p.lat, p.lon]));
+          const rings = [...window.RingBuilder.buildRings(segsOf('outer')), ...window.RingBuilder.buildRings(segsOf('inner'))];
+          const inCampus = rings.some(r => r.some(([lat,lng]) => SM.isWithinCampus(lat, lng, bounds)));
+          if (inCampus && SM.classifyMapFeature(el.tags || {}) === 'water') byKind.get('water').push(rings);
+          return;
+        }
         const pts = wayGeometry(el);
         if (pts.length < 2) return;
         // Chỉ vẽ nếu ít nhất 1 điểm nằm trong khuôn viên TDTU (cắt bỏ đối tượng lạc ra ngoài).

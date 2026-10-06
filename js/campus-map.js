@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleGps.textContent='Dừng GPS'; gpsStatus.textContent='Đang lấy GPS…';
     watchId=navigator.geolocation.watchPosition(pos=>{
       const c=pos.coords; const ll=[c.latitude,c.longitude];
+      if (c.accuracy > 10) { gpsStatus.textContent='Đang chờ GPS dưới 10 m'; gpsDetail.textContent=`Hiện sai số ±${Math.round(c.accuracy)} m`; return; }
       if(!gpsMarker)gpsMarker=L.marker(ll,{icon:markerIcon('Bạn','#0ea5e9')}).addTo(gpsLayer);else gpsMarker.setLatLng(ll);
       if(!accuracyCircle)accuracyCircle=L.circle(ll,{radius:c.accuracy,color:'#0ea5e9',weight:1,fillColor:'#0ea5e9',fillOpacity:.08}).addTo(gpsLayer);else{accuracyCircle.setLatLng(ll);accuracyCircle.setRadius(c.accuracy);}
       gpsStatus.textContent='GPS đang hoạt động'; gpsDetail.textContent=`Sai số khoảng ±${Math.round(c.accuracy)} m`; map.panTo(ll);

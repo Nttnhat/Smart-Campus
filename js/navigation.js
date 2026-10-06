@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const VM = window.TDTUVectorMap;
   const ROUTING_BASE = 'https://routing.openstreetmap.de/routed-foot/route/v1/driving';
-  const GOOD_ACCURACY = 15;
-  const REJECT_ACCURACY = 35;
+  const GOOD_ACCURACY = 10;
+  const REJECT_ACCURACY = 10;
   const REROUTE_DISTANCE = 8;
   const REROUTE_INTERVAL = 4000;
 
@@ -348,8 +348,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function onPosition(position) {
     const c = position.coords;
     const sample = {lat:c.latitude,lng:c.longitude,accuracy:c.accuracy,altitude:c.altitude,altitudeAccuracy:c.altitudeAccuracy,heading:c.heading,speed:c.speed,time:Date.now()};
-    if (sample.accuracy > REJECT_ACCURACY && currentPosition) {
-      els.gpsAccuracy.textContent = `Bỏ qua mẫu GPS sai số ±${Math.round(sample.accuracy)} m`;
+    if (sample.accuracy > REJECT_ACCURACY) {
+      els.gpsAccuracy.textContent = `Đang chờ GPS dưới 10 m (hiện ±${Math.round(sample.accuracy)} m)`;
       return;
     }
     recentSamples.push(sample); recentSamples = recentSamples.slice(-8);

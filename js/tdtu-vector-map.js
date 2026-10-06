@@ -239,34 +239,6 @@
     const q = String(query || '').trim();
     const found = officialSearch(q);
 
-    // Supplement the curated campus catalogue with live OSM objects.
-    if (q) {
-      const south = CAMPUS_BOUNDS.getSouth(), west = CAMPUS_BOUNDS.getWest();
-      const north = CAMPUS_BOUNDS.getNorth(), east = CAMPUS_BOUNDS.getEast();
-      const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const overpassQuery = `
-        [out:json][timeout:12];
-        (
-          nwr["name"~"${escaped}",i](${south},${west},${north},${east});
-          nwr["official_name"~"${escaped}",i](${south},${west},${north},${east});
-          nwr["short_name"~"${escaped}",i](${south},${west},${north},${east});
-        );
-        out center tags 30;
-      `;
-      try {
-        const data = await overpass(overpassQuery, signal);
-        for (const el of (data.elements || [])) {
-          const lat = el.lat ?? el.center?.lat, lng = el.lon ?? el.center?.lon;
-          const name = el.tags?.name || el.tags?.official_name || el.tags?.short_name;
-          if (!Number.isFinite(lat) || !Number.isFinite(lng) || !name) continue;
-          const nn=normalise(name), nq=normalise(q);
-          let score=20;
-          if(nn===nq)score+=500; else if(nn.startsWith(nq))score+=260; else if(nn.includes(nq))score+=180;
-          found.push({name,lat:Number(lat),lng:Number(lng),detail:'Địa điểm bổ sung từ OpenStreetMap',source:'OSM object',score});
-        }
-      } catch (_) {}
-    }
-
     const seen = new Set();
     return found.filter(item => {
       const key = `${normalise(item.name)}|${Number(item.lat).toFixed(5)}|${Number(item.lng).toFixed(5)}`;
@@ -720,7 +692,7 @@
           if (kind === 'green') greenAreas.push({name:'Khu cây xanh', category:'Cây xanh', rings:[pts]});
           if (kind === 'building' && el.tags?.name) {
             const official = OFFICIAL_PLACES.find(p => normalise(p.name) === normalise(el.tags.name));
-            buildingAreas.push({name: official ? official.name : el.tags.name, category: official ? official.category : 'Tòa nhà', rings:[pts]});
+            if (official) buildingAreas.push({name: official.name, category: official.category, rings:[pts]});
           }
           if (kind === 'building' || kind === 'green') {
             L.polygon(pts, {...style, interactive:false}).addTo(layers);

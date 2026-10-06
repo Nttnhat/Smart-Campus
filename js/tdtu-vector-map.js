@@ -702,7 +702,7 @@
         if (!style) return;
         byKind.get(kind).forEach(pts => {
           if (kind === 'green') greenAreas.push({name:'Khu cây xanh', category:'Cây xanh', rings:[pts]});
-          if (kind === 'building' || kind === 'water' || kind === 'green') {
+          if (kind === 'building' || kind === 'green') {
             L.polygon(pts, {...style, interactive:false}).addTo(layers);
           } else {
             L.polyline(pts, {...style, interactive:false}).addTo(layers);

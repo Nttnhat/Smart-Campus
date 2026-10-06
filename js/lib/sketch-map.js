@@ -14,7 +14,7 @@
   function classifyMapFeature(tags) {
     if (!tags) return 'ignore';
     if (tags.building) return 'building';
-    if (tags.natural === 'water' || tags.waterway) return 'water';
+    if (tags.waterway) return 'water';
     if (GREEN_LEISURE.has(tags.leisure) || tags.landuse === 'grass' || tags.natural === 'grass') return 'green';
     if (PEDESTRIAN_HIGHWAYS.has(tags.highway)) return 'pedestrian';
     if (ROAD_HIGHWAYS.has(tags.highway)) return 'road';

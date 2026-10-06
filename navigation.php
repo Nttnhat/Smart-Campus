@@ -11,16 +11,16 @@
 </head>
 <body>
 <header class="app-header">
-    <a href="home.html" class="logo">
+    <a href="home.php" class="logo">
         <img src="image/logo.svg" alt="TDTU Logo" height="24" style="margin-right: 8px;">
         BẢN ĐỒ KHUÔN VIÊN TDTU
     </a>
     <nav class="nav-links">
-        <a href="home.html">Trang chủ</a>
-        <a href="campus-map.html">Bản đồ</a>
-        <a href="navigation.html" class="active">Tìm đường</a>
+        <a href="home.php">Trang chủ</a>
+        <a href="campus-map.php">Bản đồ</a>
+        <a href="navigation.php" class="active">Tìm đường</a>
     </nav>
-    <div class="user-menu"><a href="profile.html"><div class="avatar">SV</div></a></div>
+    <div class="user-menu"><a href="profile.php"><div class="avatar">SV</div></a></div>
 </header>
 
 <main class="navigation-page geo-navigation-page">

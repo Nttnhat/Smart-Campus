@@ -11,16 +11,16 @@
 </head>
 <body>
 <header class="app-header">
-    <a href="home.html" class="logo">
+    <a href="home.php" class="logo">
         <img src="image/logo.svg" alt="TDTU Logo" height="24" style="margin-right:8px;">
         BẢN ĐỒ KHUÔN VIÊN TDTU
     </a>
     <nav class="nav-links">
-        <a href="home.html">Trang chủ</a>
-        <a href="campus-map.html" class="active">Bản đồ</a>
-        <a href="navigation.html">Tìm đường</a>
+        <a href="home.php">Trang chủ</a>
+        <a href="campus-map.php" class="active">Bản đồ</a>
+        <a href="navigation.php">Tìm đường</a>
     </nav>
-    <div class="user-menu"><a href="profile.html"><div class="avatar">SV</div></a></div>
+    <div class="user-menu"><a href="profile.php"><div class="avatar">SV</div></a></div>
 </header>
 
 <main class="campus-page real-vector-campus">
@@ -54,7 +54,7 @@
             <strong id="selectedPlaceName">Chưa chọn điểm</strong>
             <p id="selectedPlaceDetail">Tìm địa điểm hoặc bấm trực tiếp lên bản đồ.</p>
             <div class="coord-readout" id="selectedCoordinates">—</div>
-            <a id="selectedPlaceRoute" href="navigation.html" class="selected-route-btn disabled-link">Dẫn đường đến đây</a>
+            <a id="selectedPlaceRoute" href="navigation.php" class="selected-route-btn disabled-link">Dẫn đường đến đây</a>
         </div>
     </aside>
 
@@ -66,7 +66,7 @@
                 <span class="zoom-readout" id="zoomCampus">18</span>
                 <button id="zoomInCampus" class="map-action-btn" type="button">+</button>
                 <button id="fitCampus" class="map-action-btn" type="button">Vừa khuôn viên</button>
-                <a class="map-action-btn primary-action" href="navigation.html">Mở dẫn đường</a>
+                <a class="map-action-btn primary-action" href="navigation.php">Mở dẫn đường</a>
             </div>
         </div>
 

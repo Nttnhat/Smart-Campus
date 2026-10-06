@@ -6,11 +6,11 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
             if (user === 'admin' && pass === 'admin') {
                 errorMsg.style.display = 'none';
-                window.location.href = 'admin.html';
+                window.location.href = 'admin.php';
             } else if (user && pass) {
                 // Any other non-empty credentials act as a normal student login
                 errorMsg.style.display = 'none';
-                window.location.href = 'home.html';
+                window.location.href = 'home.php';
             } else {
                 errorMsg.style.display = 'block';
                 const container = document.querySelector('.login-form-container') || document.querySelector('.login-container');

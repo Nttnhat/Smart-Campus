@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showSelection(lat,lng,name,detail) {
     selectedName.textContent=name; selectedDetail.textContent=detail||'Vị trí trong khuôn viên';
-    routeLink.href=`navigation.html?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&name=${encodeURIComponent(name)}`;
+    routeLink.href=`navigation.php?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&name=${encodeURIComponent(name)}`;
   }
 
   async function selectPoint(lat,lng,name=null,detail=null) {

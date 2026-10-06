@@ -11,19 +11,19 @@
 <body>
 
     <header class="app-header">
-        <a href="home.html" class="logo">
+        <a href="home.php" class="logo">
             <img src="image/logo.svg" alt="TDTU Logo" height="24" style="margin-right: 8px;">
             BẢN ĐỒ KHUÔN VIÊN TDTU
         </a>
 
         <nav class="nav-links">
-            <a href="home.html" class="active">Trang chủ</a>
-            <a href="campus-map.html">Bản đồ</a>
-            <a href="navigation.html">Tìm đường</a>
+            <a href="home.php" class="active">Trang chủ</a>
+            <a href="campus-map.php">Bản đồ</a>
+            <a href="navigation.php">Tìm đường</a>
         </nav>
 
         <div class="user-menu">
-            <a href="profile.html">
+            <a href="profile.php">
                 <div class="avatar" title="Trang cá nhân">SV</div>
             </a>
         </div>
@@ -43,11 +43,11 @@
                     <span class="hero-badge">Bản đồ thực tế bằng OpenStreetMap</span>
                 </div>
                 <div class="hero-actions">
-                    <a href="campus-map.html" class="btn btn-secondary hero-btn">
+                    <a href="campus-map.php" class="btn btn-secondary hero-btn">
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
                         Khám phá bản đồ
                     </a>
-                    <a href="navigation.html" class="btn btn-outline hero-btn">
+                    <a href="navigation.php" class="btn btn-outline hero-btn">
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         Tìm kiếm vị trí
                     </a>
@@ -81,7 +81,7 @@
                             <span>Hiển thị trên nền bản đồ thực tế; phù hợp để tìm các khu vực ngoài trời trong khuôn viên.</span>
                         </div>
                     </div>
-                    <a href="navigation.html" class="info-panel-link">Mở trang tìm vị trí thực tế →</a>
+                    <a href="navigation.php" class="info-panel-link">Mở trang tìm vị trí thực tế →</a>
                 </div>
                 <div class="overview-footer">
                     <div><strong>Tra cứu</strong><span>Tòa học · thư viện</span></div>
@@ -163,7 +163,7 @@
                     <p>Mỗi chức năng được thiết kế để giảm thời gian tìm kiếm và giúp người dùng định hướng trực quan hơn trong khuôn viên.</p>
                 </div>
                 <div class="function-grid">
-                    <a class="function-card" href="campus-map.html">
+                    <a class="function-card" href="campus-map.php">
                         <span class="function-icon">
                             <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
                         </span>
@@ -171,7 +171,7 @@
                         <p>Hiển thị khuôn viên trên bản đồ nền thực tế, thuận tiện để đối chiếu khi di chuyển ngoài trời.</p>
                         <span class="function-link">Mở bản đồ →</span>
                     </a>
-                    <a class="function-card" href="navigation.html">
+                    <a class="function-card" href="navigation.php">
                         <span class="function-icon">
                             <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         </span>
@@ -179,7 +179,7 @@
                         <p>Tìm theo tên hoặc danh mục và nhận gợi ý các địa điểm phù hợp trong khuôn viên.</p>
                         <span class="function-link">Tìm ngay →</span>
                     </a>
-                    <a class="function-card" href="navigation.html?mode=mylocation">
+                    <a class="function-card" href="navigation.php?mode=mylocation">
                         <span class="function-icon">
                             <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path></svg>
                         </span>
@@ -187,7 +187,7 @@
                         <p>Xác định vị trí hiện tại ngoài trời và neo lên khu vực phù hợp trong khuôn viên.</p>
                         <span class="function-link">Xem vị trí →</span>
                     </a>
-                    <a class="function-card" href="navigation.html">
+                    <a class="function-card" href="navigation.php">
                         <span class="function-icon">
                             <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 18h14"></path><path d="M6 15l3-8 4 5 2-3 3 6"></path></svg>
                         </span>
@@ -205,22 +205,22 @@
                     <span class="section-kicker">ĐỊA ĐIỂM NỔI BẬT</span>
                     <h2>Những nơi thường được tìm kiếm</h2>
                 </div>
-                <a class="text-link" href="navigation.html">Xem trên bản đồ thực tế →</a>
+                <a class="text-link" href="navigation.php">Xem trên bản đồ thực tế →</a>
             </div>
             <div class="place-grid">
-                <a class="place-card" href="navigation.html">
+                <a class="place-card" href="navigation.php">
                     <div class="place-visual place-library"><span>📚</span></div>
                     <div class="place-content"><span class="place-category">HỌC TẬP</span><h3>Thư viện</h3><p>Không gian học tập, tra cứu và tự học.</p></div>
                 </a>
-                <a class="place-card" href="navigation.html">
+                <a class="place-card" href="navigation.php">
                     <div class="place-visual place-food"><span>🍽️</span></div>
                     <div class="place-content"><span class="place-category">ĂN UỐNG</span><h3>Căn tin</h3><p>Khu ăn uống phục vụ sinh viên trong khuôn viên.</p></div>
                 </a>
-                <a class="place-card" href="navigation.html">
+                <a class="place-card" href="navigation.php">
                     <div class="place-visual place-sport"><span>🏀</span></div>
                     <div class="place-content"><span class="place-category">THỂ THAO</span><h3>Nhà thi đấu</h3><p>Khu vực phục vụ luyện tập và hoạt động thể thao.</p></div>
                 </a>
-                <a class="place-card" href="navigation.html">
+                <a class="place-card" href="navigation.php">
                     <div class="place-visual place-gate"><span>🚪</span></div>
                     <div class="place-content"><span class="place-category">DI CHUYỂN</span><h3>Cổng chính</h3><p>Mốc định hướng quen thuộc khi bắt đầu tìm đường.</p></div>
                 </a>
@@ -233,7 +233,7 @@
                 <h2>Bạn đang cần tìm một địa điểm?</h2>
                 <p>Nhập điểm đến, chọn gợi ý phù hợp và xem lộ trình ngay trên bản đồ thực tế.</p>
             </div>
-            <a href="navigation.html" class="btn btn-secondary hero-btn">Tìm vị trí ngay</a>
+            <a href="navigation.php" class="btn btn-secondary hero-btn">Tìm vị trí ngay</a>
         </section>
     </main>
 

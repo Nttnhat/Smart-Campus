@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Handle active link state
-  const currentPath = window.location.pathname.split('/').pop() || 'home.html';
+  const currentPath = window.location.pathname.split('/').pop() || 'home.php';
   const navLinks = document.querySelectorAll('.nav-links a');
   navLinks.forEach(link => {
     if (link.getAttribute('href') === currentPath) {

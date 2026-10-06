@@ -651,6 +651,11 @@
     const SM = window.SketchMap;
     greenAreas.length = 0;
     buildingAreas.length = 0;
+    buildingAreas.push({name:'Tòa A', category:'Tòa nhà', rings:[[
+      [10.731881, 106.698808], [10.732076, 106.698942], [10.732137, 106.699210],
+      [10.732076, 106.699430], [10.731832, 106.699442], [10.731759, 106.699405],
+      [10.731759, 106.699060], [10.731783, 106.698887]
+    ]]});
     const bounds = {
       south: CAMPUS_BOUNDS.getSouth(), west: CAMPUS_BOUNDS.getWest(),
       north: CAMPUS_BOUNDS.getNorth(), east: CAMPUS_BOUNDS.getEast()

@@ -370,7 +370,7 @@
         if(tags.access==='no'||tags.access==='private'||tags.foot==='no')continue;
         const pts=wayGeometry(el); if(pts.length<2)continue;
         const meta={wayId:el.id,highway:tags.highway||'',name:tags.name||'',surface:tags.surface||''};
-        const oneWay=tags.oneway==='yes'||tags.oneway==='1'; const factor=routeFactor(tags);
+        const oneWay=false; const factor=routeFactor(tags);
         for(let i=0;i<pts.length-1;i++){
           const a=pts[i],b=pts[i+1]; if(blocked(a,b))continue;
           const ka=ensure(a),kb=ensure(b),d=haversine(a,b); if(!Number.isFinite(d)||d<.05)continue;

@@ -1593,6 +1593,8 @@
   pointer-events: none !important;
 }
 .native-osm-label::before { display:none !important; }
+<<<<<<< HEAD
+=======
 
 /* Nhãn chính thức TDTU (tên tiếng Việt do admin xác nhận), kiểu pin trắng giống Google Maps thật. */
 .tdtu-place-label {
@@ -1608,3 +1610,4 @@
   white-space: nowrap !important;
 }
 .tdtu-place-label::before { display:none !important; }
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3

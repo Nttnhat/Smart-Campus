@@ -176,10 +176,20 @@
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<<<<<<< HEAD:navigation.php
 <script src="js/lib/coverage.js"></script>
 <script src="js/lib/resolve-place.js"></script>
 <script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
 <script src="js/navigation.js?v=<?php echo @filemtime(__DIR__.'/js/navigation.js') ?: time(); ?>"></script>
+=======
+<<<<<<< HEAD
+=======
+<script src="js/lib/sketch-map.js"></script>
+<script src="js/lib/resolve-place.js"></script>
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
+<script src="js/tdtu-vector-map.js"></script>
+<script src="js/navigation.js"></script>
+>>>>>>> 83c0a248526d4527122dd3ac6d1d12064f0a33fb:navigation.html
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,5 +1,11 @@
 TDTU MAP LABELS
 
+<<<<<<< HEAD
+- Custom TDTU labels/markers have been removed from campus-map and navigation maps.
+- The map now shows only the native labels rendered by the underlying OpenStreetMap tile layer.
+- CSS only increases tile contrast slightly so native text is easier to read.
+- Search and routing remain available, but search results no longer create permanent building-name overlays on the map.
+=======
 - campus-map.html và navigation.html hiện dùng VM.drawOfficialLabels(map) (js/tdtu-vector-map.js),
   hiển thị nhãn tiếng Việt chính thức của TDTU (Tòa A, VFIS, Sảnh 711, SMart, Hầm xe Tòa A, Cổng chính,...)
   thay vì nhãn tự động từ OpenStreetMap (drawNativeMapLabels vẫn còn trong code nhưng không được gọi nữa).
@@ -11,3 +17,4 @@ TDTU MAP LABELS
   (Giai đoạn 4: admin tự sửa nhãn + thông tin chi tiết, không sửa khung đường/tòa).
 - Style nhãn: class .tdtu-place-label (css/campus-map.css, css/navigation.css).
 - Khung đường/tòa nhà (polygon/polyline) vẫn lấy từ OSM qua VM.drawCampusVectors(map), không đổi.
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3

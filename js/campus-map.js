@@ -20,8 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
   let watchId = null;
   let searchAbort = null;
 
+<<<<<<< HEAD
   VM.addRealBasemap(map);
   dataStatus.textContent = 'Bản đồ thật';
+=======
+<<<<<<< HEAD
+  VM.drawCampusVectors(map).then(info => {
+    dataStatus.textContent = info.count ? `Đã tải ${info.count} đối tượng thực tế` : 'Đang dùng nền bản đồ địa lý';
+=======
+  VM.drawSketchBasemap(map).then(info => {
+    dataStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
+  });
+>>>>>>> 83c0a248526d4527122dd3ac6d1d12064f0a33fb
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   zoomReadout.textContent = map.getZoom();
   map.on('zoomend',()=>zoomReadout.textContent=map.getZoom());
@@ -46,8 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function selectPoint(lat,lng,name=null,detail=null) {
+<<<<<<< HEAD
     const token = ++selectToken;
     const hit = name ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, [...VM.buildingAreas, ...VM.greenAreas]);
+=======
+<<<<<<< HEAD
+    if (!name) { const r=await reverseName(lat,lng); name=r.name; detail=r.detail; }
+=======
+    if (!name) {
+      const hit = window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
+      if (hit) { name = hit.name; detail = hit.category; }
+      else { const r=await reverseName(lat,lng); name=r.name; detail=r.detail; }
+    }
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
+>>>>>>> 83c0a248526d4527122dd3ac6d1d12064f0a33fb
     pointLayer.clearLayers();
     selectedMarker=L.marker([lat,lng],{icon:markerIcon('Điểm chọn')}).addTo(pointLayer);
     selectedCoords.textContent=`${lat.toFixed(6)}, ${lng.toFixed(6)}`;
@@ -95,5 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('zoomOutCampus').addEventListener('click',()=>map.zoomOut());
   document.getElementById('fitCampus').addEventListener('click',()=>map.fitBounds(VM.CAMPUS_BOUNDS,{padding:[30,30]}));
 
+<<<<<<< HEAD
+  VM.drawNativeMapLabels(map).catch?.(()=>{});
+=======
   VM.drawOfficialLabels(map);
+>>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 });

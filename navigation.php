@@ -172,20 +172,14 @@
             <div class="map-click-hint" id="mapClickHint">Chọn chế độ rồi bấm bản đồ để đặt điểm.</div>
             <div class="map-source-pill" id="vectorStatus">Đang tải dữ liệu đường và công trình…</div>
         </div>
-
-        <div class="map-footer-note">
-            <div><strong>Nền tảng</strong><span>Hệ tọa độ lat/lng thật. Không còn phép chiếu ảnh isometric nên tuyến không bị méo hình học.</span></div>
-            <div><strong>Routing</strong><span>Máy định tuyến đi bộ dựa trên mạng OpenStreetMap; tuyến không được phép đi xuyên công trình nếu dữ liệu đường đã được bản đồ hóa đúng.</span></div>
-        </div>
     </section>
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="js/lib/sketch-map.js"></script>
+<script src="js/lib/coverage.js"></script>
 <script src="js/lib/resolve-place.js"></script>
-<script src="js/lib/ring-builder.js"></script>
-<script src="js/tdtu-vector-map.js"></script>
-<script src="js/navigation.js"></script>
+<script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
+<script src="js/navigation.js?v=<?php echo @filemtime(__DIR__.'/js/navigation.js') ?: time(); ?>"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

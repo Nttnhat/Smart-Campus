@@ -20,9 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let watchId = null;
   let searchAbort = null;
 
-  VM.drawSketchBasemap(map).then(info => {
-    dataStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
-  });
+  VM.addRealBasemap(map);
+  dataStatus.textContent = 'Bản đồ thật';
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   zoomReadout.textContent = map.getZoom();
   map.on('zoomend',()=>zoomReadout.textContent=map.getZoom());

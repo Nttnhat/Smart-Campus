@@ -36,13 +36,21 @@
     return null;
   }
 
-  function resolvePlaceAtPoint(lat, lng, places, radiusM, areas = []) {
+  // place.coverage (nếu có, dạng {type:'circle',diameterM} | {type:'square',diagonalM} - xem
+  // js/lib/coverage.js) ưu tiên hơn fallbackRadiusM: mỗi nơi được nhận diện theo đúng hình dạng/kích
+  // thước riêng của nó thay vì một bán kính chung cho mọi nơi.
+  function resolvePlaceAtPoint(lat, lng, places, fallbackRadiusM, areas = []) {
     if (!Array.isArray(places) || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    const Coverage = typeof window !== 'undefined' ? window.Coverage : require('./coverage.js');
     let best = null;
     let bestDist = Infinity;
     for (const place of places) {
+      const inCoverage = place.coverage && Coverage
+        ? Coverage.isPointInCoverage(lat, lng, place.lat, place.lng, place.coverage)
+        : distanceM(lat, lng, place.lat, place.lng) <= fallbackRadiusM;
+      if (!inCoverage) continue;
       const d = distanceM(lat, lng, place.lat, place.lng);
-      if (d <= radiusM && d < bestDist) {
+      if (d < bestDist) {
         best = place;
         bestDist = d;
       }

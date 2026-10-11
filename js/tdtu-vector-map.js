@@ -41,7 +41,6 @@
     {id:'ho-boi-moi', name:'Hồ bơi 2', aliases:['ho boi 2','ho boi moi','be boi moi'], category:'Thể thao', lat:10.731091, lng:106.697683},
     {id:'san-tennis', name:'Sân tennis', aliases:['san tennis','tennis'], category:'Thể thao', lat:10.73234, lng:106.697133},
     {id:'san-bong-ro', name:'Sân bóng rổ', aliases:['san bong ro','bong ro'], category:'Thể thao', lat:10.73243, lng:106.696957},
-    {id:'san-golf', name:'Sân tập golf', aliases:['san tap golf','golf'], category:'Thể thao', lat:10.73455, lng:106.70015},
     {id:'khu-tap-luyen-quan-su', name:'Khu tập luyện quân sự', aliases:['khu tap luyen quan su','quan su'], category:'Khu vực', lat:10.731635, lng:106.695949},
     {id:'san-golf-khu', name:'Khu golf', aliases:['khu golf','san golf'], category:'Khu vực', lat:10.730891, lng:106.696631},
     {id:'san-pickleball', name:'Sân pickleball', aliases:['san pickleball','pickleball'], category:'Khu vực', lat:10.730092, lng:106.696340},
@@ -151,74 +150,6 @@
 
   function wayGeometry(element) {
     return (element.geometry || []).map(p => [p.lat, p.lon]);
-  }
-
-  function roadStyle(tags) {
-    const highway = tags.highway || '';
-    if (['footway','path','pedestrian','steps'].includes(highway)) {
-      return {color:'#2f855a', weight:4, opacity:.95, dashArray: highway === 'steps' ? '5 5' : null};
-    }
-    if (['service','living_street'].includes(highway)) {
-      return {color:'#64748b', weight:6, opacity:.8};
-    }
-    if (['residential','unclassified','tertiary'].includes(highway)) {
-      return {color:'#94a3b8', weight:7, opacity:.65};
-    }
-    return {color:'#9aa7b6', weight:4, opacity:.55};
-  }
-
-  async function drawCampusVectors(map, options = {}) {
-    const south = CAMPUS_BOUNDS.getSouth();
-    const west = CAMPUS_BOUNDS.getWest();
-    const north = CAMPUS_BOUNDS.getNorth();
-    const east = CAMPUS_BOUNDS.getEast();
-    const query = `
-      [out:json][timeout:20];
-      (
-        way["building"](${south},${west},${north},${east});
-        way["highway"](${south},${west},${north},${east});
-        way["natural"="water"](${south},${west},${north},${east});
-        way["waterway"](${south},${west},${north},${east});
-        way["leisure"~"^(pitch|sports_centre|stadium)$"](${south},${west},${north},${east});
-      );
-      out geom tags;
-    `;
-
-    const layers = L.layerGroup().addTo(map);
-    try {
-      const data = await overpass(query, options.signal);
-      const elements = data.elements || [];
-      elements.forEach(el => {
-        const pts = wayGeometry(el);
-        if (pts.length < 2) return;
-        const tags = el.tags || {};
-        if (tags.building) {
-          L.polygon(pts, {
-            color:'#56708d', weight:1.2, fillColor:'#dbe5ef', fillOpacity:.42, interactive:false
-          }).addTo(layers);
-          return;
-        }
-        if (tags.natural === 'water' || tags.waterway) {
-          L.polygon(pts, {
-            color:'#6aa7c8', weight:1, fillColor:'#bfe5f3', fillOpacity:.48, interactive:false
-          }).addTo(layers);
-          return;
-        }
-        if (tags.leisure) {
-          L.polygon(pts, {
-            color:'#3e8f5c', weight:1, fillColor:'#bde0b8', fillOpacity:.45, interactive:false
-          }).addTo(layers);
-          return;
-        }
-        if (tags.highway) {
-          L.polyline(pts, {...roadStyle(tags), interactive:false}).addTo(layers);
-        }
-      });
-      return {layers, source:'overpass', count:elements.length};
-    } catch (error) {
-      console.warn('Không tải được vector OSM chi tiết:', error);
-      return {layers, source:'fallback', count:0, error};
-    }
   }
 
   function officialSearch(query) {
@@ -484,61 +415,6 @@
       source:'tdtu-walk-graph'
     };
   }
-  async function drawNativeMapLabels(map, options = {}) {
-    const group = L.layerGroup().addTo(map);
-    const south = CAMPUS_BOUNDS.getSouth(), west = CAMPUS_BOUNDS.getWest();
-    const north = CAMPUS_BOUNDS.getNorth(), east = CAMPUS_BOUNDS.getEast();
-    const query = `
-      [out:json][timeout:18];
-      (
-        nwr["name"](${south},${west},${north},${east});
-      );
-      out center tags 300;
-    `;
-
-    try {
-      const data = await overpass(query, options.signal);
-      const seen = new Set();
-      (data.elements || []).forEach(el => {
-        const tags = el.tags || {};
-        const name = tags.name;
-        const lat = el.lat ?? el.center?.lat;
-        const lng = el.lon ?? el.center?.lon;
-        if (!name || !Number.isFinite(lat) || !Number.isFinite(lng)) return;
-
-        // Keep campus-relevant POI/building/area labels. Road names remain rendered by the base map.
-        const useful = Boolean(
-          tags.building || tags.amenity || tags.leisure || tags.shop || tags.office ||
-          tags.tourism || tags.sport || tags.landuse || tags.man_made || tags.historic ||
-          tags.place || tags.school || tags.university
-        );
-        if (!useful) return;
-
-        const key = `${normalise(name)}|${Number(lat).toFixed(5)}|${Number(lng).toFixed(5)}`;
-        if (seen.has(key)) return;
-        seen.add(key);
-
-        const anchor = L.circleMarker([lat,lng], {
-          radius: 1,
-          stroke: false,
-          fillOpacity: 0,
-          opacity: 0,
-          interactive: false
-        }).addTo(group);
-        anchor.bindTooltip(escapeHtml(name), {
-          permanent: true,
-          direction: 'center',
-          className: 'native-osm-label',
-          opacity: 1
-        });
-      });
-      return {group, source:'osm-names', count:seen.size};
-    } catch (error) {
-      console.warn('Không tải được lớp tên gốc OSM:', error);
-      return {group, source:'fallback', count:0, error};
-    }
-  }
-
   // Chỉ gán nhãn cho: tòa nhà, khu vực (kể cả thể thao/trường trực thuộc), cổng, hầm xe.
   // Các danh mục khác (ăn uống, mua sắm, phòng ban...) có trong dữ liệu nhưng không hiện nhãn mặc định
   // để tránh rối bản đồ - admin có thể bật thêm sau qua danh sách categories truyền vào.
@@ -560,6 +436,8 @@
     });
     const update=()=>{const show=map.getZoom()>=17; group.eachLayer(layer=>{if(layer.getTooltip()){const el=layer.getTooltip().getElement(); if(el)el.style.display=show?'':'none';}});};
     map.on('zoomend',update); setTimeout(update,0);
+    // Ô bật/tắt nhãn: bỏ tick là ẩn toàn bộ group nhãn (marker + chữ).
+    L.control.layers(null, {'Nhãn địa điểm': group}, {position:'topright', collapsed:false}).addTo(map);
     return {group,entries};
   }
 
@@ -567,7 +445,7 @@
     const map = L.map(elementId, {
       zoomControl:false,
       minZoom:17,
-      maxZoom:22,
+      maxZoom:19,
       maxBounds:CAMPUS_BOUNDS,
       maxBoundsViscosity:1.0,
       preferCanvas:true,
@@ -584,129 +462,21 @@
     return map;
   }
 
-  // Thứ tự lớp từ dưới lên, mô phỏng cách Google Maps vẽ: nền đất/cây xanh/nước dưới cùng,
-  // rồi đường, rồi lối đi bộ, tòa nhà trên cùng.
-  const SKETCH_DRAW_ORDER = ['green', 'water', 'road', 'pedestrian', 'building'];
-
-  // Cache dữ liệu Overpass vào localStorage - khuôn viên gần như không đổi theo ngày,
-  // nên các lần tải trang sau không cần gọi mạng lại, "tạo khối" gần như tức thì.
-  const SKETCH_CACHE_KEY = 'tdtu_sketch_cache_v2';
-  const SKETCH_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 ngày
-
-  function readSketchCache() {
-    try {
-      const raw = localStorage.getItem(SKETCH_CACHE_KEY);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (!parsed || !Array.isArray(parsed.elements)) return null;
-      if (Date.now() - parsed.savedAt > SKETCH_CACHE_TTL_MS) return null;
-      return parsed.elements;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  function writeSketchCache(elements) {
-    try {
-      localStorage.setItem(SKETCH_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), elements }));
-    } catch (_) {
-      // Hết quota hoặc private mode - bỏ qua, không ảnh hưởng chức năng chính.
-    }
-  }
-
-  // Vẽ khung khuôn viên TDTU theo màu Google Maps thật: chỉ hình khối (tòa nhà/đường/cây xanh/nước),
-  // không tile ảnh nền, không chữ/nhãn nào được gắn vào các hình này.
+  // Hai mảng này từng được drawSketchBasemap() tính từ polygon OSM để resolvePlaceAtPoint() phân loại
+  // điểm bấm trên bản đồ là tòa nhà/cây xanh nào. Lớp sketch đã bỏ nên tạm để rỗng; nếu cần khôi phục
+  // khả năng phân loại theo polygon thì phải nạp dữ liệu building/green riêng, không qua sketch nữa.
   const greenAreas = [];
   const buildingAreas = [];
 
-  async function drawSketchBasemap(map, options = {}) {
-    const SM = window.SketchMap;
-    greenAreas.length = 0;
-    buildingAreas.length = 0;
-    buildingAreas.push({name:'Tòa K / Tòa L', category:'Tòa nhà', rings:[[
-      [10.730744, 106.697454], [10.730803, 106.697496], [10.730792, 106.697838],
-      [10.730684, 106.697946], [10.730432, 106.697946], [10.730371, 106.697814],
-      [10.730371, 106.697498], [10.730480, 106.697430]
-    ]]});
-    buildingAreas.push({name:'Hồ bơi 2', category:'Thể thao', rings:[[
-      [10.731152, 106.697574], [10.731188, 106.697694], [10.731128, 106.697886],
-      [10.731020, 106.697886], [10.731008, 106.697694], [10.731051, 106.697574]
-    ]]});
-    buildingAreas.push({name:'Tòa A', category:'Tòa nhà', rings:[[
-      [10.731881, 106.698808], [10.732076, 106.698942], [10.732137, 106.699210],
-      [10.732076, 106.699430], [10.731832, 106.699442], [10.731759, 106.699405],
-      [10.731759, 106.699060], [10.731783, 106.698887]
-    ]]});
-    const bounds = {
-      south: CAMPUS_BOUNDS.getSouth(), west: CAMPUS_BOUNDS.getWest(),
-      north: CAMPUS_BOUNDS.getNorth(), east: CAMPUS_BOUNDS.getEast()
-    };
-    const layers = L.layerGroup().addTo(map);
-    try {
-      let elements = options.forceRefresh ? null : readSketchCache();
-      let source = 'sketch-cache';
-      if (!elements) {
-        const query = `
-          [out:json][timeout:25];
-          (
-            way["building"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-            way["highway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-            way["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-            way["waterway"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-            way["leisure"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-            way["landuse"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-            way["natural"="grass"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-            relation["natural"="water"](${bounds.south},${bounds.west},${bounds.north},${bounds.east});
-          );
-          out geom tags;
-        `;
-        const data = await overpass(query, options.signal);
-        elements = data.elements || [];
-        writeSketchCache(elements);
-        source = 'sketch';
-      }
-      const byKind = new Map(SKETCH_DRAW_ORDER.map(k => [k, []]));
-      elements.forEach(el => {
-        if (el.type === 'relation') {
-          const members = el.members || [];
-          const segsOf = role => members
-            .filter(m => m.role === role && Array.isArray(m.geometry) && m.geometry.length >= 2)
-            .map(m => m.geometry.map(p => [p.lat, p.lon]));
-          const rings = [...window.RingBuilder.buildRings(segsOf('outer')), ...window.RingBuilder.buildRings(segsOf('inner'))];
-          const inCampus = rings.some(r => r.some(([lat,lng]) => SM.isWithinCampus(lat, lng, bounds)));
-          if (inCampus && SM.classifyMapFeature(el.tags || {}) === 'water') byKind.get('water').push(rings);
-          return;
-        }
-        const pts = wayGeometry(el);
-        if (pts.length < 2) return;
-        // Chỉ vẽ nếu ít nhất 1 điểm nằm trong khuôn viên TDTU (cắt bỏ đối tượng lạc ra ngoài).
-        if (!pts.some(([lat,lng]) => SM.isWithinCampus(lat, lng, bounds))) return;
-        const kind = SM.classifyMapFeature(el.tags || {});
-        if (byKind.has(kind)) byKind.get(kind).push(pts);
-      });
-      let drawn = 0;
-      SKETCH_DRAW_ORDER.forEach(kind => {
-        const style = SM.sketchStyleFor(kind);
-        if (!style) return;
-        byKind.get(kind).forEach(pts => {
-          if (kind === 'green') greenAreas.push({name:'Khu cây xanh', category:'Cây xanh', rings:[pts]});
-          if (kind === 'building' && el.tags?.name) {
-            const official = OFFICIAL_PLACES.find(p => normalise(p.name) === normalise(el.tags.name));
-            if (official) buildingAreas.push({name: official.name, category: official.category, rings:[pts]});
-          }
-          if (kind === 'building' || kind === 'green') {
-            L.polygon(pts, {...style, interactive:false}).addTo(layers);
-          } else {
-            L.polyline(pts, {...style, interactive:false}).addTo(layers);
-          }
-          drawn++;
-        });
-      });
-      return {layers, source, count:drawn};
-    } catch (error) {
-      console.warn('Không tải được dữ liệu sketch:', error);
-      return {layers, source:'fallback', count:0, error};
-    }
+  // Nền bản đồ thật duy nhất: OpenStreetMap. Từng có thêm lớp vệ tinh Esri làm lựa chọn phụ, nhưng
+  // ảnh vệ tinh bị lệch tọa độ so với thực tế (lỗi hiệu chỉnh của Esri) nên đã bỏ, chỉ giữ OSM.
+  function addRealBasemap(map) {
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    });
+    osm.addTo(map);
+    return osm;
   }
 
   window.TDTUVectorMap = {
@@ -720,12 +490,10 @@
     escapeHtml,
     haversine,
     createBaseMap,
-    drawCampusVectors,
-    drawSketchBasemap,
+    addRealBasemap,
     searchCampus,
     officialSearch,
     drawOfficialLabels,
-    drawNativeMapLabels,
     loadWalkGraph,
     shortestWalkRoute,
     nearestGraphProjection,

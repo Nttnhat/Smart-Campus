@@ -52,3 +52,22 @@ test('resolvePlaceAtPoint: có nhãn sát điểm bấm -> ưu tiên nhãn hơn 
   const result = resolvePlaceAtPoint(10.731936, 106.699125, PLACES, 12, areas);
   assert.equal(result.id, 'toa-a');
 });
+
+test('resolvePlaceAtPoint: nơi có coverage riêng -> dùng hình dạng đó thay vì bán kính chung', () => {
+  const places = [
+    { id: 'toa-a', name: 'Tòa A', lat: 10.731936, lng: 106.699125, coverage: { type: 'circle', diameterM: 50 } },
+  ];
+  // Cách tâm ~20m (trong bán kính 25m của coverage) nhưng ngoài fallbackRadiusM=5 truyền vào ->
+  // vẫn phải trả về toa-a vì coverage riêng được ưu tiên, không dùng fallback 5m.
+  const near = 10.731936 + 20 / 111320;
+  const result = resolvePlaceAtPoint(near, 106.699125, places, 5);
+  assert.equal(result.id, 'toa-a');
+});
+
+test('resolvePlaceAtPoint: ngoài coverage riêng -> null dù fallbackRadiusM lớn', () => {
+  const places = [
+    { id: 'toa-a', name: 'Tòa A', lat: 10.731936, lng: 106.699125, coverage: { type: 'circle', diameterM: 50 } },
+  ];
+  const far = 10.731936 + 40 / 111320;
+  assert.equal(resolvePlaceAtPoint(far, 106.699125, places, 999), null);
+});

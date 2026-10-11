@@ -474,9 +474,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Map data / vector overlay.
-  VM.drawSketchBasemap(map).then(info => {
-    els.vectorStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
-  });
+  VM.addRealBasemap(map);
+  els.vectorStatus.textContent = 'Bản đồ thật';
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   els.zoomValue.textContent = map.getZoom();
   map.on('zoomend', ()=>els.zoomValue.textContent=map.getZoom());

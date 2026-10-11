@@ -85,10 +85,9 @@
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="js/lib/sketch-map.js"></script>
+<script src="js/lib/coverage.js"></script>
 <script src="js/lib/resolve-place.js"></script>
-<script src="js/lib/ring-builder.js"></script>
-<script src="js/tdtu-vector-map.js"></script>
+<script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
 <script src="js/campus-map.js"></script>
 <script src="js/main.js"></script>
 </body>

@@ -20,13 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let watchId = null;
   let searchAbort = null;
 
-<<<<<<< HEAD
-  VM.drawCampusVectors(map).then(info => {
-    dataStatus.textContent = info.count ? `Đã tải ${info.count} đối tượng thực tế` : 'Đang dùng nền bản đồ địa lý';
-=======
   VM.drawSketchBasemap(map).then(info => {
     dataStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
   });
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   zoomReadout.textContent = map.getZoom();
@@ -45,15 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function selectPoint(lat,lng,name=null,detail=null) {
-<<<<<<< HEAD
-    if (!name) { const r=await reverseName(lat,lng); name=r.name; detail=r.detail; }
-=======
     if (!name) {
       const hit = window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
       if (hit) { name = hit.name; detail = hit.category; }
       else { const r=await reverseName(lat,lng); name=r.name; detail=r.detail; }
     }
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
     pointLayer.clearLayers();
     selectedMarker=L.marker([lat,lng],{icon:markerIcon('Điểm chọn')}).addTo(pointLayer);
     selectedName.textContent=name; selectedDetail.textContent=detail||'Vị trí trong khuôn viên';
@@ -95,9 +86,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('zoomOutCampus').addEventListener('click',()=>map.zoomOut());
   document.getElementById('fitCampus').addEventListener('click',()=>map.fitBounds(VM.CAMPUS_BOUNDS,{padding:[30,30]}));
 
-<<<<<<< HEAD
-  VM.drawNativeMapLabels(map).catch?.(()=>{});
-=======
   VM.drawOfficialLabels(map);
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 });

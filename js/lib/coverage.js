@@ -40,6 +40,19 @@
         const halfSide = diagonalM / (2 * Math.SQRT2);
         return Math.abs(north) <= halfSide && Math.abs(east) <= halfSide;
       }
+      case 'polygon': {
+        // Đường bao thật của tòa nhà/khu vực: ring = [[lat,lng], ...], khép kín tự động.
+        const ring = coverage.ring;
+        if (!Array.isArray(ring) || ring.length < 3) return false;
+        let inside = false;
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          const [yi, xi] = ring[i];
+          const [yj, xj] = ring[j];
+          const intersect = ((yi > lat) !== (yj > lat)) && (lng < ((xj - xi) * (lat - yi)) / ((yj - yi) || 1e-12) + xi);
+          if (intersect) inside = !inside;
+        }
+        return inside;
+      }
       default:
         return false;
     }

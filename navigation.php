@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/navigation.css?v=<?php echo @filemtime(__DIR__.'/css/navigation.css') ?: time(); ?>">
 </head>
 <body>
 <header class="app-header">
@@ -23,7 +23,10 @@
     <div class="user-menu"><a href="profile.php"><div class="avatar">SV</div></a></div>
 </header>
 
-<main class="navigation-page geo-navigation-page">
+<main class="navigation-page geo-navigation-page" id="navigationPage">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" title="Ẩn/hiện menu" aria-label="Ẩn/hiện menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+    </button>
     <aside class="route-sidebar">
         <div class="route-heading">
             <div>
@@ -176,20 +179,11 @@
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<<<<<<< HEAD:navigation.php
 <script src="js/lib/coverage.js"></script>
+<script src="js/lib/entrances.js"></script>
 <script src="js/lib/resolve-place.js"></script>
 <script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
 <script src="js/navigation.js?v=<?php echo @filemtime(__DIR__.'/js/navigation.js') ?: time(); ?>"></script>
-=======
-<<<<<<< HEAD
-=======
-<script src="js/lib/sketch-map.js"></script>
-<script src="js/lib/resolve-place.js"></script>
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
-<script src="js/tdtu-vector-map.js"></script>
-<script src="js/navigation.js"></script>
->>>>>>> 83c0a248526d4527122dd3ac6d1d12064f0a33fb:navigation.html
 <script src="js/main.js"></script>
 </body>
 </html>

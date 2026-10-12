@@ -20,3 +20,16 @@ test('nearestEntrance: tòa không có lối vào -> null, không throw', () => 
   assert.equal(nearestEntrance('toa-khong-co', 10.73, 106.69), null);
   assert.deepEqual(entrancesFor('toa-khong-co'), []);
 });
+
+test('entrancesFor: Tòa A có 4 lối vào (đo lại từ ảnh, thay cho 3 lối ước lượng trước đó)', () => {
+  assert.equal(entrancesFor('toa-a').length, 4);
+});
+
+test('entrancesFor: Tòa C có 7 lối vào', () => {
+  assert.equal(entrancesFor('toa-c').length, 7);
+});
+
+test('nearestEntrance: đứng gần lối 1 của Tòa G -> chọn toa-g-1', () => {
+  const e = nearestEntrance('toa-g', 10.730917, 106.699208);
+  assert.equal(e.id, 'toa-g-1');
+});

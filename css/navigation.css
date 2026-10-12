@@ -5,6 +5,41 @@
     padding: 24px;
     min-height: calc(100vh - 80px);
     background: linear-gradient(180deg, #f5f8fc 0%, #eef4fa 100%);
+    transition: grid-template-columns .25s ease;
+}
+
+/* Ẩn/hiện menu: bật bằng nút sidebarToggle, lưu lựa chọn trong localStorage (navigation.js). */
+.navigation-page.sidebar-collapsed {
+    grid-template-columns: 0 minmax(0, 1fr);
+}
+
+.navigation-page.sidebar-collapsed .route-sidebar {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    top: 98px;
+    left: 410px;
+    z-index: 500;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 69, 140, 0.15);
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0, 69, 140, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: left .25s ease, transform .25s ease;
+    color: #00458c;
+}
+
+.navigation-page.sidebar-collapsed .sidebar-toggle {
+    left: 14px;
+    transform: rotate(180deg);
 }
 
 .route-sidebar,
@@ -16,6 +51,13 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
+    /* Menu tự cuộn riêng, dính theo viewport; bản đồ bên cạnh không bị kéo theo khi menu dài. */
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-gutter: stable;
 }
 
 .route-heading,
@@ -1593,8 +1635,6 @@
   pointer-events: none !important;
 }
 .native-osm-label::before { display:none !important; }
-<<<<<<< HEAD
-=======
 
 /* Nhãn chính thức TDTU (tên tiếng Việt do admin xác nhận), kiểu pin trắng giống Google Maps thật. */
 .tdtu-place-label {
@@ -1610,4 +1650,3 @@
   white-space: nowrap !important;
 }
 .tdtu-place-label::before { display:none !important; }
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3

@@ -4,7 +4,7 @@ function db(): PDO
     static $pdo = null;
     if ($pdo === null) {
         $pdo = new PDO(
-            'mysql:host=127.0.0.1;dbname=smart_campus;charset=utf8mb4',
+            'mysql:host=127.0.0.1;dbname=smart_campus_tdtu;charset=utf8mb4',
             'root',
             '',
             [

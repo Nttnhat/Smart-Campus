@@ -25,116 +25,116 @@
     <div class="admin-layout">
         <aside class="admin-sidebar">
             <ul class="admin-menu">
-                <li><a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard</a></li>
-                <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg> Quản lý Tòa nhà</a></li>
-                <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> Quản lý Tầng & Phòng</a></li>
-                <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg> Địa điểm & Tiện ích</a></li>
-                <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg> Dữ liệu Bản đồ (Polygons)</a></li>
-                <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Quản lý Người dùng</a></li>
+                <li><a href="#" class="active" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard</a></li>
+                <li><a href="#" data-view="unavailable"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> Quản lý Tầng & Phòng</a></li>
+                <li><a href="#" data-view="places"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg> Địa điểm & Tiện ích</a></li>
                 <li><a href="home.php" style="margin-top: 2rem; color: var(--secondary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Về trang chủ</a></li>
             </ul>
         </aside>
 
         <main class="admin-content">
-            <div class="dashboard-header">
-                <h1 style="color: var(--primary);">Tổng quan hệ thống</h1>
-                <button class="btn btn-secondary">+ Thêm địa điểm mới</button>
-            </div>
+            <p id="adminNotice" class="admin-notice" hidden></p>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg></div>
-                    <div class="stat-info">
-                        <h3>15</h3>
-                        <p>Tổng số Tòa nhà</p>
-                    </div>
+            <section id="view-dashboard" class="admin-view">
+                <div class="dashboard-header">
+                    <h1 style="color: var(--primary);">Tổng quan hệ thống</h1>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg></div>
-                    <div class="stat-info">
-                        <h3>342</h3>
-                        <p>Tổng số Phòng</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg></div>
-                    <div class="stat-info">
-                        <h3>128</h3>
-                        <p>Điểm tiện ích</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
-                    <div class="stat-info">
-                        <h3>4,502</h3>
-                        <p>Lượt tìm kiếm/tuần</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="table-container">
-                <div class="table-header">
-                    <h3 style="margin: 0; color: var(--primary);">Danh sách Tòa nhà</h3>
-                    <div class="search-container" style="width: 300px;">
-                        <input type="text" class="search-input" placeholder="Tìm kiếm tòa nhà..." style="padding: 0.5rem 1rem 0.5rem 2.5rem;">
-                        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg></div>
+                        <div class="stat-info">
+                            <h3 id="statBuildings">—</h3>
+                            <p>Tổng số Tòa nhà</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg></div>
+                        <div class="stat-info">
+                            <h3 id="statPlaces">—</h3>
+                            <p>Tổng số Địa điểm</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg></div>
+                        <div class="stat-info">
+                            <h3 id="statCoverage">—</h3>
+                            <p>Đã có vùng phủ (coverage)</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg></div>
+                        <div class="stat-info">
+                            <h3 id="statEntrances">—</h3>
+                            <p>Tòa đã có lối vào</p>
+                        </div>
                     </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Mã Tòa</th>
-                            <th>Tên Tòa Nhà</th>
-                            <th>Số Tầng</th>
-                            <th>Số Phòng</th>
-                            <th>Trạng Thái</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>A</strong></td>
-                            <td>Tòa nhà Hành chính & Lý thuyết</td>
-                            <td>5</td>
-                            <td>42</td>
-                            <td><span class="badge-status status-active">Hoạt động</span></td>
-                            <td>
-                                <div class="action-btns">
-                                    <button class="btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg></button>
-                                    <button class="btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>B</strong></td>
-                            <td>Tòa Thực hành Máy tính</td>
-                            <td>4</td>
-                            <td>30</td>
-                            <td><span class="badge-status status-active">Hoạt động</span></td>
-                            <td>
-                                <div class="action-btns">
-                                    <button class="btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg></button>
-                                    <button class="btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>LIB</strong></td>
-                            <td>Thư viện Trung tâm</td>
-                            <td>3</td>
-                            <td>12</td>
-                            <td><span class="badge-status status-maintenance">Bảo trì tầng 3</span></td>
-                            <td>
-                                <div class="action-btns">
-                                    <button class="btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg></button>
-                                    <button class="btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 style="margin: 0; color: var(--primary);">Danh sách Tòa nhà</h3>
+                        <div class="search-container" style="width: 300px;">
+                            <input type="text" id="buildingSearchInput" class="search-input" placeholder="Tìm kiếm tòa nhà..." style="padding: 0.5rem 1rem 0.5rem 2.5rem;">
+                            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên Tòa Nhà</th>
+                                <th>Danh mục</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="buildingsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="view-places" class="admin-view" hidden>
+                <div class="dashboard-header">
+                    <h1 style="color: var(--primary);">Địa điểm & Tiện ích</h1>
+                </div>
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 style="margin: 0; color: var(--primary);">Tất cả địa điểm</h3>
+                        <div class="search-container" style="width: 300px;">
+                            <input type="text" id="placeSearchInput" class="search-input" placeholder="Tìm theo tên hoặc danh mục..." style="padding: 0.5rem 1rem 0.5rem 2.5rem;">
+                            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Danh mục</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="placesTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div id="editModalOverlay" class="edit-modal-overlay" hidden>
+                <div class="edit-modal">
+                    <h3>Sửa địa điểm</h3>
+                    <label>Tên<input type="text" id="editName"></label>
+                    <label>Danh mục<input type="text" id="editCategory"></label>
+                    <p class="edit-modal-hint">Lưu trên trình duyệt này (localStorage) - chưa có backend nên không đồng bộ cho người dùng khác.</p>
+                    <div class="edit-modal-actions">
+                        <button type="button" class="btn-icon" id="editCancelBtn">Hủy</button>
+                        <button type="button" class="btn btn-secondary" id="editSaveBtn">Lưu</button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="js/lib/entrances.js"></script>
+    <script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
+    <script src="js/admin.js?v=<?php echo @filemtime(__DIR__.'/js/admin.js') ?: time(); ?>"></script>
 </body>
 </html>

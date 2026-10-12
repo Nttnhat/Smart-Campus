@@ -1,5 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const VM = window.TDTUVectorMap;
+  // Nạp OFFICIAL_PLACES từ database thật (api/places.php) trước khi vẽ nhãn/tìm kiếm. Bắt đầu
+  // fetch ngay (không await) để chạy song song lúc map còn đang dựng, chỉ await ngay trước chỗ
+  // thật sự cần dữ liệu (VM.drawOfficialLabels ở cuối file).
+  const placesReady = VM.loadOfficialPlaces();
   const ROUTING_BASE = 'https://routing.openstreetmap.de/routed-foot/route/v1/driving';
   const GOOD_ACCURACY = 15;
   const REJECT_ACCURACY = 35;
@@ -134,18 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function assignPoint(kind, lat, lng, suppliedName = null, suppliedDetail = null) {
-<<<<<<< HEAD
     const hit = suppliedName ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, [...VM.buildingAreas, ...VM.greenAreas]);
-=======
-<<<<<<< HEAD
-    const resolved = suppliedName ? {name:suppliedName, detail:suppliedDetail || suppliedName} : await reverseName(lat, lng);
-=======
-    const hit = suppliedName ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, VM.greenAreas);
->>>>>>> 83c0a248526d4527122dd3ac6d1d12064f0a33fb
     const resolved = suppliedName ? {name:suppliedName, detail:suppliedDetail || suppliedName}
       : hit ? {name:hit.name, detail:hit.category}
       : await reverseName(lat, lng);
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 
     // Keep the REAL selected place coordinate for the marker/name.
     // Routing uses a separate walkable access coordinate so the destination never
@@ -160,7 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
       snapDistance:0
     };
     try {
-      const snapped = await VM.snapToWalkable(point.lat, point.lng, 120);
+      // Nếu điểm khớp một tòa có dữ liệu lối vào (window.Entrances), snap từ lối vào gần nhất
+      // thay vì từ tâm tòa - để tuyến đường kết thúc đúng ở cửa thật, không phải điểm bất kỳ cạnh tòa.
+      const entrance = hit && window.Entrances ? window.Entrances.nearestEntrance(hit.id, point.lat, point.lng) : null;
+      const anchor = entrance ? {lat: entrance.lat, lng: entrance.lng} : point;
+      const snapped = await VM.snapToWalkable(anchor.lat, anchor.lng, 120);
       if (snapped) {
         point.routeLat = snapped.lat;
         point.routeLng = snapped.lng;
@@ -482,19 +482,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Map data / vector overlay.
-<<<<<<< HEAD
   VM.addRealBasemap(map);
   els.vectorStatus.textContent = 'Bản đồ thật';
-=======
-<<<<<<< HEAD
-  VM.drawCampusVectors(map).then(info => {
-    els.vectorStatus.textContent = info.count ? `Đã tải ${info.count} đối tượng đường/công trình thực tế` : 'Đang dùng nền bản đồ địa lý thực tế';
-=======
-  VM.drawSketchBasemap(map).then(info => {
-    els.vectorStatus.textContent = info.count ? `Đã phác thảo ${info.count} hình khối` : 'Không tải được dữ liệu phác thảo';
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
-  });
->>>>>>> 83c0a248526d4527122dd3ac6d1d12064f0a33fb
   map.fitBounds(VM.CORE_BOUNDS || VM.CAMPUS_BOUNDS, {padding:[30,30]});
   els.zoomValue.textContent = map.getZoom();
   map.on('zoomend', ()=>els.zoomValue.textContent=map.getZoom());
@@ -530,14 +519,31 @@ document.addEventListener('DOMContentLoaded', () => {
   els.zoomIn.addEventListener('click',()=>map.zoomIn()); els.zoomOut.addEventListener('click',()=>map.zoomOut());
   els.resetRoute.addEventListener('click',resetAll);
 
+  // Ẩn/hiện menu bên trái: lưu lựa chọn trong localStorage (chỉ để tiện cho người dùng, không ảnh
+  // hưởng chức năng nếu đọc/ghi lỗi - vd chế độ ẩn danh của trình duyệt).
+  (function setupSidebarToggle() {
+    const KEY = 'tdtu_sidebar_hidden';
+    const page = document.getElementById('navigationPage');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (!page || !toggleBtn) return;
+    const applyInvalidate = () => setTimeout(() => map.invalidateSize(), 260);
+    let hidden = false;
+    try { hidden = localStorage.getItem(KEY) === '1'; } catch (_) { hidden = false; }
+    page.classList.toggle('sidebar-collapsed', hidden);
+    toggleBtn.addEventListener('click', () => {
+      hidden = !hidden;
+      page.classList.toggle('sidebar-collapsed', hidden);
+      try { localStorage.setItem(KEY, hidden ? '1' : '0'); } catch (_) { /* bỏ qua, không ảnh hưởng chức năng chính */ }
+      applyInvalidate();
+    });
+  })();
+
+  await placesReady;
+
   const params = new URLSearchParams(location.search);
   const lat = Number(params.get('lat')), lng = Number(params.get('lng'));
   if (Number.isFinite(lat)&&Number.isFinite(lng)) assignPoint('destination',lat,lng,params.get('name')||null);
   if (params.get('mode')==='mylocation') startTracking();
 
-<<<<<<< HEAD
-  VM.drawNativeMapLabels(map).catch?.(()=>{});
-=======
   VM.drawOfficialLabels(map);
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
 });

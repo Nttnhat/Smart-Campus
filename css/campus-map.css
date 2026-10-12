@@ -3,6 +3,41 @@
     display: grid;
     grid-template-columns: 370px minmax(0, 1fr);
     background: #f4f7fb;
+    transition: grid-template-columns .25s ease;
+}
+
+/* Ẩn/hiện menu: bật bằng nút sidebarToggle, lưu lựa chọn trong localStorage (campus-map.js). */
+.campus-page.sidebar-collapsed {
+    grid-template-columns: 0 minmax(0, 1fr);
+}
+
+.campus-page.sidebar-collapsed .map-sidebar {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    top: 98px;
+    left: 380px;
+    z-index: 500;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 69, 140, 0.15);
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0, 69, 140, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: left .25s ease, transform .25s ease;
+    color: #00458c;
+}
+
+.campus-page.sidebar-collapsed .sidebar-toggle {
+    left: 14px;
+    transform: rotate(180deg);
 }
 
 .map-sidebar {
@@ -13,6 +48,11 @@
     border-right: 1px solid rgba(0,69,140,.08);
     box-shadow: 8px 0 32px rgba(0,69,140,.06);
     z-index: 5;
+    /* Menu tự cuộn riêng, dính theo viewport; bản đồ bên cạnh không bị kéo theo khi menu dài. */
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .sidebar-header {
@@ -487,11 +527,8 @@
 [hidden] { display:none !important; }
 .real-campus-map-shell {
     position:relative;
-<<<<<<< HEAD
-=======
     z-index:0;
     isolation:isolate; /* chặn z-index nội bộ của Leaflet (400-700) đè lên header của trang */
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3
     min-height:680px;
     overflow:hidden;
     border-radius:22px;
@@ -556,8 +593,6 @@
   pointer-events: none !important;
 }
 .native-osm-label::before { display:none !important; }
-<<<<<<< HEAD
-=======
 
 /* Nhãn chính thức TDTU (tên tiếng Việt do admin xác nhận), kiểu pin trắng giống Google Maps thật. */
 .tdtu-place-label {
@@ -573,4 +608,3 @@
   white-space: nowrap !important;
 }
 .tdtu-place-label::before { display:none !important; }
->>>>>>> 67d44d491e93dbfac26461a15e6a15aed84634a3

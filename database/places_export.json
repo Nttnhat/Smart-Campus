@@ -1,0 +1,1163 @@
+[
+ {
+  "id": "toa-a",
+  "name": "Tòa A",
+  "aliases": [
+   "nha a",
+   "giang duong a",
+   "toa a"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.731925,
+  "lng": 106.698919,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.732253,
+     106.699305
+    ],
+    [
+     10.731816,
+     106.699297
+    ],
+    [
+     10.731768,
+     106.698816
+    ],
+    [
+     10.731723,
+     106.69863
+    ],
+    [
+     10.731968,
+     106.698643
+    ],
+    [
+     10.732023,
+     106.698824
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-b",
+  "name": "Tòa B",
+  "aliases": [
+   "nha b",
+   "giang duong b",
+   "toa b"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.732448,
+  "lng": 106.699068,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.732462,
+     106.698686
+    ],
+    [
+     10.732613,
+     106.69948
+    ],
+    [
+     10.732434,
+     106.69945
+    ],
+    [
+     10.732283,
+     106.698656
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-c",
+  "name": "Tòa C",
+  "aliases": [
+   "nha c",
+   "giang duong c",
+   "toa c"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.731403,
+  "lng": 106.699205,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.731665,
+     106.698878
+    ],
+    [
+     10.731304,
+     106.699572
+    ],
+    [
+     10.731138,
+     106.69954
+    ],
+    [
+     10.731505,
+     106.69883
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-d",
+  "name": "Tòa D",
+  "aliases": [
+   "nha d",
+   "giang duong d",
+   "toa d"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.732828,
+  "lng": 106.698758,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.733007,
+     106.698914
+    ],
+    [
+     10.732676,
+     106.698831
+    ],
+    [
+     10.732567,
+     106.698603
+    ],
+    [
+     10.732901,
+     106.698671
+    ],
+    [
+     10.732989,
+     106.698771
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-e",
+  "name": "Tòa E",
+  "aliases": [
+   "nha e",
+   "giang duong e",
+   "toa e"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.732907,
+  "lng": 106.69928,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.732997,
+     106.699042
+    ],
+    [
+     10.733096,
+     106.699565
+    ],
+    [
+     10.732817,
+     106.699518
+    ],
+    [
+     10.732718,
+     106.698995
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-f",
+  "name": "Tòa F",
+  "aliases": [
+   "nha f",
+   "giang duong f",
+   "toa f"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.730827,
+  "lng": 106.698876,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.731132,
+     106.698734
+    ],
+    [
+     10.731129,
+     106.698792
+    ],
+    [
+     10.731055,
+     106.698943
+    ],
+    [
+     10.730893,
+     106.698961
+    ],
+    [
+     10.73086,
+     106.69902
+    ],
+    [
+     10.730752,
+     106.698988
+    ],
+    [
+     10.730786,
+     106.698819
+    ],
+    [
+     10.730829,
+     106.698777
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-g",
+  "name": "Tòa G - Thư viện truyền cảm hứng",
+  "aliases": [
+   "toa g",
+   "nha g",
+   "thu vien",
+   "thu vien truyen cam hung"
+  ],
+  "category": "Tòa nhà · Thư viện",
+  "lat": 10.730772,
+  "lng": 106.699395,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.730764,
+     106.69915
+    ],
+    [
+     10.730946,
+     106.699222
+    ],
+    [
+     10.730874,
+     106.699367
+    ],
+    [
+     10.730806,
+     106.699634
+    ],
+    [
+     10.730585,
+     106.699676
+    ],
+    [
+     10.730657,
+     106.699321
+    ]
+   ]
+  }
+ },
+ {
+  "id": "nha-h",
+  "name": "Tòa H",
+  "aliases": [
+   "toa h",
+   "nha h",
+   "ky tuc xa h",
+   "ktx h"
+  ],
+  "category": "Ký túc xá",
+  "lat": 10.732849,
+  "lng": 106.697007,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.732948,
+     106.697109
+    ],
+    [
+     10.732934,
+     106.696905
+    ],
+    [
+     10.732754,
+     106.696919
+    ],
+    [
+     10.732761,
+     106.697097
+    ]
+   ]
+  }
+ },
+ {
+  "id": "home-mart",
+  "name": "Home Mart",
+  "aliases": [
+   "home mart",
+   "tang tret toa h"
+  ],
+  "category": "Khu vực",
+  "lat": 10.732863,
+  "lng": 106.696886
+ },
+ {
+  "id": "stepup",
+  "name": "StepUp",
+  "aliases": [
+   "stepup",
+   "step up",
+   "tang tret toa h"
+  ],
+  "category": "Khu vực",
+  "lat": 10.732848,
+  "lng": 106.697159
+ },
+ {
+  "id": "can-tin-nha-h",
+  "name": "Căn tin Nhà H",
+  "aliases": [
+   "can tin nha h",
+   "can tin toa h"
+  ],
+  "category": "Khu vực",
+  "lat": 10.73302,
+  "lng": 106.696802
+ },
+ {
+  "id": "nha-tam-quan-su",
+  "name": "Nhà tắm khu quân sự",
+  "aliases": [
+   "nha tam quan su",
+   "nha tam"
+  ],
+  "category": "Khu vực",
+  "lat": 10.733116,
+  "lng": 106.696927
+ },
+ {
+  "id": "nha-i",
+  "name": "Tòa I",
+  "aliases": [
+   "toa i",
+   "nha i",
+   "ky tuc xa i",
+   "ktx i"
+  ],
+  "category": "Ký túc xá",
+  "lat": 10.733135,
+  "lng": 106.696776,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.73319,
+     106.696584
+    ],
+    [
+     10.73321,
+     106.696935
+    ],
+    [
+     10.733046,
+     106.696946
+    ],
+    [
+     10.733026,
+     106.696594
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-k",
+  "name": "Tòa K",
+  "aliases": [
+   "nha k",
+   "giang duong k",
+   "toa k"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.7308612,
+  "lng": 106.6977227
+ },
+ {
+  "id": "toa-l",
+  "name": "Tòa L",
+  "aliases": [
+   "nha l",
+   "giang duong l",
+   "toa l",
+   "toa n"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.730902,
+  "lng": 106.697855,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.730934,
+     106.697649
+    ],
+    [
+     10.730986,
+     106.69797
+    ],
+    [
+     10.73087,
+     106.698059
+    ],
+    [
+     10.730819,
+     106.697737
+    ]
+   ]
+  }
+ },
+ {
+  "id": "toa-m",
+  "name": "Tòa M",
+  "aliases": [
+   "toa m"
+  ],
+  "category": "Tòa nhà",
+  "lat": 10.730561,
+  "lng": 106.698151,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.730653,
+     106.698265
+    ],
+    [
+     10.730521,
+     106.698364
+    ],
+    [
+     10.730469,
+     106.698036
+    ],
+    [
+     10.7306,
+     106.697938
+    ]
+   ]
+  }
+ },
+ {
+  "id": "trung-tam-qpan",
+  "name": "Trung tâm QPAN",
+  "aliases": [
+   "trung tam qp",
+   "trung tam quoc phong",
+   "qpan",
+   "quoc phong",
+   "trung tam qpan"
+  ],
+  "category": "Khu vực",
+  "lat": 10.730716,
+  "lng": 106.698462,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.730802,
+     106.698242
+    ],
+    [
+     10.730847,
+     106.698515
+    ],
+    [
+     10.73063,
+     106.69868
+    ],
+    [
+     10.730587,
+     106.698406
+    ]
+   ]
+  }
+ },
+ {
+  "id": "vfis",
+  "name": "Trường Quốc tế Việt Nam - Phần Lan (VFIS)",
+  "aliases": [
+   "vfis",
+   "truong vfis",
+   "viet nam phan lan",
+   "truong quoc te viet nam phan lan"
+  ],
+  "category": "Trường trực thuộc",
+  "lat": 10.732462,
+  "lng": 106.694972
+ },
+ {
+  "id": "san-qpan",
+  "name": "Sân quốc phòng",
+  "aliases": [
+   "san quoc phong",
+   "san qpan"
+  ],
+  "category": "Khu vực",
+  "lat": 10.731219,
+  "lng": 106.698014,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.731482,
+     106.697614
+    ],
+    [
+     10.731539,
+     106.697972
+    ],
+    [
+     10.730956,
+     106.698414
+    ],
+    [
+     10.7309,
+     106.698054
+    ]
+   ]
+  }
+ },
+ {
+  "id": "nha-in-ada",
+  "name": "Nhà In ADA",
+  "aliases": [
+   "nha in ada",
+   "in ada"
+  ],
+  "category": "Khu vực",
+  "lat": 10.731749,
+  "lng": 106.698165
+ },
+ {
+  "id": "loi-vao-ham-xe-nha-thi-dau",
+  "name": "Lối vào hầm xe Nhà thi đấu",
+  "aliases": [
+   "loi vao ham xe nha thi dau"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.731833,
+  "lng": 106.698159
+ },
+ {
+  "id": "loi-ra-ham-xe-nha-thi-dau",
+  "name": "Lối ra hầm xe Nhà thi đấu",
+  "aliases": [
+   "loi ra ham xe nha thi dau"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.731845,
+  "lng": 106.6974
+ },
+ {
+  "id": "khu-tap-the-duc-ktx",
+  "name": "Khu tập thể dục KTX",
+  "aliases": [
+   "khu tap the duc ktx",
+   "tap the duc ktx"
+  ],
+  "category": "Khu vực",
+  "lat": 10.732184,
+  "lng": 106.697145
+ },
+ {
+  "id": "nha-thi-dau",
+  "name": "Nhà thi đấu",
+  "aliases": [
+   "nha thi dau",
+   "gym",
+   "nha the thao"
+  ],
+  "category": "Thể thao",
+  "lat": 10.731839,
+  "lng": 106.697904,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.732011,
+     106.697507
+    ],
+    [
+     10.732055,
+     106.698281
+    ],
+    [
+     10.731637,
+     106.698308
+    ],
+    [
+     10.731593,
+     106.697534
+    ]
+   ]
+  }
+ },
+ {
+  "id": "san-van-dong",
+  "name": "Sân vận động",
+  "aliases": [
+   "san van dong",
+   "san bong da"
+  ],
+  "category": "Thể thao",
+  "lat": 10.732629,
+  "lng": 106.697863,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.733134,
+     106.697448
+    ],
+    [
+     10.733176,
+     106.698193
+    ],
+    [
+     10.732141,
+     106.698259
+    ],
+    [
+     10.732098,
+     106.697514
+    ]
+   ]
+  }
+ },
+ {
+  "id": "ho-boi",
+  "name": "Hồ bơi 1",
+  "aliases": [
+   "ho boi",
+   "ho boi 1",
+   "be boi"
+  ],
+  "category": "Thể thao",
+  "lat": 10.732615,
+  "lng": 106.697061,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.732693,
+     106.696937
+    ],
+    [
+     10.732712,
+     106.69727
+    ],
+    [
+     10.732557,
+     106.69728
+    ],
+    [
+     10.732538,
+     106.696947
+    ]
+   ]
+  }
+ },
+ {
+  "id": "ho-boi-moi",
+  "name": "Hồ bơi 2",
+  "aliases": [
+   "ho boi 2",
+   "ho boi moi",
+   "be boi moi"
+  ],
+  "category": "Thể thao",
+  "lat": 10.731091,
+  "lng": 106.697683,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.731133,
+     106.697476
+    ],
+    [
+     10.731183,
+     106.697787
+    ],
+    [
+     10.73105,
+     106.697889
+    ],
+    [
+     10.731,
+     106.697577
+    ]
+   ]
+  }
+ },
+ {
+  "id": "san-tennis",
+  "name": "Sân tennis",
+  "aliases": [
+   "san tennis",
+   "tennis"
+  ],
+  "category": "Thể thao",
+  "lat": 10.73234,
+  "lng": 106.697133,
+  "coverage": {
+   "type": "polygon",
+   "ring": [
+    [
+     10.732514,
+     106.696891
+    ],
+    [
+     10.732538,
+     106.697306
+    ],
+    [
+     10.732077,
+     106.697335
+    ],
+    [
+     10.732053,
+     106.69692
+    ]
+   ]
+  }
+ },
+ {
+  "id": "san-bong-ro",
+  "name": "Sân bóng rổ",
+  "aliases": [
+   "san bong ro",
+   "bong ro"
+  ],
+  "category": "Thể thao",
+  "lat": 10.73243,
+  "lng": 106.696957
+ },
+ {
+  "id": "khu-tap-luyen-quan-su",
+  "name": "Khu tập luyện quân sự",
+  "aliases": [
+   "khu tap luyen quan su",
+   "quan su"
+  ],
+  "category": "Khu vực",
+  "lat": 10.731635,
+  "lng": 106.695949
+ },
+ {
+  "id": "san-golf-khu",
+  "name": "Khu golf",
+  "aliases": [
+   "khu golf",
+   "san golf"
+  ],
+  "category": "Khu vực",
+  "lat": 10.730891,
+  "lng": 106.696631
+ },
+ {
+  "id": "san-pickleball",
+  "name": "Sân pickleball",
+  "aliases": [
+   "san pickleball",
+   "pickleball"
+  ],
+  "category": "Khu vực",
+  "lat": 10.730092,
+  "lng": 106.69634
+ },
+ {
+  "id": "khu-cay-xanh-ghe-da",
+  "name": "Khu cây xanh bóng mát (ghế đá)",
+  "aliases": [
+   "cay xanh",
+   "bong mat",
+   "ghe da",
+   "khu cay xanh"
+  ],
+  "category": "Khu vực",
+  "lat": 10.731312,
+  "lng": 106.697611
+ },
+ {
+  "id": "sanh-noi-ab",
+  "name": "Sảnh nối Tòa A-B",
+  "aliases": [
+   "sanh noi ab",
+   "sanh noi a b"
+  ],
+  "category": "Khu vực",
+  "lat": 10.732218,
+  "lng": 106.698964
+ },
+ {
+  "id": "sanh-noi-ac",
+  "name": "Sảnh nối Tòa A-C",
+  "aliases": [
+   "sanh noi ac",
+   "sanh noi a c"
+  ],
+  "category": "Khu vực",
+  "lat": 10.731693,
+  "lng": 106.699057
+ },
+ {
+  "id": "vuon-uom",
+  "name": "Vườn ươm",
+  "aliases": [
+   "vuon uom",
+   "nha kinh"
+  ],
+  "category": "Khu vực",
+  "lat": 10.730757,
+  "lng": 106.694926
+ },
+ {
+  "id": "tuong-dai",
+  "name": "Tượng đài Bác Tôn Đức Thắng",
+  "aliases": [
+   "tuong dai",
+   "tuong ton duc thang",
+   "tuong dai ton duc thang"
+  ],
+  "category": "Điểm mốc",
+  "lat": 10.73192,
+  "lng": 106.69952
+ },
+ {
+  "id": "7-eleven",
+  "name": "7-Eleven",
+  "aliases": [
+   "7 eleven",
+   "seven eleven",
+   "cua hang tien loi"
+  ],
+  "category": "Tiện ích",
+  "lat": 10.73063,
+  "lng": 106.69822
+ },
+ {
+  "id": "phong-y-te",
+  "name": "Phòng y tế",
+  "aliases": [
+   "phong y te",
+   "y te"
+  ],
+  "category": "Khu vực",
+  "lat": 10.73171,
+  "lng": 106.698054
+ },
+ {
+  "id": "tram-dien",
+  "name": "Trạm điện",
+  "aliases": [
+   "tram dien"
+  ],
+  "category": "Hạ tầng",
+  "lat": 10.73055,
+  "lng": 106.69972
+ },
+ {
+  "id": "sanh-711",
+  "name": "Sảnh 711",
+  "aliases": [
+   "sanh 711",
+   "khu an uong sanh 711"
+  ],
+  "category": "Khu vực",
+  "lat": 10.730538,
+  "lng": 106.697864
+ },
+ {
+  "id": "can-tin",
+  "name": "Căn tin",
+  "aliases": [
+   "can tin",
+   "nha an"
+  ],
+  "category": "Ăn uống",
+  "lat": 10.7315,
+  "lng": 106.69905
+ },
+ {
+  "id": "can-tin-10d",
+  "name": "Căn tin 10D",
+  "aliases": [
+   "can tin 10d",
+   "10d"
+  ],
+  "category": "Ăn uống",
+  "lat": 10.7323,
+  "lng": 106.69865
+ },
+ {
+  "id": "startup-cafe",
+  "name": "StartUp",
+  "aliases": [
+   "startup",
+   "start up",
+   "start up cafe"
+  ],
+  "category": "Khu vực",
+  "lat": 10.732701,
+  "lng": 106.6981
+ },
+ {
+  "id": "coffee-duoi-thu-vien",
+  "name": "Coffee dưới thư viện",
+  "aliases": [
+   "coffee duoi thu vien",
+   "quan duoi thu vien"
+  ],
+  "category": "Khu vực",
+  "lat": 10.73083,
+  "lng": 106.699129
+ },
+ {
+  "id": "day-phong-nghi-san-vd",
+  "name": "Dãy phòng nghỉ/họp sân vận động",
+  "aliases": [
+   "day phong nghi san van dong",
+   "phong nghi san van dong",
+   "phong hop san van dong"
+  ],
+  "category": "Khu vực",
+  "lat": 10.732647,
+  "lng": 106.697396
+ },
+ {
+  "id": "day-phong-cong-vu",
+  "name": "Dãy phòng công vụ",
+  "aliases": [
+   "day phong cong vu",
+   "phong cong vu"
+  ],
+  "category": "Khu vực",
+  "lat": 10.733127,
+  "lng": 106.697747
+ },
+ {
+  "id": "phong-gym",
+  "name": "Phòng Gym",
+  "aliases": [
+   "phong gym",
+   "gym"
+  ],
+  "category": "Khu vực",
+  "lat": 10.73283,
+  "lng": 106.6981
+ },
+ {
+  "id": "smart",
+  "name": "SMart",
+  "aliases": [
+   "smart",
+   "sieu thi smart"
+  ],
+  "category": "Khu vực",
+  "lat": 10.730794,
+  "lng": 106.697617
+ },
+ {
+  "id": "ham-xe-cong-cong",
+  "name": "Hầm xe phương tiện công cộng",
+  "aliases": [
+   "ham xe cong cong",
+   "ham xe xe buyt"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.731883,
+  "lng": 106.698626
+ },
+ {
+  "id": "loi-vao-ham-xe-a",
+  "name": "Lối vào hầm xe Tòa A",
+  "aliases": [
+   "loi vao ham xe a",
+   "cua vao ham xe a"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.732244,
+  "lng": 106.699332
+ },
+ {
+  "id": "loi-ra-ham-xe-a",
+  "name": "Lối ra hầm xe Tòa A",
+  "aliases": [
+   "loi ra ham xe a",
+   "cua ra ham xe a"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.731693,
+  "lng": 106.699367
+ },
+ {
+  "id": "loi-vao-ham-xe-d",
+  "name": "Lối vào hầm xe Tòa D",
+  "aliases": [
+   "loi vao ham xe d",
+   "cua vao ham xe d"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.732652,
+  "lng": 106.698791
+ },
+ {
+  "id": "thang-bo-ham-xe-d",
+  "name": "Thang bộ xuống hầm Tòa D",
+  "aliases": [
+   "thang bo xuong ham xe d",
+   "thang bo ham d"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.732599,
+  "lng": 106.699503
+ },
+ {
+  "id": "loi-ra-ham-xe-d",
+  "name": "Lối ra hầm xe Tòa D",
+  "aliases": [
+   "loi ra ham xe d",
+   "cua ra ham xe d"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.733013,
+  "lng": 106.69911
+ },
+ {
+  "id": "loi-vao-ham-xe-f",
+  "name": "Lối vào hầm xe Tòa F",
+  "aliases": [
+   "loi vao ham xe f",
+   "cua vao ham xe f"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.730817,
+  "lng": 106.69877
+ },
+ {
+  "id": "loi-ra-ham-xe-f",
+  "name": "Lối ra hầm xe Tòa F",
+  "aliases": [
+   "loi ra ham xe f",
+   "cua ra ham xe f"
+  ],
+  "category": "Hầm xe",
+  "lat": 10.730645,
+  "lng": 106.699286
+ },
+ {
+  "id": "cong-1",
+  "name": "Cổng 1",
+  "aliases": [
+   "cong 1",
+   "cong chinh"
+  ],
+  "category": "Cổng",
+  "lat": 10.731588,
+  "lng": 106.699997
+ },
+ {
+  "id": "cong-2",
+  "name": "Cổng 2",
+  "aliases": [
+   "cong 2"
+  ],
+  "category": "Cổng",
+  "lat": 10.732455,
+  "lng": 106.699906
+ },
+ {
+  "id": "cong-3",
+  "name": "Cổng 3",
+  "aliases": [
+   "cong 3"
+  ],
+  "category": "Cổng",
+  "lat": 10.733033,
+  "lng": 106.699814
+ },
+ {
+  "id": "cong-4-xe-buyt",
+  "name": "Cổng 4 (xe buýt)",
+  "aliases": [
+   "cong 4",
+   "cong xe buyt"
+  ],
+  "category": "Cổng",
+  "lat": 10.733169,
+  "lng": 106.699393
+ },
+ {
+  "id": "cong-5",
+  "name": "Cổng 5",
+  "aliases": [
+   "cong 5"
+  ],
+  "category": "Cổng",
+  "lat": 10.733169,
+  "lng": 106.698948
+ },
+ {
+  "id": "cong-6",
+  "name": "Cổng 6",
+  "aliases": [
+   "cong 6"
+  ],
+  "category": "Cổng",
+  "lat": 10.733269,
+  "lng": 106.697283
+ },
+ {
+  "id": "cong-7",
+  "name": "Cổng 7",
+  "aliases": [
+   "cong 7"
+  ],
+  "category": "Cổng",
+  "lat": 10.733311,
+  "lng": 106.69638
+ },
+ {
+  "id": "phong-c00",
+  "name": "Phòng C00 - Một cửa",
+  "aliases": [
+   "c00",
+   "phong c00",
+   "mot cua"
+  ],
+  "category": "Phòng ban",
+  "lat": 10.73178,
+  "lng": 106.69915
+ },
+ {
+  "id": "phong-a003",
+  "name": "Phòng A003",
+  "aliases": [
+   "a003"
+  ],
+  "category": "Phòng ban",
+  "lat": 10.73183,
+  "lng": 106.69922
+ }
+]

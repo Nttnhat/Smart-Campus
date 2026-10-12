@@ -36,6 +36,18 @@ test('square: điểm trong vòng tròn ngoại tiếp nhưng ở góc (ngoài c
   assert.equal(isPointInCoverage(corner.lat, corner.lng, CENTER.lat, CENTER.lng, { type: 'square', diagonalM: 20 }), false);
 });
 
+test('polygon: điểm trong đường bao thật (hình chữ nhật xoay) -> true; ngoài -> false', () => {
+  const ring = [[10.7320, 106.6990], [10.7322, 106.6992], [10.7318, 106.6996], [10.7316, 106.6994]];
+  const coverage = { type: 'polygon', ring };
+  assert.equal(isPointInCoverage(10.7319, 106.6993, CENTER.lat, CENTER.lng, coverage), true);
+  assert.equal(isPointInCoverage(10.7330, 106.7000, CENTER.lat, CENTER.lng, coverage), false);
+});
+
+test('polygon: ring thiếu hoặc quá ít điểm -> false, không throw', () => {
+  assert.equal(isPointInCoverage(10.7319, 106.6993, CENTER.lat, CENTER.lng, { type: 'polygon' }), false);
+  assert.equal(isPointInCoverage(10.7319, 106.6993, CENTER.lat, CENTER.lng, { type: 'polygon', ring: [[10.73, 106.69]] }), false);
+});
+
 test('coverage rỗng hoặc type không xác định -> false, không throw', () => {
   assert.equal(isPointInCoverage(CENTER.lat, CENTER.lng, CENTER.lat, CENTER.lng, null), false);
   assert.equal(isPointInCoverage(CENTER.lat, CENTER.lng, CENTER.lat, CENTER.lng, { type: 'hinh-thang' }), false);

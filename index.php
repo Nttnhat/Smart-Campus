@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Campus | Đăng nhập Hệ thống</title>
+    <title>Smart Campus | Đăng nhập Quản trị</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
@@ -200,7 +200,7 @@
             <div class="login-logo">
                 <img src="image/logo.svg" alt="TDTU Logo" height="80">
             </div>
-            <h1>CỔNG<br>THÔNG TIN<br>SINH VIÊN</h1>
+            <h1>CỔNG<br>QUẢN TRỊ<br>HỆ THỐNG</h1>
         </div>
 
         <div class="login-right">
@@ -209,23 +209,18 @@
             </div>
 
             <div class="login-form-container">
-                <h2>XIN CHÀO!</h2>
-                
-                <div class="social-login">
-                    <a href="#" class="social-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                    </a>
-                </div>
+                <h2>ĐĂNG NHẬP QUẢN TRỊ</h2>
+                <p style="text-align:center; color: var(--secondary, #64748b); font-size: 0.9rem; margin-top: -1rem; margin-bottom: 1.5rem;">Chỉ dành cho quản trị viên hệ thống.</p>
 
                 <form id="loginForm">
                     <div class="form-group">
                         <svg class="form-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <input type="text" id="username" class="form-control" placeholder="Mã số sinh viên (admin)" required autocomplete="off">
+                        <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập quản trị" required autocomplete="off">
                     </div>
-                    
+
                     <div class="form-group">
                         <svg class="form-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <input type="password" id="password" class="form-control" placeholder="Mật khẩu (admin)" required>
+                        <input type="password" id="password" class="form-control" placeholder="Mật khẩu quản trị" required>
                         <svg style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #999; cursor: pointer;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </div>
 
@@ -233,10 +228,14 @@
 
                     <button type="submit" class="btn-login">ĐĂNG NHẬP</button>
                 </form>
+
+                <p style="text-align:center; margin-top: 1.5rem; font-size: 0.9rem;">
+                    Không phải quản trị viên? <a href="home.php" style="color: var(--secondary); font-weight: 600;">Vào trang web, không cần đăng nhập</a>
+                </p>
             </div>
         </div>
     </div>
 
-    <script src="js/login.js"></script>
+    <script src="js/login.js?v=<?php echo @filemtime(__DIR__.'/js/login.js') ?: time(); ?>"></script>
 </body>
 </html>

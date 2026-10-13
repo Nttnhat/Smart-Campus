@@ -420,10 +420,16 @@
 
   // Nền bản đồ thật duy nhất: OpenStreetMap. Từng có thêm lớp vệ tinh Esri làm lựa chọn phụ, nhưng
   // ảnh vệ tinh bị lệch tọa độ so với thực tế (lỗi hiệu chỉnh của Esri) nên đã bỏ, chỉ giữ OSM.
+  // Ưu tiên tile đã tải sẵn trong thư mục tiles/ (xem tools/download_tiles.js) để không phụ thuộc
+  // Internet/HTTPS mỗi lần mở trang (máy khác bị chặn/lỗi chứng chỉ vẫn xem được bản đồ nền).
+  // Nếu thiếu tile local (ngoài vùng đã tải, hoặc tải lỗi) thì tự động tải online làm dự phòng.
   function addRealBasemap(map) {
-    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const osm = L.tileLayer('tiles/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap contributors'
+    });
+    osm.on('tileerror', (e) => {
+      if (e.tile) e.tile.src = `https://tile.openstreetmap.org/${e.coords.z}/${e.coords.x}/${e.coords.y}.png`;
     });
     osm.addTo(map);
     return osm;

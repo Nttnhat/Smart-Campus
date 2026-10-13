@@ -1,26 +1,16 @@
-// Trang admin: nối trực tiếp với OFFICIAL_PLACES đang dùng cho navigation.php/campus-map.php.
-// Không có backend/database thật, nên sửa tên/danh mục được lưu đè (override) trong localStorage
-// của trình duyệt này - không đồng bộ sang người dùng khác, không ghi lại vào file code.
+// Trang admin: nối trực tiếp với OFFICIAL_PLACES đang dùng cho navigation.php/campus-map.php
+// (nạp từ database qua api/places.php). Sửa tên/danh mục gọi api/admin/update_place.php - ghi
+// thật vào bảng `places`, cần đăng nhập admin (session), có audit_logs. Sau khi lưu, cập nhật
+// trực tiếp vào mảng VM.OFFICIAL_PLACES (cùng reference đang dùng cho search/nhãn) để không phải
+// tải lại trang.
 document.addEventListener('DOMContentLoaded', async () => {
   const VM = window.TDTUVectorMap;
   await VM.loadOfficialPlaces();
-  const basePlaces = (VM && VM.OFFICIAL_PLACES) || [];
 
   const BUILDING_CATEGORIES = new Set(['Tòa nhà', 'Tòa nhà · Thư viện', 'Ký túc xá', 'Trường trực thuộc']);
-  const OVERRIDES_KEY = 'tdtu_admin_overrides';
 
-  function loadOverrides() {
-    try { return JSON.parse(localStorage.getItem(OVERRIDES_KEY) || '{}'); } catch (_) { return {}; }
-  }
-  function saveOverrides(overrides) {
-    try { localStorage.setItem(OVERRIDES_KEY, JSON.stringify(overrides)); } catch (_) { /* bỏ qua */ }
-  }
-
-  // Luôn tính lại từ base + override hiện tại, để số liệu/bảng là "động" theo đúng trạng thái mới
-  // nhất sau mỗi lần sửa, không phải giá trị tính một lần lúc tải trang.
   function getEffectivePlaces() {
-    const overrides = loadOverrides();
-    return basePlaces.map(p => (overrides[p.id] ? { ...p, ...overrides[p.id] } : p));
+    return VM.OFFICIAL_PLACES;
   }
 
   function entranceCount(id) {
@@ -110,16 +100,34 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('editCancelBtn').addEventListener('click', closeEdit);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeEdit(); });
 
-  document.getElementById('editSaveBtn').addEventListener('click', () => {
+  const saveBtn = document.getElementById('editSaveBtn');
+  const editError = document.createElement('p');
+  editError.className = 'edit-modal-error';
+  editError.hidden = true;
+  saveBtn.closest('.edit-modal').insertBefore(editError, saveBtn.closest('.edit-modal-actions'));
+
+  saveBtn.addEventListener('click', async () => {
     if (!editingId) return;
     const name = nameInput.value.trim();
     const category = categoryInput.value.trim();
     if (!name || !category) return;
-    const overrides = loadOverrides();
-    overrides[editingId] = { ...(overrides[editingId] || {}), name, category };
-    saveOverrides(overrides);
-    closeEdit();
-    renderAll();
+    editError.hidden = true;
+    saveBtn.disabled = true;
+    try {
+      const body = new URLSearchParams({ slug: editingId, name, category });
+      const res = await fetch('api/admin/update_place.php', { method: 'POST', body });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Lỗi ${res.status}`);
+      const place = VM.OFFICIAL_PLACES.find(p => p.id === editingId);
+      if (place) { place.name = name; place.category = category; }
+      closeEdit();
+      renderAll();
+    } catch (err) {
+      editError.textContent = 'Lưu thất bại: ' + err.message;
+      editError.hidden = false;
+    } finally {
+      saveBtn.disabled = false;
+    }
   });
 
   // ---- Chuyển view qua sidebar; mục chưa có dữ liệu thật thì báo rõ thay vì giả vờ hoạt động ----

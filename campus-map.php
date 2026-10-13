@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/config/auth.php';
+$isAdminSession = (bool) current_admin_id();
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -6,7 +10,7 @@
     <title>TDTU | Bản đồ khuôn viên thực</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo @filemtime(__DIR__.'/css/style.css') ?: time(); ?>">
     <link rel="stylesheet" href="css/campus-map.css?v=<?php echo @filemtime(__DIR__.'/css/campus-map.css') ?: time(); ?>">
 </head>
 <body>
@@ -20,7 +24,7 @@
         <a href="campus-map.php" class="active">Bản đồ</a>
         <a href="navigation.php">Tìm đường</a>
     </nav>
-    <div class="user-menu"><a href="profile.php"><div class="avatar">SV</div></a></div>
+    <div class="user-menu"><?php if ($isAdminSession): ?><a href="admin.php" title="Về trang quản trị"><div class="avatar admin-avatar">AD</div></a><?php else: ?><div class="avatar">SV</div><?php endif; ?></div>
 </header>
 
 <main class="campus-page real-vector-campus" id="campusMapPage">
@@ -58,6 +62,7 @@
             <p id="selectedPlaceDetail">Tìm địa điểm hoặc bấm trực tiếp lên bản đồ.</p>
             <div class="coord-readout" id="selectedCoordinates">—</div>
             <a id="selectedPlaceRoute" href="navigation.php" class="selected-route-btn disabled-link">Dẫn đường đến đây</a>
+            <a id="selectedPlaceDetails" href="building-details.php" class="selected-route-btn selected-details-btn disabled-link">Xem thông tin chi tiết</a>
         </div>
     </aside>
 
@@ -92,7 +97,7 @@
 <script src="js/lib/entrances.js"></script>
 <script src="js/lib/resolve-place.js"></script>
 <script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
-<script src="js/campus-map.js"></script>
-<script src="js/main.js"></script>
+<script src="js/campus-map.js?v=<?php echo @filemtime(__DIR__.'/js/campus-map.js') ?: time(); ?>"></script>
+<script src="js/main.js?v=<?php echo @filemtime(__DIR__.'/js/main.js') ?: time(); ?>"></script>
 </body>
 </html>

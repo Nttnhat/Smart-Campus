@@ -137,48 +137,59 @@ ul {
   color: rgba(255,255,255,0.9);
 }
 
+/* Desktop mặc định: menu nằm ngang ngay trong header (trước đây bị để position:fixed luôn luôn,
+   nên ẩn mất ở mọi kích thước màn hình - chỉ hiện đúng khi bấm logo bật ".active", nhưng logo lại
+   bị chặn điều hướng để làm việc này, khiến cả menu lẫn nút logo đều coi như không dùng được). */
 .nav-links {
-  position: fixed;
-  top: calc(var(--header-height) + 10px);
-  left: -300px;
-  width: 300px;
-  height: calc(100vh - 80px);
-  background-color: var(--surface);
-  box-shadow: 4px 0 10px rgba(0,0,0,0.05);
   display: flex;
-  flex-direction: column;
-  gap: 0;
-  transition: left 0.3s ease;
-  z-index: 95;
-}
-
-.nav-links.active {
-  left: 0;
+  align-items: center;
+  gap: 1.75rem;
 }
 
 .nav-links a {
   font-weight: 600;
-  color: var(--text-dark);
-  padding: 1.25rem 2rem;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  transition: background 0.2s, color 0.2s;
+  color: rgba(255,255,255,0.85);
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
 }
 
 .nav-links a:hover, .nav-links a.active {
-  background-color: rgba(211,17,69,0.05);
-  color: var(--secondary);
+  color: #fff;
+  border-bottom-color: #fff;
 }
 
-.nav-links a.active::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background-color: var(--secondary);
-  bottom: auto;
-  border-radius: 0;
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: calc(var(--header-height) + 10px);
+    left: -300px;
+    width: 300px;
+    height: calc(100vh - 80px);
+    background-color: var(--surface);
+    box-shadow: 4px 0 10px rgba(0,0,0,0.05);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    transition: left 0.3s ease;
+    z-index: 95;
+  }
+
+  .nav-links.active {
+    left: 0;
+  }
+
+  .nav-links a {
+    color: var(--text-dark);
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    background-color: rgba(211,17,69,0.05);
+    color: var(--secondary);
+    border-bottom-color: rgba(0,0,0,0.05);
+  }
 }
 
 .sidebar-overlay {
@@ -222,6 +233,13 @@ ul {
   font-weight: bold;
   cursor: pointer;
   border: 2px solid var(--secondary);
+}
+
+/* Avatar "AD" chỉ hiện khi đang có phiên đăng nhập admin - bấm vào quay lại admin.php. */
+.admin-avatar {
+  background-color: var(--primary, #00458c);
+  color: #fff;
+  border-color: #fff;
 }
 
 /* Layout System */

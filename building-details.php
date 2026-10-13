@@ -1,13 +1,33 @@
+<?php
+require_once __DIR__ . '/config/auth.php';
+require_once __DIR__ . '/config/db.php';
+$isAdminSession = (bool) current_admin_id();
+
+// Nơi được chọn từ campus-map.php (nút "Xem thông tin chi tiết"). Không có ?slug= hoặc không tìm
+// thấy -> dùng dữ liệu mẫu "Tòa A" như trước đây, có ghi rõ là ví dụ minh hoạ.
+$BUILDING_CATEGORIES = ['Tòa nhà', 'Tòa nhà · Thư viện', 'Ký túc xá', 'Trường trực thuộc'];
+$slug = trim($_GET['slug'] ?? '');
+$place = null;
+if ($slug !== '') {
+    $stmt = db()->prepare('SELECT slug, name, category_label, lat, lng FROM places WHERE slug = :slug AND is_active = 1 LIMIT 1');
+    $stmt->execute([':slug' => $slug]);
+    $place = $stmt->fetch() ?: null;
+}
+$isSample = !$place;
+$displayName = $place['name'] ?? 'Tòa A';
+$displayCategory = $place['category_label'] ?? 'Tòa nhà';
+$showFloorDemo = in_array($displayCategory, $BUILDING_CATEGORIES, true);
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDTU | Chi tiết tòa nhà</title>
+    <title>TDTU | Chi tiết <?php echo htmlspecialchars($displayName); ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo @filemtime(__DIR__.'/css/style.css') ?: time(); ?>">
     
-    <link rel="stylesheet" href="css/building-details.css">
+    <link rel="stylesheet" href="css/building-details.css?v=<?php echo @filemtime(__DIR__.'/css/building-details.css') ?: time(); ?>">
 </head>
 <body>
 
@@ -22,31 +42,42 @@
             <a href="navigation.php">Tìm đường</a>
         </nav>
         <div class="user-menu">
-            <a href="profile.php"><div class="avatar">SV</div></a>
+            <?php if ($isAdminSession): ?>
+                <a href="admin.php" title="Về trang quản trị"><div class="avatar admin-avatar">AD</div></a>
+            <?php else: ?>
+                <div class="avatar">SV</div>
+            <?php endif; ?>
         </div>
     </header>
 
     <div class="building-layout">
         <!-- Sidebar -->
         <div class="building-sidebar">
-            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tòa A" class="building-image">
-            
+            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="<?php echo htmlspecialchars($displayName); ?>" class="building-image">
+
             <div class="building-info">
-                <h2>Tòa A <span class="badge">Đang hoạt động</span></h2>
-                <p class="text-light">Khu hành chính & Phòng học lý thuyết dành cho sinh viên năm nhất.</p>
-                
+                <h2><?php echo htmlspecialchars($displayName); ?> <span class="badge"><?php echo htmlspecialchars($displayCategory); ?></span></h2>
+                <?php if ($isSample): ?>
+                    <p class="text-light">Chưa chọn địa điểm nào từ bản đồ - đây là dữ liệu ví dụ minh hoạ bố cục trang.</p>
+                <?php elseif ($place): ?>
+                    <p class="text-light">Toạ độ: <?php echo htmlspecialchars(number_format((float) $place['lat'], 6) . ', ' . number_format((float) $place['lng'], 6)); ?></p>
+                <?php endif; ?>
+
+                <?php if ($showFloorDemo): ?>
                 <div class="info-grid">
                     <div class="info-item">
                         <div class="info-value">05</div>
-                        <div class="info-label">Số tầng</div>
+                        <div class="info-label">Số tầng (mẫu)</div>
                     </div>
                     <div class="info-item">
                         <div class="info-value">42</div>
-                        <div class="info-label">Phòng học</div>
+                        <div class="info-label">Phòng học (mẫu)</div>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
 
+            <?php if ($showFloorDemo): ?>
             <div class="floor-selector">
                 <h3 class="text-primary">Sơ đồ các tầng</h3>
                 <div class="floor-list">
@@ -68,12 +99,14 @@
                     </button>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
 
-        <!-- Floor Plan Area -->
+        <?php if ($showFloorDemo): ?>
+        <!-- Floor Plan Area (mẫu minh hoạ - chưa có dữ liệu sơ đồ tầng thật cho từng phòng) -->
         <div class="floor-map-container">
             <div class="floor-map-header">
-                <h3>Sơ đồ Tầng 3 - Tòa A</h3>
+                <h3>Sơ đồ Tầng 3 - <?php echo htmlspecialchars($displayName); ?> (mẫu)</h3>
                 
                 <!-- Search within floor -->
                 <div class="search-container" style="width: 250px;">
@@ -116,10 +149,15 @@
                 </div>
             </div>
         </div>
+        <?php else: ?>
+        <div class="floor-map-container" style="display:flex; align-items:center; justify-content:center; padding:3rem; color:var(--text-light,#64748b); text-align:center;">
+            <p>Chưa có dữ liệu sơ đồ tầng/phòng cho "<?php echo htmlspecialchars($displayName); ?>" (danh mục "<?php echo htmlspecialchars($displayCategory); ?>" không phải tòa nhà có tầng/phòng).</p>
+        </div>
+        <?php endif; ?>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=<?php echo @filemtime(__DIR__.'/js/main.js') ?: time(); ?>"></script>
     
-<script src="js/building-details.js"></script>
+<script src="js/building-details.js?v=<?php echo @filemtime(__DIR__.'/js/building-details.js') ?: time(); ?>"></script>
 </body>
 </html>

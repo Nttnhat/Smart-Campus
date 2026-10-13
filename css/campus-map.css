@@ -243,6 +243,13 @@
     font-weight: 800;
 }
 
+.selected-details-btn {
+    margin-top: 8px;
+    background: #fff;
+    color: var(--primary, #00458c);
+    border: 1.5px solid var(--primary, #00458c);
+}
+
 .map-content {
     min-width: 0;
     padding: 20px;

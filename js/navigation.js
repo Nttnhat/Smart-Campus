@@ -156,9 +156,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       snapDistance:0
     };
     try {
-      // Nếu điểm khớp một tòa có dữ liệu lối vào (window.Entrances), snap từ lối vào gần nhất
-      // thay vì từ tâm tòa - để tuyến đường kết thúc đúng ở cửa thật, không phải điểm bất kỳ cạnh tòa.
-      const entrance = hit && window.Entrances ? window.Entrances.nearestEntrance(hit.id, point.lat, point.lng) : null;
+      // Nếu điểm khớp một tòa có dữ liệu lối vào (bảng place_entrances trong database, qua
+      // VM.nearestEntranceFor - tự rơi về file tĩnh js/lib/entrances.js nếu API lỗi), snap từ lối
+      // vào gần nhất thay vì từ tâm tòa - để tuyến đường kết thúc đúng ở cửa thật.
+      const entrance = hit ? await VM.nearestEntranceFor(hit.id, point.lat, point.lng) : null;
       const anchor = entrance ? {lat: entrance.lat, lng: entrance.lng} : point;
       const snapped = await VM.snapToWalkable(anchor.lat, anchor.lng, 120);
       if (snapped) {

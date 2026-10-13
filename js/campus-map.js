@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const selectedDetail = document.getElementById('selectedPlaceDetail');
   const selectedCoords = document.getElementById('selectedCoordinates');
   const routeLink = document.getElementById('selectedPlaceRoute');
+  const detailsLink = document.getElementById('selectedPlaceDetails');
   const dataStatus = document.getElementById('mapDataStatus');
   const gpsStatus = document.getElementById('gpsMapStatus');
   const gpsDetail = document.getElementById('gpsMapDetail');
@@ -41,12 +42,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let selectToken = 0;
 
-  function showSelection(lat,lng,name,detail) {
+  function showSelection(lat,lng,name,detail,id=null) {
     selectedName.textContent=name; selectedDetail.textContent=detail||'Vị trí trong khuôn viên';
     routeLink.href=`navigation.php?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&name=${encodeURIComponent(name)}`;
+    // Chỉ bật nút "Xem thông tin chi tiết" khi điểm khớp một địa điểm có sẵn (có id/slug) - điểm
+    // bấm tự do trên bản đồ (reverse-geocode) không có trang chi tiết tương ứng.
+    if (id) {
+      detailsLink.href = `building-details.php?slug=${encodeURIComponent(id)}`;
+      detailsLink.classList.remove('disabled-link');
+    } else {
+      detailsLink.href = 'building-details.php';
+      detailsLink.classList.add('disabled-link');
+    }
   }
 
-  async function selectPoint(lat,lng,name=null,detail=null) {
+  async function selectPoint(lat,lng,name=null,detail=null,id=null) {
     const token = ++selectToken;
     const hit = name ? null : window.ResolvePlace.resolvePlaceAtPoint(lat, lng, VM.OFFICIAL_PLACES, 12, [...VM.buildingAreas, ...VM.greenAreas]);
     pointLayer.clearLayers();
@@ -55,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     routeLink.classList.remove('disabled-link');
     map.flyTo([lat,lng],19,{duration:.4});
     if (name || hit) {
-      showSelection(lat,lng,name||hit.name,detail||hit?.category);
+      showSelection(lat,lng,name||hit.name,detail||hit?.category,id||hit?.id);
       return;
     }
     showSelection(lat,lng,'Đang xác định…',null);
@@ -78,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   search.addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
   search.addEventListener('focus',doSearch);
   search.addEventListener('input',()=>{clearTimeout(search._t);search._t=setTimeout(doSearch,450);});
-  results.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;const list=JSON.parse(results.dataset.items||'[]');const r=list[Number(b.dataset.i)];if(r)selectPoint(r.lat,r.lng,r.name,r.detail);});
+  results.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;const list=JSON.parse(results.dataset.items||'[]');const r=list[Number(b.dataset.i)];if(r)selectPoint(r.lat,r.lng,r.name,r.detail,r.id);});
 
   toggleGps.addEventListener('click',()=>{
     if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null;toggleGps.textContent='Bật GPS';gpsStatus.textContent='Đã dừng GPS';return;}

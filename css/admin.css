@@ -110,6 +110,12 @@ body { background-color: #F1F5F9; }
             color: #0f172a;
         }
 
+        .edit-modal-error {
+            color: #b91c1c;
+            font-size: 0.85rem;
+            margin: -0.5rem 0 1rem;
+        }
+
         .edit-modal-hint {
             font-size: 0.78rem;
             color: var(--secondary, #64748b);

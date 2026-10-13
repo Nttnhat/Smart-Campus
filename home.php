@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/config/auth.php';
+$isAdminSession = (bool) current_admin_id();
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TDTU | Trang chủ</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo @filemtime(__DIR__.'/css/style.css') ?: time(); ?>">
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
@@ -23,9 +27,11 @@
         </nav>
 
         <div class="user-menu">
-            <a href="profile.php">
-                <div class="avatar" title="Trang cá nhân">SV</div>
-            </a>
+            <?php if ($isAdminSession): ?>
+                <a href="admin.php" title="Về trang quản trị"><div class="avatar admin-avatar">AD</div></a>
+            <?php else: ?>
+                <div class="avatar">SV</div>
+            <?php endif; ?>
         </div>
     </header>
 
@@ -237,6 +243,6 @@
         </section>
     </main>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=<?php echo @filemtime(__DIR__.'/js/main.js') ?: time(); ?>"></script>
 </body>
 </html>

@@ -450,6 +450,36 @@
     return officialPlacesPromise;
   }
 
+  const entrancesCache = new Map();
+  // Lối vào đọc từ database (api/entrances.php) theo tòa, cache theo slug trong phiên trang. Lỗi
+  // mạng/API thì rơi về window.Entrances (file tĩnh js/lib/entrances.js) nếu có, để routing vẫn
+  // hoạt động được thay vì mất hẳn tính năng.
+  async function entrancesFor(buildingSlug) {
+    if (entrancesCache.has(buildingSlug)) return entrancesCache.get(buildingSlug);
+    let list = [];
+    try {
+      const res = await fetch(`api/entrances.php?building=${encodeURIComponent(buildingSlug)}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      list = data.results || [];
+    } catch (error) {
+      console.warn(`Không tải được lối vào từ database cho "${buildingSlug}", dùng dữ liệu tĩnh:`, error);
+      list = window.Entrances ? window.Entrances.entrancesFor(buildingSlug) : [];
+    }
+    entrancesCache.set(buildingSlug, list);
+    return list;
+  }
+
+  async function nearestEntranceFor(buildingSlug, lat, lng) {
+    const list = await entrancesFor(buildingSlug);
+    let best = null, bestDist = Infinity;
+    for (const e of list) {
+      const d = haversine([lat, lng], [e.lat, e.lng]);
+      if (d < bestDist) { best = e; bestDist = d; }
+    }
+    return best;
+  }
+
   window.TDTUVectorMap = {
     CAMPUS_BOUNDS,
     CORE_BOUNDS,
@@ -469,6 +499,8 @@
     shortestWalkRoute,
     nearestGraphProjection,
     snapToWalkable,
-    loadOfficialPlaces
+    loadOfficialPlaces,
+    entrancesFor,
+    nearestEntranceFor
   };
 })();

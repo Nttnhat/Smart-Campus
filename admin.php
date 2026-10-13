@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/config/auth.php';
+require_admin_page(); // chưa đăng nhập -> đẩy về login.php
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TDTU | Quản trị Hệ thống</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo @filemtime(__DIR__.'/css/style.css') ?: time(); ?>">
     
     <link rel="stylesheet" href="css/admin.css">
 </head>
@@ -19,6 +23,7 @@
         <div class="user-menu">
             <span style="font-size: 0.9rem; font-weight: 500;">Admin Panel</span>
             <div class="avatar" style="border-color: white;">AD</div>
+            <a href="api/logout.php" style="color:#fff; font-size:0.85rem; margin-left:12px;">Đăng xuất</a>
         </div>
     </header>
 
@@ -122,7 +127,7 @@
                     <h3>Sửa địa điểm</h3>
                     <label>Tên<input type="text" id="editName"></label>
                     <label>Danh mục<input type="text" id="editCategory"></label>
-                    <p class="edit-modal-hint">Lưu trên trình duyệt này (localStorage) - chưa có backend nên không đồng bộ cho người dùng khác.</p>
+                    <p class="edit-modal-hint">Lưu thật vào database, mọi người dùng đều thấy thay đổi.</p>
                     <div class="edit-modal-actions">
                         <button type="button" class="btn-icon" id="editCancelBtn">Hủy</button>
                         <button type="button" class="btn btn-secondary" id="editSaveBtn">Lưu</button>

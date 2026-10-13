@@ -1,0 +1,45 @@
+TDTU SMART CAMPUS - HƯỚNG DẪN CÀI ĐẶT & CHẠY (nộp bài)
+========================================================
+
+YÊU CẦU
+- Đã cài XAMPP (gồm Apache + MySQL + PHP 8.x). Tải tại: apachefriends.org
+
+BƯỚC 1 - Copy project
+- Giải nén/copy toàn bộ thư mục này vào: C:\xampp\htdocs\CK
+  (Giữ nguyên tên thư mục "CK", vì đường dẫn trong code dựa vào vị trí này.)
+
+BƯỚC 2 - Bật XAMPP
+- Mở XAMPP Control Panel.
+- Bấm Start ở dòng Apache và dòng MySQL, chờ cả 2 chuyển sang chữ "Running" (xanh).
+
+BƯỚC 3 - Nạp database (chỉ làm 1 lần)
+- Mở Command Prompt (cmd), chạy lần lượt 2 lệnh sau:
+
+  "C:\xampp\mysql\bin\mysql.exe" -uroot -e "CREATE DATABASE IF NOT EXISTS smart_campus_tdtu"
+  "C:\xampp\mysql\bin\mysql.exe" -uroot smart_campus_tdtu < "C:\xampp\htdocs\CK\database\smart_campus_tdtu.sql"
+
+- (Nếu dùng PowerShell thay vì cmd:
+  & "C:\xampp\mysql\bin\mysql.exe" -uroot -e "CREATE DATABASE IF NOT EXISTS smart_campus_tdtu"
+  Get-Content "C:\xampp\htdocs\CK\database\smart_campus_tdtu.sql" | & "C:\xampp\mysql\bin\mysql.exe" -uroot smart_campus_tdtu
+  )
+
+- Không báo lỗi gì là thành công. Chỉ cần làm bước này 1 lần, không phải lặp lại mỗi lần mở web.
+
+BƯỚC 4 - Mở trang web
+- Trình duyệt mở: http://localhost/CK/
+- Trang đầu cho chọn vai trò: "Người dùng" (xem bản đồ, không cần đăng nhập) hoặc "Quản trị viên" (đăng nhập quản lý dữ liệu).
+
+TÀI KHOẢN QUẢN TRỊ (demo)
+- Tên đăng nhập: admin
+- Mật khẩu: admin
+
+KIỂM TRA NHANH NẾU LỖI
+- Mở http://localhost/CK/api/places.php — nếu thấy JSON danh sách địa điểm là database đã nối đúng.
+  Nếu thấy {"error": "Không kết nối được database..."} thì quay lại BƯỚC 3.
+- Bản đồ nền (tile) đã được tải sẵn trong thư mục tiles/, không cần Internet để hiện bản đồ khu vực
+  campus. Tuy nhiên tính năng tìm kiếm địa chỉ ngoài campus và dẫn đường (routing qua OpenStreetMap/
+  Overpass) vẫn cần Internet.
+
+GHI CHÚ
+- Không mở file trực tiếp kiểu file:///C:/xampp/htdocs/CK/... — PHP sẽ không chạy. Luôn truy cập qua
+  http://localhost/CK/.

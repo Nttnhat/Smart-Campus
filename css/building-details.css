@@ -1,0 +1,296 @@
+.building-layout {
+            display: flex;
+            height: calc(100vh - var(--header-height));
+        }
+
+        .building-sidebar {
+            width: 400px;
+            background: var(--surface);
+            border-right: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            box-shadow: var(--shadow-md);
+            overflow-y: auto;
+        }
+
+        .building-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .building-info {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .building-info h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .badge {
+            background-color: rgba(230, 57, 70, 0.1);
+            color: var(--secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-item {
+            background: rgba(0,0,0,0.02);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .floor-selector {
+            padding: 1.5rem;
+        }
+
+        .floor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .floor-btn {
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: var(--border-radius);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .floor-btn:hover {
+            border-color: var(--primary);
+            background: rgba(10, 25, 47, 0.02);
+        }
+
+        .floor-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .floor-btn.active .floor-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .floor-badge {
+            background: rgba(0,0,0,0.05);
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .floor-map-container {
+            flex: 1;
+            min-width: 0;
+            background-color: #F8FAFC;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .floor-map-header {
+            padding: 1rem 2rem;
+            background: white;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-legend {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .floor-plan-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: auto;
+        }
+
+        /* Floor Plan Mockup */
+        .floor-plan-mockup {
+            width: 800px;
+            height: 500px;
+            background: white;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            padding: 20px;
+        }
+
+        .corridor {
+            position: absolute;
+            background: #E2E8F0;
+            top: 220px;
+            left: 50px;
+            right: 50px;
+            height: 60px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .room {
+            position: absolute;
+            background: #F1F5F9;
+            border: 2px solid #CBD5E1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .room:hover {
+            background: #E2E8F0;
+            transform: scale(1.02);
+            z-index: 2;
+        }
+
+        .room.highlight {
+            background: rgba(230, 57, 70, 0.1);
+            border-color: var(--secondary);
+            color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.2);
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(230, 57, 70, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+        }
+
+        .facility {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .stairs { background: #3B82F6; }
+        .elevator { background: #8B5CF6; }
+        .wc { background: #10B981; }
+/* ===== Dữ liệu thật (11/2026) ===== */
+.building-title { font-size: 1.4rem; margin: 0 0 .5rem; }
+.building-desc { color: #475569; line-height: 1.6; }
+.building-image-placeholder { display: grid; place-items: center; background: linear-gradient(135deg, var(--primary), #1e6bd6); color: #fff; font-size: 3.5rem; font-weight: 800; }
+.info-grid { grid-template-columns: repeat(3, 1fr); }
+.building-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.building-actions .btn { flex: 1; text-align: center; }
+.status-banner { border-radius: 8px; padding: .5rem .75rem; font-weight: 600; }
+.status-banner.status-maintenance { background: #fef3c7; color: #92400e; }
+.status-banner.status-closed { background: #fee2e2; color: #991b1b; }
+.floor-btn[aria-pressed="true"] { outline: 2px solid var(--primary); }
+.room-search { position: relative; width: 260px; max-width: 100%; }
+.room-search .search-input { padding: .5rem 1rem; border-radius: 20px; width: 100%; }
+.room-search-results { position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; right: 0; list-style: none; margin: 0; padding: .25rem; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px rgba(15,23,42,.15); max-height: 300px; overflow-y: auto; }
+.room-search-results button { width: 100%; text-align: left; border: 0; background: none; padding: .5rem .6rem; border-radius: 6px; font: inherit; cursor: pointer; }
+.room-search-results button:hover, .room-search-results button:focus { background: #eef2f7; }
+.room-search-results small { color: #64748b; margin-left: .3rem; }
+.room-search-results .empty { color: #94a3b8; padding: .5rem; }
+.floor-plan-area { overflow: auto; flex-direction: column; align-items: stretch; justify-content: flex-start; }
+.floor-svg { display: block; max-width: 100%; margin: 0 auto 1.5rem; background: #fff; border-radius: 12px; }
+.room-group h4 { margin: 1rem 0 .5rem; color: var(--primary); }
+.room-group h4 small { color: #64748b; font-weight: 500; }
+.room-grid { display: flex; flex-wrap: nowrap; gap: .6rem; overflow-x: auto; padding-bottom: .5rem; }
+.room-card { display: flex; flex-direction: column; gap: .15rem; padding: .7rem .8rem; border-radius: 10px; background: #f1f5f9; border: 1px solid #cbd5e1; min-height: 72px; flex: 1 1 140px; min-width: 140px; }
+.room-card span { font-size: .82rem; color: #334155; }
+.room-card small { font-size: .75rem; color: #64748b; }
+.room-card.highlight { background: #fde2e8; border: 2px solid var(--secondary); box-shadow: 0 0 0 4px rgba(211,17,69,.15); }
+.room-card.inactive { opacity: .6; }
+.room-status { color: #b45309 !important; font-weight: 600; }
+.legend-color { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid #cbd5e1; vertical-align: -2px; }
+.type-classroom { background: #f1f5f9; } .type-office { background: #e0f2fe; } .type-lab { background: #ede9fe; }
+.type-wc, .type-stairs, .type-elevator, .type-support { background: #dcfce7; }
+.room-card.type-office { background: #e0f2fe; } .room-card.type-lab { background: #ede9fe; }
+.room-card.type-wc, .room-card.type-stairs, .room-card.type-elevator, .room-card.type-support { background: #dcfce7; }
+.empty-floor { padding: 3rem 1rem; text-align: center; color: #64748b; }
+.building-index { max-width: 1100px; margin: 2rem auto; padding: 0 16px; }
+.building-index h1 { color: var(--primary); }
+.building-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.building-card { display: flex; flex-direction: column; gap: .3rem; padding: 1.1rem; background: #fff; border-radius: 14px; box-shadow: 0 2px 10px rgba(15,23,42,.06); color: inherit; text-decoration: none; }
+.building-card:hover, .building-card:focus { box-shadow: 0 6px 18px rgba(15,23,42,.12); }
+.building-code { font-size: 1.6rem; font-weight: 800; color: var(--secondary); }
+.building-card small { color: #64748b; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Sơ đồ tầng + ghim phòng (ghim đặt theo % nên tự co giãn theo ảnh) */
+.plan-wrap { position: relative; display: block; width: 100%; max-width: 900px; margin: 0 auto 1rem; }
+.plan-wrap .floor-svg { display: block; width: 100%; height: auto; margin: 0; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; }
+.plan-pin {
+  position: absolute; transform: translate(-50%, -100%);
+  border: 2px solid #fff; background: var(--primary); color: #fff; border-radius: 999px;
+  padding: .1rem .45rem; font: inherit; font-size: .7rem; font-weight: 700; cursor: pointer;
+  box-shadow: 0 2px 6px rgba(15,23,42,.35); white-space: nowrap;
+}
+.plan-pin::after { content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 4px solid transparent; border-top-color: var(--primary); }
+.plan-pin.active { background: var(--secondary); z-index: 2; transform: translate(-50%, -100%) scale(1.2); }
+.plan-pin.active::after { border-top-color: var(--secondary); }
+.plan-pin:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }

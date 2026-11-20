@@ -1,0 +1,197 @@
+<?php
+require_once __DIR__ . '/config/auth.php';
+$isAdminSession = (bool) current_admin_id();
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php echo csrf_meta(); ?>
+    <title>TDTU | Tìm đường & Vị trí</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo @filemtime(__DIR__.'/css/style.css') ?: time(); ?>">
+    <link rel="stylesheet" href="css/navigation.css?v=<?php echo @filemtime(__DIR__.'/css/navigation.css') ?: time(); ?>">
+</head>
+<body>
+<header class="app-header">
+    <a href="home.php" class="logo">
+        <img src="image/logo.svg" alt="TDTU Logo" height="24" style="margin-right: 8px;">
+        <span class="logo-text">BẢN ĐỒ KHUÔN VIÊN TDTU</span>
+    </a>
+    <nav class="nav-links">
+        <a href="home.php">Trang chủ</a>
+        <a href="campus-map.php">Bản đồ</a>
+        <a href="navigation.php" class="active">Tìm đường</a>
+    </nav>
+    <?php include __DIR__ . '/includes/user-menu.php'; ?>
+</header>
+
+<main class="navigation-page geo-navigation-page" id="navigationPage">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" title="Ẩn/hiện menu" aria-label="Ẩn/hiện menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+    </button>
+    <aside class="route-sidebar">
+        <section class="search-card">
+            <div class="start-mode-block">
+                <label style="display:flex;justify-content:space-between;align-items:center">Điểm bắt đầu
+                    <button class="icon-button" id="resetRoute" type="button" title="Đặt lại" style="width:32px;height:32px">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>
+                    </button>
+                </label>
+                <div class="start-mode-switch" id="startModeSwitch">
+                    <button type="button" class="start-mode-btn active" data-mode="gps">
+                        <span class="mode-icon">◎</span>
+                        <span><strong>GPS của tôi</strong><small>Theo dõi liên tục khi di chuyển</small></span>
+                    </button>
+                    <button type="button" class="start-mode-btn" data-mode="manual">
+                        <span class="mode-icon">⌖</span>
+                        <span><strong>Tự chọn</strong><small>Tìm kiếm hoặc bấm bản đồ</small></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="gps-mode-panel" id="gpsModePanel">
+                <div class="live-status-row">
+                    <span class="live-dot" id="gpsDot"></span>
+                    <div>
+                        <strong id="gpsStatus">GPS chưa bật</strong>
+                        <small id="gpsAccuracy">Nhấn nút bên dưới để lấy vị trí liên tục.</small>
+                    </div>
+                </div>
+                <button class="gps-primary-btn" id="toggleTracking" type="button">
+                    <span>◎</span><span>Bắt đầu theo dõi GPS</span>
+                </button>
+            </div>
+
+            <div class="manual-mode-panel" id="manualModePanel" hidden>
+                <div class="manual-start-search-block">
+                    <label for="startSearchInput">Tìm điểm bắt đầu</label>
+                    <div class="start-search-wrap">
+                        <input id="startSearchInput" class="route-input" type="text" placeholder="VD: Tòa A, Thư viện..." autocomplete="off">
+                        <button class="search-osm-btn" id="searchStart" type="button" title="Tìm điểm bắt đầu">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </button>
+                        <div class="search-suggestions" id="startSearchSuggestions"></div>
+                    </div>
+                </div>
+                <button class="manual-start-btn" id="pickManualStart" type="button"><span>⌖</span> Chọn trực tiếp trên bản đồ</button>
+                <div class="start-readout">
+                    <span class="start-pin-dot"></span>
+                    <div>
+                        <small>ĐIỂM BẮT ĐẦU</small>
+                        <strong id="manualStartName">Chưa chọn</strong>
+                        <span id="manualStartCoords">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="destination-block">
+                <label for="destinationInput">Điểm đến</label>
+                <div class="destination-search-wrap">
+                    <input id="destinationInput" class="route-input" type="text" placeholder="VD: Tòa E, Nhà thi đấu..." autocomplete="off">
+                    <button class="search-osm-btn" id="searchDestination" type="button" title="Tìm điểm đến">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+                <button class="manual-start-btn destination-pick-btn" id="pickDestination" type="button"><span>⌖</span> Hoặc chọn điểm đến trên bản đồ</button>
+            </div>
+
+            <div class="destination-readout">
+                <span class="destination-pin-dot"></span>
+                <div>
+                    <small>ĐIỂM ĐẾN</small>
+                    <strong id="destinationName">Chưa chọn</strong>
+                    <span id="destinationCoords">—</span>
+                </div>
+            </div>
+
+            <label class="route-option">
+                <input type="checkbox" id="avoidSteps">
+                <span>Tránh bậc thang (xe lăn, xe đẩy)</span>
+            </label>
+
+            <button class="start-route-btn" id="startRoute" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h13"></path><path d="M13 6l6 6-6 6"></path></svg>
+                Tìm đường đi bộ tốt nhất
+            </button>
+        </section>
+
+        <section class="route-summary">
+            <div class="summary-header">
+                <div>
+                    <span class="summary-label">LỘ TRÌNH</span>
+                    <h2 id="routeTitle">Chưa có lộ trình</h2>
+                </div>
+                <span class="best-route-badge" id="routeStateBadge">Sẵn sàng</span>
+            </div>
+            <div class="route-meta">
+                <div><strong id="routeDistance">—</strong><span>Quãng đường</span></div>
+                <div><strong id="routeTime">—</strong><span>Đi bộ</span></div>
+                <div><strong id="routeRemaining">—</strong><span>Còn lại</span></div>
+            </div>
+            <div class="empty-route" id="emptyRoute"><p>Tuyến chỉ đi theo mạng đường đi bộ/thực tế của bản đồ, không nối xuyên qua tòa nhà.</p></div>
+            <div class="navigation-actions" id="navigationActions" hidden>
+                <button class="begin-navigation-btn" id="beginNavigation" type="button">▶ Bắt đầu dẫn đường</button>
+                <button class="voice-toggle-btn active" id="voiceToggle" type="button" title="Bật/tắt giọng nói">🔊</button>
+            </div>
+            <div class="route-steps" id="routeSteps" hidden></div>
+        </section>
+    </aside>
+
+    <section class="map-workspace">
+        <div class="map-toolbar">
+            <div class="map-title-block">
+                <span>BẢN ĐỒ ĐỊA LÝ THẬT · TDTU</span>
+                <strong>Đường đi bám theo footway/path/service road thực tế</strong>
+            </div>
+            <div class="navigation-banner" id="navigationBanner" hidden>
+                <div class="nav-turn-icon" id="navTurnIcon">↑</div>
+                <div class="nav-banner-copy">
+                    <small id="navDistanceToTurn">Bắt đầu</small>
+                    <strong id="navInstruction">Sẵn sàng dẫn đường</strong>
+                    <span id="navStreet">Theo tuyến màu đỏ</span>
+                </div>
+                <button class="end-navigation-btn" id="endNavigation" type="button">Kết thúc</button>
+            </div>
+            <div class="map-tools">
+                <button class="map-tool-btn follow-btn" id="followMe" type="button" title="Theo dõi vị trí">◎</button>
+                <button class="map-tool-btn" id="zoomOut" type="button">−</button>
+                <span id="zoomValue">18</span>
+                <button class="map-tool-btn" id="zoomIn" type="button">+</button>
+            </div>
+        </div>
+
+        <div class="current-location-card" id="currentLocationCard" hidden style="display:none">
+            <span class="location-pulse"></span>
+            <div>
+                <small>VỊ TRÍ HIỆN TẠI</small>
+                <strong id="currentLocationName">Chưa có dữ liệu GPS</strong>
+                <p id="currentLocationDetail">GPS chỉ được dùng khi sai số đủ tốt; tuyến tự tính lại khi bạn đi lệch.</p>
+            </div>
+            <span class="gps-coordinates" id="currentCoordinates">—</span>
+        </div>
+
+        <div class="campus-map-board real-map-board geo-real-map-board">
+            <div id="geoNavigationMap" class="geo-navigation-map" aria-label="Bản đồ địa lý TDTU"></div>
+            <div class="map-click-hint" id="mapClickHint">Chọn chế độ rồi bấm bản đồ để đặt điểm.</div>
+            <div class="map-source-pill" id="vectorStatus">Đang tải dữ liệu đường và công trình…</div>
+        </div>
+    </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="js/api.js?v=<?php echo @filemtime(__DIR__.'/js/api.js') ?: time(); ?>"></script>
+<script src="js/lib/coverage.js"></script>
+<script src="js/lib/entrances.js"></script>
+<script src="js/lib/resolve-place.js"></script>
+<script src="js/lib/walk-router.js?v=<?php echo @filemtime(__DIR__.'/js/lib/walk-router.js') ?: time(); ?>"></script>
+<script src="js/lib/route-tracker.js?v=<?php echo @filemtime(__DIR__.'/js/lib/route-tracker.js') ?: time(); ?>"></script>
+<script src="js/lib/gps-filter.js?v=<?php echo @filemtime(__DIR__.'/js/lib/gps-filter.js') ?: time(); ?>"></script>
+<script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
+<script src="js/navigation.js?v=<?php echo @filemtime(__DIR__.'/js/navigation.js') ?: time(); ?>"></script>
+<script src="js/main.js?v=<?php echo @filemtime(__DIR__.'/js/main.js') ?: time(); ?>"></script>
+</body>
+</html>

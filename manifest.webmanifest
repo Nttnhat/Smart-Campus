@@ -1,0 +1,14 @@
+{
+  "name": "Bản đồ khuôn viên TDTU",
+  "short_name": "TDTU Map",
+  "description": "Bản đồ, tìm kiếm và dẫn đường đi bộ trong khuôn viên Trường Đại học Tôn Đức Thắng",
+  "lang": "vi",
+  "start_url": "home.php",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#D31145",
+  "icons": [
+    { "src": "image/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

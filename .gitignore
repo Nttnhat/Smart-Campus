@@ -1,0 +1,15 @@
+# Cấu hình riêng từng máy/hosting (chứa mật khẩu database)
+config/config.local.php
+
+# Cache dữ liệu OSM do api/osm-campus.php tạo ra lúc chạy
+cache/
+
+# Hệ điều hành / editor
+Thumbs.db
+.DS_Store
+.vscode/
+node_modules/
+
+# Cấu hình/bộ nhớ riêng của Claude Code (không phải code dự án)
+.claude/
+CLAUDE.md

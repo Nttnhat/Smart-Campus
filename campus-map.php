@@ -1,0 +1,101 @@
+<?php
+require_once __DIR__ . '/config/auth.php';
+$isAdminSession = (bool) current_admin_id();
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php echo csrf_meta(); ?>
+    <title>TDTU | Bản đồ khuôn viên thực</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo @filemtime(__DIR__.'/css/style.css') ?: time(); ?>">
+    <link rel="stylesheet" href="css/campus-map.css?v=<?php echo @filemtime(__DIR__.'/css/campus-map.css') ?: time(); ?>">
+</head>
+<body>
+<header class="app-header">
+    <a href="home.php" class="logo">
+        <img src="image/logo.svg" alt="TDTU Logo" height="24" style="margin-right:8px;">
+        <span class="logo-text">BẢN ĐỒ KHUÔN VIÊN TDTU</span>
+    </a>
+    <nav class="nav-links">
+        <a href="home.php">Trang chủ</a>
+        <a href="campus-map.php" class="active">Bản đồ</a>
+        <a href="navigation.php">Tìm đường</a>
+    </nav>
+    <?php include __DIR__ . '/includes/user-menu.php'; ?>
+</header>
+
+<main class="campus-page real-vector-campus" id="campusMapPage">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" title="Ẩn/hiện menu" aria-label="Ẩn/hiện menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+    </button>
+    <aside class="map-sidebar">
+        <div class="sidebar-header">
+            <div class="search-container">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input id="campusSearch" type="text" class="search-input" placeholder="VD: Tòa A, Thư viện, Nhà thi đấu..." autocomplete="off">
+            </div>
+            <div id="campusSearchResults" class="official-search-results"></div>
+        </div>
+
+        <div class="gps-map-card">
+            <div class="gps-map-card-head">
+                <div><span>GPS TRÊN BẢN ĐỒ</span><strong id="gpsMapStatus">Chưa bật GPS</strong></div>
+                <button id="toggleMapGps" type="button" class="gps2d-btn">Bật GPS</button>
+            </div>
+            <p id="gpsMapDetail">Vị trí GPS được hiển thị trực tiếp trên cùng hệ tọa độ của bản đồ.</p>
+        </div>
+
+        <div class="selected-coordinate-card">
+            <span>ĐIỂM ĐANG CHỌN</span>
+            <strong id="selectedPlaceName">Chưa chọn điểm</strong>
+            <p id="selectedPlaceDetail">Tìm địa điểm hoặc bấm trực tiếp lên bản đồ.</p>
+            <div class="coord-readout" id="selectedCoordinates">—</div>
+            <a id="selectedPlaceRoute" href="navigation.php" class="selected-route-btn disabled-link">Dẫn đường đến đây</a>
+            <a id="selectedPlaceDetails" href="building-details.php" class="selected-route-btn selected-details-btn disabled-link">Xem thông tin chi tiết</a>
+            <button type="button" id="favoriteToggle" class="favorite-btn" aria-pressed="false" disabled
+                data-logged-in="<?php echo current_user_id() ? '1' : '0'; ?>">☆ Lưu vào yêu thích</button>
+        </div>
+    </aside>
+
+    <section class="map-content">
+        <div class="map-topbar">
+            <div><span>BẢN ĐỒ VECTOR TDTU</span><strong>Đường, tòa nhà và vị trí thật</strong></div>
+            <div class="map-actions">
+                <button id="zoomOutCampus" class="map-action-btn" type="button">−</button>
+                <span class="zoom-readout" id="zoomCampus">18</span>
+                <button id="zoomInCampus" class="map-action-btn" type="button">+</button>
+                <button id="fitCampus" class="map-action-btn" type="button">Vừa khuôn viên</button>
+                <a class="map-action-btn primary-action" href="navigation.php">Mở dẫn đường</a>
+            </div>
+        </div>
+
+        <div class="real-campus-map-shell">
+            <div id="realCampusMap" class="real-campus-map"></div>
+            <div class="official-map-hint">Bấm một điểm để chọn · Cuộn để zoom · Kéo để di chuyển</div>
+        </div>
+
+        <div class="map-info-strip">
+            <div><strong>Hệ tọa độ</strong><span>WGS84 lat/lng</span></div>
+            <div><strong>Công trình</strong><span>OSM building geometry</span></div>
+            <div><strong>Đường đi</strong><span>Footway / path / service road</span></div>
+            <div><strong>Dẫn đường</strong><span>Pedestrian routing</span></div>
+        </div>
+    </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="js/api.js?v=<?php echo @filemtime(__DIR__.'/js/api.js') ?: time(); ?>"></script>
+<script src="js/lib/coverage.js"></script>
+<script src="js/lib/entrances.js"></script>
+<script src="js/lib/resolve-place.js"></script>
+<script src="js/lib/walk-router.js?v=<?php echo @filemtime(__DIR__.'/js/lib/walk-router.js') ?: time(); ?>"></script>
+<script src="js/lib/gps-filter.js?v=<?php echo @filemtime(__DIR__.'/js/lib/gps-filter.js') ?: time(); ?>"></script>
+<script src="js/tdtu-vector-map.js?v=<?php echo @filemtime(__DIR__.'/js/tdtu-vector-map.js') ?: time(); ?>"></script>
+<script src="js/campus-map.js?v=<?php echo @filemtime(__DIR__.'/js/campus-map.js') ?: time(); ?>"></script>
+<script src="js/main.js?v=<?php echo @filemtime(__DIR__.'/js/main.js') ?: time(); ?>"></script>
+</body>
+</html>

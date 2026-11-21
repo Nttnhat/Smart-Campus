@@ -289,7 +289,10 @@
 
 @media (max-width: 1100px) {
     .campus-page { grid-template-columns: 1fr; }
-    .map-sidebar { border-right: 0; box-shadow: none; }
+    /* Sidebar giờ xếp CHỒNG lên trên bản đồ (không còn nằm cạnh) nên không cần dính/cuộn riêng
+       nữa - position:sticky + overflow-y:auto trên mobile chỉ gây kẹt cử chỉ vuốt cuộn trang
+       trên một số trình duyệt (đặc biệt Safari iOS), phải tắt hẳn để cuộn trang bình thường. */
+    .map-sidebar { border-right: 0; box-shadow: none; position: static; max-height: none; overflow-y: visible; }
 }
 
 @media (max-width: 720px) {
